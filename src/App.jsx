@@ -303,7 +303,7 @@ export default function App() {
             <div className="lead-bar" style={{background:'#ec4899'}}/>
             <span className="mono dim" style={{fontSize:'.65rem',letterSpacing:'.12em'}}>FEB 2026 – PRESENT</span>
             <h3 style={{fontSize:'1.25rem',marginTop:8}}>Show Director</h3>
-            <p style={{color:'#ec4899',fontSize:'.9rem',fontWeight:600,marginBottom:16}}>Just Between Us (JBU)</p>
+            <a href="https://justbetweenus.veltech.edu.in/" target="_blank" rel="noopener noreferrer" style={{color:'#ec4899',fontSize:'.9rem',fontWeight:600,marginBottom:16,display:'inline-block'}}>Just Between Us (JBU) ↗</a>
             <p className="dim" style={{fontSize:'.88rem',lineHeight:1.7}}>Created a student-led town hall platform connecting students with accomplished leaders — 4 episodes, end-to-end production, real conversations on innovation and growth.</p>
           </motion.div>
         </div>

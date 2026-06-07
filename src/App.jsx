@@ -21,6 +21,10 @@ const TECH = [
   {n:'GCP',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg'},
   {n:'Git',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'},
   {n:'Figma',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg'},
+  {n:'Jira',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg'},
+  {n:'Notion',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg'},
+  {n:'Canva',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg'},
+  {n:'Photoshop',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg'},
 ];
 
 const SKILLS = [
@@ -126,7 +130,7 @@ export default function App() {
           <ul className="nav__links">
             {NAV.map(n=><li key={n}><a href={`#${n.toLowerCase()}`}>{n}</a></li>)}
           </ul>
-          <a href="/resume.pdf" download className="btn btn-outline nav__cta">Resume ↓</a>
+          <a href={`${import.meta.env.BASE_URL}resume.pdf`} download className="btn btn-outline nav__cta">Resume ↓</a>
           <button className="nav__burger" onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X size={20}/>:<Menu size={20}/>}</button>
         </div>
         <AnimatePresence>
@@ -164,7 +168,7 @@ export default function App() {
 
             <motion.div className="hero__cta" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1}}>
               <a href="#story" className="btn btn-fill">My Story <ArrowRight size={15}/></a>
-              <a href="/resume.pdf" download className="btn btn-outline"><Download size={14}/> Resume</a>
+              <a href={`${import.meta.env.BASE_URL}resume.pdf`} download className="btn btn-outline"><Download size={14}/> Resume</a>
             </motion.div>
 
             <motion.div className="hero__stats" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.2}}>
@@ -178,7 +182,7 @@ export default function App() {
             <div className="hero__frame">
               <span className="fc fc-tl"/><span className="fc fc-tr"/><span className="fc fc-bl"/><span className="fc fc-br"/>
               <div className="frame-scan"/>
-              <img src="/hero_futuristic.png" alt="Abhilash Reddy"/>
+              <img src={`${import.meta.env.BASE_URL}hero_futuristic.png`} alt="Abhilash Reddy"/>
               <div className="frame-grad"/>
             </div>
             <div className="hero__glow"/>
@@ -225,7 +229,7 @@ export default function App() {
           {/* Right — image + quick facts */}
           <div className="story-aside">
             <motion.div className="story-img-wrap" {...fade(.15)}>
-              <img src="/hero_action.png" alt="Abhilash thinking" className="story-img"/>
+              <img src={`${import.meta.env.BASE_URL}hero_action.png`} alt="Abhilash thinking" className="story-img"/>
               <div className="story-img-label card">
                 <Sparkles size={14} style={{color:'#f59e0b'}}/>
                 <span>Problem Discovery Mode</span>

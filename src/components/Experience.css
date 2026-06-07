@@ -1,0 +1,122 @@
+.exp-section { padding: 100px 20px; }
+.exp-inner { max-width: 1000px; margin: 0 auto; }
+.timeline { display: flex; flex-direction: column; gap: 24px; margin-bottom: 30px; }
+
+.exp-card {
+  position: relative;
+  padding: 32px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.exp-card:hover {
+  border-color: var(--exp-color, var(--accent-cyan));
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.08);
+}
+.exp-top-line {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--glass-border);
+  flex-wrap: wrap;
+}
+.exp-role {
+  font-size: 1.5rem;
+  color: var(--text-bright);
+  margin-bottom: 6px;
+}
+.exp-company {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.exp-sub { font-size: 0.85rem; color: var(--text-muted); }
+
+.exp-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.exp-meta span {
+  font-family: var(--font-accent);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: flex-end;
+  letter-spacing: 0.05em;
+}
+.exp-badge {
+  border: 1px solid;
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.1em !important;
+  align-self: flex-end;
+}
+
+.exp-points { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.exp-points li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--text-main);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+.exp-points li::before {
+  content: '▹';
+  position: absolute;
+  left: 0;
+  color: var(--bullet-color, var(--accent-cyan));
+}
+
+/* Education */
+.edu-card {
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.edu-icon { font-size: 2.5rem; }
+.edu-card h3 { font-size: 1.1rem; color: var(--text-bright); margin-bottom: 4px; }
+.edu-card p { font-size: 0.9rem; }
+.edu-cgpa {
+  margin-left: auto;
+  text-align: center;
+  flex-shrink: 0;
+}
+.edu-cgpa span {
+  font-family: var(--font-accent);
+  font-size: 2.5rem;
+  font-weight: 700;
+  display: block;
+  line-height: 1;
+}
+.edu-cgpa small {
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+  .exp-header { flex-direction: column; }
+  .exp-meta { text-align: left; }
+  .exp-meta span { justify-content: flex-start; }
+}

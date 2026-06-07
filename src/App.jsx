@@ -1,0 +1,405 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { Download, ArrowRight, ArrowUpRight, Menu, X, Mail, Phone, MapPin, ChevronDown, Sparkles } from 'lucide-react';
+import './App.css';
+
+/* ── Data ─────────────────────────────────── */
+const NAV = ['Story','Impact','Projects','Arsenal','Connect'];
+
+const TYPED_WORDS = ['problems.', 'patterns.', 'root causes.', 'opportunities.', 'the invisible.'];
+
+const TECH = [
+  {n:'Python',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'},
+  {n:'JavaScript',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'},
+  {n:'React',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'},
+  {n:'Node.js',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'},
+  {n:'Java',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg'},
+  {n:'Spring',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg'},
+  {n:'MySQL',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'},
+  {n:'Firebase',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg'},
+  {n:'AWS',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg'},
+  {n:'GCP',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg'},
+  {n:'Git',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'},
+  {n:'Figma',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg'},
+];
+
+const SKILLS = [
+  {label:'Product & Strategy',c:'#22d3a6',tags:['Problem Discovery','Product Thinking','User Research','Market Research','Competitive Analysis','Product Validation','Stakeholder Management']},
+  {label:'AI & Emerging Tech',c:'#a855f7',tags:['Agentic AI','LLM Applications','Prompt Engineering','Machine Learning','Intelligent Automation']},
+  {label:'Data & Analytics',c:'#f59e0b',tags:['SQL','Power BI','Google Analytics','Data Analysis','KPI Tracking','Dashboarding','Decision Support']},
+  {label:'Dev Stack',c:'#00e5ff',tags:['Python','Java','JavaScript','React.js','Node.js','Spring','HTML/CSS']},
+  {label:'Cloud & DevOps',c:'#ec4899',tags:['MySQL','Firebase','AWS','GCP','GitHub Actions','Git']},
+  {label:'Business & Ops',c:'#4f8ef7',tags:['Business Analysis','Innovation Management','Startup Ops','Process Optimization','SEO','Agile/Scrum','Jira','Confluence']},
+];
+
+/* ── Typing animation hook ────────────────── */
+function useTyping(words, typeSpeed=100, pauseMs=2200) {
+  const [text, setText] = useState('');
+  const [wordIdx, setWordIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const word = words[wordIdx];
+    const timeout = setTimeout(() => {
+      if (!deleting) {
+        setText(word.slice(0, charIdx + 1));
+        if (charIdx + 1 === word.length) {
+          setTimeout(() => setDeleting(true), pauseMs);
+        } else {
+          setCharIdx(c => c + 1);
+        }
+      } else {
+        setText(word.slice(0, charIdx));
+        if (charIdx === 0) {
+          setDeleting(false);
+          setWordIdx((wordIdx + 1) % words.length);
+        } else {
+          setCharIdx(c => c - 1);
+        }
+      }
+    }, deleting ? 50 : typeSpeed);
+    return () => clearTimeout(timeout);
+  }, [charIdx, deleting, wordIdx, words, typeSpeed, pauseMs]);
+
+  return text;
+}
+
+/* ── Particle Canvas ──────────────────────── */
+function Particles() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const c = ref.current, ctx = c.getContext('2d');
+    const resize = () => { c.width = window.innerWidth; c.height = window.innerHeight; };
+    resize(); window.addEventListener('resize', resize);
+    const pts = Array.from({length:50}, () => ({
+      x: Math.random()*c.width, y: Math.random()*c.height,
+      vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.3,
+      s: Math.random()*1.5+.5, o: Math.random()*.4+.1
+    }));
+    let id;
+    const draw = () => {
+      ctx.clearRect(0,0,c.width,c.height);
+      pts.forEach(p => {
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0)p.x=c.width; if(p.x>c.width)p.x=0;
+        if(p.y<0)p.y=c.height; if(p.y>c.height)p.y=0;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
+        ctx.fillStyle=`rgba(0,229,255,${p.o})`; ctx.fill();
+      });
+      pts.forEach((a,i) => pts.slice(i+1).forEach(b => {
+        const d = Math.hypot(a.x-b.x, a.y-b.y);
+        if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+          ctx.strokeStyle=`rgba(0,229,255,${.08*(1-d/120)})`;ctx.lineWidth=.5;ctx.stroke();}
+      }));
+      id=requestAnimationFrame(draw);
+    };
+    draw();
+    return ()=>{cancelAnimationFrame(id);window.removeEventListener('resize',resize);};
+  },[]);
+  return <canvas ref={ref} className="particles"/>;
+}
+
+/* ── Helpers ───────────────────────────────── */
+const fade = (d=0) => ({initial:{opacity:0,y:40},whileInView:{opacity:1,y:0},viewport:{once:true},transition:{duration:1,delay:d,ease:[0.16,1,0.3,1]}});
+
+/* ══════════════════════════════════════════════
+   APP
+   ══════════════════════════════════════════════ */
+export default function App() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const typed = useTyping(TYPED_WORDS);
+  const heroRef = useRef(null);
+  const {scrollYProgress} = useScroll({target:heroRef,offset:['start start','end start']});
+  const heroOpacity = useTransform(scrollYProgress,[0,.8],[1,0]);
+  const imgY = useTransform(scrollYProgress,[0,1],[0,60]);
+
+  useEffect(()=>{const h=()=>setScrolled(window.scrollY>60);window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h);},[]);
+
+  return (
+    <>
+      {/* ═══ NAV ═══ */}
+      <nav className={`nav${scrolled?' nav--solid':''}`}>
+        <div className="nav__inner">
+          <a href="#" className="nav__logo">AR<span className="blink">_</span></a>
+          <ul className="nav__links">
+            {NAV.map(n=><li key={n}><a href={`#${n.toLowerCase()}`}>{n}</a></li>)}
+          </ul>
+          <a href="/resume.pdf" download className="btn btn-outline nav__cta">Resume ↓</a>
+          <button className="nav__burger" onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X size={20}/>:<Menu size={20}/>}</button>
+        </div>
+        <AnimatePresence>
+          {menuOpen&&<motion.div className="nav__mobile" initial={{opacity:0,y:-10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-10}}>
+            {NAV.map(n=><a key={n} href={`#${n.toLowerCase()}`} onClick={()=>setMenuOpen(false)}>{n}</a>)}
+          </motion.div>}
+        </AnimatePresence>
+      </nav>
+
+      {/* ═══ HERO ═══ */}
+      <section id="hero" className="hero" ref={heroRef}>
+        <Particles/>
+        <div className="orb orb1"/><div className="orb orb2"/><div className="orb orb3"/>
+
+        <motion.div className="hero__inner" style={{opacity:heroOpacity}}>
+          <div className="hero__left">
+            <motion.div className="badge" initial={{opacity:0,scale:.9}} animate={{opacity:1,scale:1}} transition={{delay:.2}}>
+              <span className="badge__dot"/>Open to Opportunities
+            </motion.div>
+
+            <motion.h1 className="hero__name" initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.4,duration:.9}}>
+              I don't wait for problems.<br/>
+              <span className="grad">I hunt them.</span>
+            </motion.h1>
+
+            <motion.p className="hero__typing" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7}}>
+              I discover <span className="typed-word">{typed}<span className="cursor">|</span></span>
+            </motion.p>
+
+            <motion.p className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.85}}>
+              Hey, I'm <strong>Abhilash Reddy</strong> — a 20-year-old from Andhra Pradesh
+              who builds AI systems, automates entire business operations, and founded a 700+ member
+              innovation ecosystem. I love discovering problems rather than just solving them. My superpower? Seeing the problem nobody else noticed yet.
+            </motion.p>
+
+            <motion.div className="hero__cta" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1}}>
+              <a href="#story" className="btn btn-fill">My Story <ArrowRight size={15}/></a>
+              <a href="/resume.pdf" download className="btn btn-outline"><Download size={14}/> Resume</a>
+            </motion.div>
+
+            <motion.div className="hero__stats" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.2}}>
+              {[['700+','Community Built'],['70%','Manual Work Eliminated'],['98.4%','AI Accuracy Achieved'],['9.2','CGPA']].map(([v,l])=>(
+                <div key={l} className="hstat"><span className="hstat__v grad">{v}</span><span className="hstat__l">{l}</span></div>
+              ))}
+            </motion.div>
+          </div>
+
+          <motion.div className="hero__right" style={{y:imgY}} initial={{opacity:0,scale:.85}} animate={{opacity:1,scale:1}} transition={{delay:.5,duration:1}}>
+            <div className="hero__frame">
+              <span className="fc fc-tl"/><span className="fc fc-tr"/><span className="fc fc-bl"/><span className="fc fc-br"/>
+              <div className="frame-scan"/>
+              <img src="/hero_futuristic.png" alt="Abhilash Reddy"/>
+              <div className="frame-grad"/>
+            </div>
+            <div className="hero__glow"/>
+          </motion.div>
+        </motion.div>
+        <a href="#story" className="scroll-cue"><div className="scroll-line"/><ChevronDown size={14}/></a>
+      </section>
+
+      {/* ═══ STORY ═══ */}
+      <section id="story" className="section">
+        <motion.div {...fade()}>
+          <p className="sec-label">01 / THE ORIGIN</p>
+          <h2 className="sec-title">Most people solve problems<br/>they're given.<br/><span className="grad">I find the ones nobody saw.</span></h2>
+        </motion.div>
+
+        <div className="story-grid">
+          {/* Left — narrative text blocks */}
+          <div className="story-narrative">
+            <motion.div className="nblock" {...fade(.1)}>
+              <span className="nblock-tag">THE REALIZATION</span>
+              <p>At university, I noticed something broken: hundreds of talented students — engineers, MBAs, law students — all stuck in silos. No one was connecting problems across disciplines. Ideas died in dorm rooms because there was no framework to validate them.</p>
+              <p>So I didn't just complain about it. I built <strong>Yantriksha X Hub</strong>.</p>
+            </motion.div>
+
+            <motion.div className="nblock" {...fade(.2)}>
+              <span className="nblock-tag">THE FRAMEWORK</span>
+              <p>I developed what I call the <span className="highlight">-1 → 0 → 1</span> framework:</p>
+              <div className="framework-visual">
+                <div className="fw-step"><span className="fw-num grad">-1</span><span className="fw-label">Confusion</span><p className="dim">You feel the pain but can't name the problem</p></div>
+                <div className="fw-arrow">→</div>
+                <div className="fw-step"><span className="fw-num grad">0</span><span className="fw-label">Validated Idea</span><p className="dim">Research, user feedback, feasibility confirmed</p></div>
+                <div className="fw-arrow">→</div>
+                <div className="fw-step"><span className="fw-num grad">1</span><span className="fw-label">Working Product</span><p className="dim">Built, shipped, creating real impact</p></div>
+              </div>
+            </motion.div>
+
+            <motion.div className="nblock" {...fade(.3)}>
+              <span className="nblock-tag">THE SCALE</span>
+              <p>What started with a handful of frustrated students became a <strong>700+ member multidisciplinary ecosystem</strong>. We've facilitated <strong>100+ internships</strong>, supported <strong>10+ patentable projects</strong>, and built connections with <strong>20+ industry experts</strong>.</p>
+              <p>Students now go from "I have no idea what to build" to "Here's my working prototype" — because someone taught them how to see problems.</p>
+            </motion.div>
+          </div>
+
+          {/* Right — image + quick facts */}
+          <div className="story-aside">
+            <motion.div className="story-img-wrap" {...fade(.15)}>
+              <img src="/hero_action.png" alt="Abhilash thinking" className="story-img"/>
+              <div className="story-img-label card">
+                <Sparkles size={14} style={{color:'#f59e0b'}}/>
+                <span>Problem Discovery Mode</span>
+              </div>
+            </motion.div>
+
+            <motion.div className="story-edu card" {...fade(.25)}>
+              <div className="edu-row">
+                <div>
+                  <span className="mono dim" style={{fontSize:'.65rem',letterSpacing:'.15em'}}>EDUCATION</span>
+                  <h4 style={{marginTop:4,fontSize:'1rem'}}>Vel Tech R&D Institute</h4>
+                  <p className="dim" style={{fontSize:'.85rem'}}>B.Tech CSE (AI & ML) · Expected 2027</p>
+                </div>
+                <div className="edu-cgpa">
+                  <span className="grad" style={{fontFamily:'var(--syne)',fontSize:'2.4rem',fontWeight:800,lineHeight:1}}>9.2</span>
+                  <span className="mono dim" style={{fontSize:'.6rem',letterSpacing:'.15em'}}>CGPA</span>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div className="story-lang card" {...fade(.3)}>
+              <span className="mono dim" style={{fontSize:'.65rem',letterSpacing:'.15em',marginBottom:10,display:'block'}}>LANGUAGES I SPEAK</span>
+              <div className="lang-tags">
+                {[['English','Pro'],['Telugu','Native'],['Hindi','Pro'],['Tamil','Working'],['German','Basic'],['Kannada','Basic']].map(([l,lv])=>(
+                  <span key={l} className="lang-tag"><strong>{l}</strong> <span className="dim">· {lv}</span></span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ IMPACT ═══ */}
+      <section id="impact" className="section">
+        <motion.div {...fade()}>
+          <p className="sec-label">02 / REAL IMPACT</p>
+          <h2 className="sec-title">I don't just build things.<br/><span className="grad">I eliminate inefficiency.</span></h2>
+        </motion.div>
+
+        {/* Internship card */}
+        <motion.div className="exp-card card" {...fade(.1)}>
+          <div className="exp-stripe"/>
+          <div className="exp-top">
+            <div>
+              <span className="exp-type">INTERNSHIP · FULL-TIME · HYBRID</span>
+              <h3 className="exp-role">Agentic AI Developer</h3>
+              <p className="grad" style={{fontSize:'1rem',fontWeight:600}}>MATIC — MADeIT Incubated Startup · IIITDM Kancheepuram</p>
+              <p className="dim" style={{fontSize:'.85rem',marginTop:4}}>Chennai, Tamil Nadu · Jun 2025 – Oct 2025</p>
+            </div>
+            <div className="exp-metric-box card">
+              <span className="grad" style={{fontFamily:'var(--syne)',fontSize:'2.8rem',fontWeight:800,lineHeight:1}}>70%</span>
+              <span className="mono dim" style={{fontSize:'.6rem',letterSpacing:'.15em'}}>MANUAL EFFORT<br/>ELIMINATED</span>
+            </div>
+          </div>
+          <div className="exp-story">
+            <p>The startup had a classic scaling problem: <strong>5+ business functions running on manual processes</strong>. Every team was drowning in repetitive tasks. I didn't just automate what they told me to — I mapped the entire operation, found the bottlenecks nobody was tracking, and built <span className="highlight">Assist Pro</span>.</p>
+            <p>Assist Pro became the backbone of their operations — an AI-powered automation platform that handles 20+ business processes using intelligent agents and workflow orchestration. The result? Their team got <strong>70% of their time back</strong>.</p>
+          </div>
+        </motion.div>
+
+        {/* Leadership cards */}
+        <div className="lead-row">
+          <motion.div className="lead-card card" {...fade(.15)} style={{'--lc':'#a855f7'}}>
+            <div className="lead-bar" style={{background:'#a855f7'}}/>
+            <span className="mono dim" style={{fontSize:'.65rem',letterSpacing:'.12em'}}>FEB 2025 – PRESENT</span>
+            <h3 style={{fontSize:'1.25rem',marginTop:8}}>Founder, Chairman & President</h3>
+            <p style={{color:'#a855f7',fontSize:'.9rem',fontWeight:600,marginBottom:16}}>Yantriksha X Hub</p>
+            <p className="dim" style={{fontSize:'.88rem',lineHeight:1.7}}>Built a 700+ member innovation ecosystem from scratch — bridging engineering, management, and law students to transform real problems into validated ventures.</p>
+          </motion.div>
+          <motion.div className="lead-card card" {...fade(.2)} style={{'--lc':'#ec4899'}}>
+            <div className="lead-bar" style={{background:'#ec4899'}}/>
+            <span className="mono dim" style={{fontSize:'.65rem',letterSpacing:'.12em'}}>FEB 2026 – PRESENT</span>
+            <h3 style={{fontSize:'1.25rem',marginTop:8}}>Show Director</h3>
+            <p style={{color:'#ec4899',fontSize:'.9rem',fontWeight:600,marginBottom:16}}>Just Between Us (JBU)</p>
+            <p className="dim" style={{fontSize:'.88rem',lineHeight:1.7}}>Created a student-led town hall platform connecting students with accomplished leaders — 4 episodes, end-to-end production, real conversations on innovation and growth.</p>
+          </motion.div>
+        </div>
+
+        {/* Achievements */}
+        <motion.div className="achieve card" {...fade(.3)}>
+          <h3 style={{marginBottom:20,fontFamily:'var(--syne)'}}>⚡ Achievements & Recognition</h3>
+          <div className="achieve-grid">
+            {[['🏆','Winner','Prototyping Contest — AI Smart Agriculture System'],
+              ['🛡️','Winner','Cybersecurity Bootcamp — IIITDM Kancheepuram'],
+              ['🥈','Runner-Up','Project Idea Contest'],
+              ['🎯','Organizer','VISAI 2026 — 720+ students, 44 institutions, 14 industry partners'],
+              ['⚡','Organizer','L&T Techgium Hackathon Preliminary Rounds'],
+              ['📋','Evaluator','Innovation Marathon — 300+ student submissions reviewed']].map(([icon,badge,text],i)=>(
+              <motion.div key={i} className="achieve-item" initial={{opacity:0,x:-10}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:.05*i}}>
+                <span className="achieve-icon">{icon}</span>
+                <div><span className="achieve-badge">{badge}</span><p className="dim" style={{fontSize:'.82rem',marginTop:3}}>{text}</p></div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ═══ PROJECTS ═══ */}
+      <section id="projects" className="section">
+        <motion.div {...fade()}>
+          <p className="sec-label">03 / WHAT I'VE BUILT</p>
+          <h2 className="sec-title">Ideas are cheap.<br/><span className="grad">These actually work.</span></h2>
+        </motion.div>
+        <div className="proj-grid">
+          {[{num:'01',title:'AI-Powered Smart Agriculture System',badge:'🥇 Winner — Prototyping Contest',c:'#22d3a6',
+            story:'Indian farmers lose crops every year because nobody can monitor 6 different soil parameters at once. So I built a system that does — using IoT sensors feeding into an ML model that recommends exactly what to plant and when to irrigate.',
+            metric:['98.4%','Prediction Accuracy'],tech:['Python','ML','IoT','Data Analytics']},
+            {num:'02',title:'Precision Bid Management Platform',badge:'Pragyan Hackathon · Aurigo Software',c:'#4f8ef7',
+            story:'Tender evaluation at construction firms involves manually comparing 10+ parameters across dozens of competitors. The process takes days. I built a platform that structures the chaos — scoring bids automatically across financial, technical, and strategic dimensions.',
+            metric:['10+','Parameters Analyzed'],tech:['React.js','Node.js','Python','Decision Support']}
+          ].map((p,i)=>(
+            <motion.div key={i} className="proj-card card" {...fade(.1+i*.15)} style={{'--pc':p.c}} whileHover={{y:-6}}>
+              <div className="proj-bar" style={{background:p.c}}/><div className="proj-num">{p.num}</div>
+              <span className="proj-badge">{p.badge}</span>
+              <h3 className="proj-title">{p.title}</h3>
+              <p className="proj-story dim">{p.story}</p>
+              <div className="proj-metric card" style={{borderColor:`${p.c}40`}}>
+                <span style={{color:p.c,fontFamily:'var(--syne)',fontSize:'1.8rem',fontWeight:800}}>{p.metric[0]}</span>
+                <span className="dim" style={{fontSize:'.8rem'}}>{p.metric[1]}</span>
+              </div>
+              <div className="proj-tech">{p.tech.map(t=><span key={t} className="ptag" style={{borderColor:`${p.c}40`,color:p.c}}>{t}</span>)}</div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══ ARSENAL ═══ */}
+      <section id="arsenal" className="section">
+        <motion.div {...fade()}>
+          <p className="sec-label">04 / THE TOOLKIT</p>
+          <h2 className="sec-title">Tools are just tools.<br/><span className="grad">Here's what I wield.</span></h2>
+        </motion.div>
+        <motion.div className="tech-row" {...fade(.1)}>
+          {TECH.map((t,i)=>(
+            <motion.div key={t.n} className="tech-item card" whileHover={{y:-6,scale:1.08}}
+              initial={{opacity:0,scale:.8}} whileInView={{opacity:1,scale:1}} viewport={{once:true}} transition={{delay:.04*i}}>
+              <img src={t.i} alt={t.n} width={38} height={38} style={{objectFit:'contain',filter:'drop-shadow(0 0 8px rgba(0,229,255,.25))'}}/>
+              <span className="tech-lbl">{t.n}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+        <div className="skill-cats">
+          {SKILLS.map((cat,i)=>(
+            <motion.div key={cat.label} className="skill-cat card" {...fade(.08+i*.06)} style={{'--cc':cat.c}}>
+              <div className="scat-hd"><div className="scat-dot" style={{background:cat.c,boxShadow:`0 0 8px ${cat.c}`}}/><h4 style={{color:cat.c}}>{cat.label}</h4></div>
+              <div className="stags">{cat.tags.map(t=><span key={t} className="stag">{t}</span>)}</div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══ CONNECT ═══ */}
+      <section id="connect" className="section contact">
+        <motion.div className="contact-inner" {...fade()}>
+          <p className="sec-label">05 / LET'S TALK</p>
+          <h2 className="sec-title">Got a messy problem?<br/><span className="grad">That's my favorite kind.</span></h2>
+          <p className="contact-sub dim">I'm actively looking for internships, collaborations, and conversations with people who think building things is the best way to learn.</p>
+          <div className="contact-links">
+            {[[<Mail size={18}/>,'Email','sannareddyabhilashreddy@gmail.com','mailto:sannareddyabhilashreddy@gmail.com'],
+              [<Phone size={18}/>,'Phone','+91 7032026509','tel:+917032026509'],
+              ['🔗','LinkedIn','Connect with me','https://linkedin.com'],
+              ['💻','GitHub','See my code','https://github.com']].map(([icon,label,val,href],i)=>(
+              <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer" className="clink card" {...fade(.08+i*.06)} whileHover={{x:6}}>
+                <span className="clink-icon">{icon}</span>
+                <div><p className="mono dim" style={{fontSize:'.68rem',letterSpacing:'.12em',textTransform:'uppercase'}}>{label}</p><p style={{fontSize:'.95rem'}}>{val}</p></div>
+                <ArrowUpRight size={16} className="clink-arrow"/>
+              </motion.a>
+            ))}
+          </div>
+          <div className="footer">
+            <p className="mono dim" style={{fontSize:'.7rem',letterSpacing:'.12em'}}>© 2025 ABHILASH REDDY SANNAREDDY · BUILT WITH REACT + FRAMER MOTION</p>
+          </div>
+        </motion.div>
+      </section>
+    </>
+  );
+}

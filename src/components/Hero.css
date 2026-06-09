@@ -133,12 +133,46 @@
   letter-spacing: 0.05em;
 }
 
-.hero-desc {
+.hero-quote-block {
+  margin-bottom: 40px;
+  max-width: 560px;
+  border-left: 3px solid var(--accent-cyan);
+  padding-left: 20px;
+  background: linear-gradient(90deg, rgba(0, 212, 255, 0.05), transparent);
+  border-radius: 0 8px 8px 0;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.hero-quote-main {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.hero-quote-sub {
   font-size: 1rem;
   color: var(--text-muted);
-  line-height: 1.8;
-  margin-bottom: 40px;
-  max-width: 520px;
+  line-height: 1.6;
+}
+
+.hero-quote-highlight {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-top: 12px;
+  color: var(--text-bright);
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  display: block;
+  margin-top: 8px;
 }
 
 .cta-buttons {

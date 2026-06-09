@@ -89,7 +89,7 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            // HELLO, WORLD
+            // PROBLEM DISCOVERY ENABLED
           </motion.p>
 
           <motion.h1
@@ -109,7 +109,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            Problem-Driven Builder — AI Systems & Product Innovation
+            Problem-Driven Builder | Agentic AI & Product Innovation | Ecosystem Builder
           </motion.p>
 
           <motion.div
@@ -122,14 +122,26 @@ const Hero = () => {
             <span><GraduationCap size={14} /> B.Tech CSE (AI & ML) · CGPA 9.2</span>
           </motion.div>
 
-          <motion.p
-            className="hero-desc"
+          <motion.div
+            className="hero-quote-block"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65 }}
           >
-            Building AI-powered automation systems, intelligent workflows, and product-driven solutions. Founder of a 700+ member innovation ecosystem.
-          </motion.p>
+            <p className="hero-quote-main">
+              Everyone asks, "How do we solve this?"<br/>
+              I ask, <span className="text-gradient">"What problem is everyone else blind to?"</span>
+            </p>
+            <p className="hero-quote-sub">
+              I don't wait for problems. I hunt them.<br/>
+              While others race to build solutions, I search for hidden friction, unmet needs, and opportunities no one has named yet.<br/>
+              Because breakthroughs don't come from better answers. They come from asking better questions.
+            </p>
+            <p className="hero-quote-highlight">
+              Anyone can solve a known problem. The real edge is finding the problem before everyone else does.<br/>
+              <span className="text-gradient font-accent">PROBLEM → OPPORTUNITY → PRODUCT → IMPACT</span>
+            </p>
+          </motion.div>
 
           <motion.div
             className="cta-buttons"

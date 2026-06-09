@@ -42,7 +42,18 @@
 .t-val { color: #a3e635; }
 .t-comment { color: #475569; font-style: italic; }
 .t-body { color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; font-family: var(--font-body); }
-
+.t-list {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  font-family: var(--font-body);
+  list-style-type: square;
+  padding-left: 20px;
+  margin-top: 8px;
+}
+.t-list li {
+  margin-bottom: 4px;
+}
 /* Stats */
 .about-stats {
   display: grid;

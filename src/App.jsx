@@ -151,20 +151,21 @@ export default function App() {
               <span className="badge__dot"/>Open to Opportunities
             </motion.div>
 
-            <motion.h1 className="hero__name" initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.4,duration:.9}}>
-              I don't wait for problems.<br/>
-              <span className="grad">I hunt them.</span>
+            <motion.h1 className="hero__name" initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.4,duration:.9}} style={{fontSize: 'clamp(2rem, 5vw, 3.5rem)', lineHeight: '1.1'}}>
+              Everyone asks, "How do we solve this?"<br/>
+              I ask, <span className="grad">"What problem is everyone else blind to?"</span>
             </motion.h1>
 
             <motion.p className="hero__typing" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7}}>
-              I discover <span className="typed-word">{typed}<span className="cursor">|</span></span>
+              I hunt <span className="typed-word">{typed}<span className="cursor">|</span></span>
             </motion.p>
 
-            <motion.p className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.85}}>
-              Hey, I'm <strong>Abhilash Reddy</strong> — a 20-year-old from Andhra Pradesh
-              who builds AI systems, automates entire business operations, and founded a 700+ member
-              innovation ecosystem. I love discovering problems rather than just solving them. My superpower? Seeing the problem nobody else noticed yet.
-            </motion.p>
+            <motion.div className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.85}} style={{display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.6'}}>
+              <p><strong>I don't wait for problems. I hunt them.</strong></p>
+              <p>While others race to build solutions, I search for hidden friction, unmet needs, and opportunities no one has named yet. Because breakthroughs don't come from better answers. They come from asking better questions.</p>
+              <p>Anyone can solve a known problem. The real edge is finding the problem before everyone else does.</p>
+              <span className="grad" style={{fontFamily:'var(--syne)', fontWeight:800, letterSpacing:'1px', display:'block', marginTop:'8px', fontSize:'1.05rem'}}>PROBLEM → OPPORTUNITY → PRODUCT → IMPACT</span>
+            </motion.div>
 
             <motion.div className="hero__cta" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1}}>
               <a href="#story" className="btn btn-fill">My Story <ArrowRight size={15}/></a>
@@ -202,27 +203,28 @@ export default function App() {
           {/* Left — narrative text blocks */}
           <div className="story-narrative">
             <motion.div className="nblock" {...fade(.1)}>
-              <span className="nblock-tag">THE REALIZATION</span>
-              <p>At university, I noticed something broken: hundreds of talented students — engineers, MBAs, law students — all stuck in silos. No one was connecting problems across disciplines. Ideas died in dorm rooms because there was no framework to validate them.</p>
-              <p>So I didn't just complain about it. I built <strong>Yantriksha X Hub</strong>.</p>
+              <span className="nblock-tag">PROBLEM-DRIVEN BUILDER</span>
+              <p>I am focused on <strong>Product Innovation, Agentic AI Systems, Entrepreneurship, and Digital Transformation</strong>. My passion lies in discovering meaningful problems, uncovering their root causes, understanding user and business needs, and transforming insights into scalable products, intelligent systems, and impactful ventures.</p>
+              <p>Currently, I design and build <strong>AI-powered automation systems and intelligent workflows</strong>, leveraging Agentic AI, workflow orchestration, and full-stack technologies to improve operational efficiency, decision-making, and business outcomes.</p>
             </motion.div>
 
             <motion.div className="nblock" {...fade(.2)}>
-              <span className="nblock-tag">THE FRAMEWORK</span>
-              <p>I developed what I call the <span className="highlight">-1 → 0 → 1</span> framework:</p>
+              <span className="nblock-tag">ECOSYSTEM BUILDER</span>
+              <p>Beyond technology, I am the <strong>Founder, Chairman & President of Yantriksha X Hub</strong>, a multidisciplinary innovation ecosystem helping students transform real-world problems into validated ideas, products, patents, startups, and ventures. We've built a community of <strong>700+ active students and 300+ alumni</strong>.</p>
+              <p>At Yantriksha X Hub, we created the <span className="highlight">-1 → 0 → 1 Framework</span>:</p>
               <div className="framework-visual">
-                <div className="fw-step"><span className="fw-num grad">-1</span><span className="fw-label">Confusion</span><p className="dim">You feel the pain but can't name the problem</p></div>
+                <div className="fw-step"><span className="fw-num grad">-1</span><span className="fw-label">Identify</span><p className="dim">Deeply understand problems.</p></div>
                 <div className="fw-arrow">→</div>
-                <div className="fw-step"><span className="fw-num grad">0</span><span className="fw-label">Validated Idea</span><p className="dim">Research, user feedback, feasibility confirmed</p></div>
+                <div className="fw-step"><span className="fw-num grad">0</span><span className="fw-label">Validate</span><p className="dim">Validate opportunities & assumptions.</p></div>
                 <div className="fw-arrow">→</div>
-                <div className="fw-step"><span className="fw-num grad">1</span><span className="fw-label">Working Product</span><p className="dim">Built, shipped, creating real impact</p></div>
+                <div className="fw-step"><span className="fw-num grad">1</span><span className="fw-label">Build</span><p className="dim">Build products, ventures & impact.</p></div>
               </div>
             </motion.div>
 
             <motion.div className="nblock" {...fade(.3)}>
-              <span className="nblock-tag">THE SCALE</span>
-              <p>What started with a handful of frustrated students became a <strong>700+ member multidisciplinary ecosystem</strong>. We've facilitated <strong>100+ internships</strong>, supported <strong>10+ patentable projects</strong>, and built connections with <strong>20+ industry experts</strong>.</p>
-              <p>Students now go from "I have no idea what to build" to "Here's my working prototype" — because someone taught them how to see problems.</p>
+              <span className="nblock-tag">LEADERSHIP & VISION</span>
+              <p>I also serve as <strong>Show Director of Just Between Us (JBU)</strong>, a student-led town hall platform connecting students with leaders and changemakers.</p>
+              <p style={{marginTop: '16px', fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-bright)'}}>I believe the future belongs not only to those who build great solutions—but to those who discover the right problems first.</p>
             </motion.div>
           </div>
 
@@ -317,7 +319,8 @@ export default function App() {
               ['🥈','Runner-Up','Project Idea Contest'],
               ['🎯','Organizer','VISAI 2026 — 720+ students, 44 institutions, 14 industry partners'],
               ['⚡','Organizer','L&T Techgium Hackathon Preliminary Rounds'],
-              ['📋','Evaluator','Innovation Marathon — 300+ student submissions reviewed']].map(([icon,badge,text],i)=>(
+              ['📋','Evaluator','Innovation Marathon — 300+ student submissions reviewed'],
+              ['🤝','Volunteer','SDIP 4.0 by EDII Tamil Nadu Govt']].map(([icon,badge,text],i)=>(
               <motion.div key={i} className="achieve-item" initial={{opacity:0,x:-10}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:.05*i}}>
                 <span className="achieve-icon">{icon}</span>
                 <div><span className="achieve-badge">{badge}</span><p className="dim" style={{fontSize:'.82rem',marginTop:3}}>{text}</p></div>
@@ -390,7 +393,7 @@ export default function App() {
           <div className="contact-links">
             {[[<Mail size={18}/>,'Email','sannareddyabhilashreddy@gmail.com','mailto:sannareddyabhilashreddy@gmail.com'],
               [<Phone size={18}/>,'Phone','+91 7032026509','tel:+917032026509'],
-              ['🔗','LinkedIn','Connect with me','https://linkedin.com'],
+              ['🔗','LinkedIn','Connect with me','https://www.linkedin.com/in/abhilash-reddy-sannareddy-546005320'],
               ['💻','GitHub','See my code','https://github.com']].map(([icon,label,val,href],i)=>(
               <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer" className="clink card" {...fade(.08+i*.06)} whileHover={{x:6}}>
                 <span className="clink-icon">{icon}</span>

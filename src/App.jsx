@@ -152,22 +152,27 @@ export default function App() {
             </motion.div>
 
             <motion.h1 className="hero__name" initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.4,duration:.9}}>
-              Abhilash <span className="grad">Reddy</span>
+              I don't wait for problems.<br/>
+              <span className="grad">I hunt them.</span>
             </motion.h1>
 
             <motion.p className="hero__typing" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7}}>
-              I hunt <span className="typed-word">{typed}<span className="cursor">|</span></span>
+              I discover <span className="typed-word">{typed}<span className="cursor">|</span></span>
             </motion.p>
 
-            <motion.div className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.85}} style={{display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.6'}}>
-              <p style={{fontSize: '1.25rem', fontWeight: 600, color: 'var(--text-bright)', lineHeight: '1.4'}}>
+            <motion.div className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.85}} style={{display: 'flex', flexDirection: 'column', gap: '16px', lineHeight: '1.6'}}>
+              <p style={{fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-bright)', lineHeight: '1.4'}}>
                 Everyone asks, "How do we solve this?"<br/>
                 I ask, <span className="grad">"What problem is everyone else blind to?"</span>
               </p>
-              <p>I build AI systems, automate business operations, and lead a 700+ member innovation ecosystem. <strong>I don't wait for problems. I hunt them.</strong></p>
+              
+              <p>Hi, I am <strong className="grad" style={{fontSize: '1.35rem', fontWeight: 800}}>Abhilash Reddy Sannareddy</strong>. I build AI systems, automate business operations, and lead a 700+ member innovation ecosystem.</p>
+
               <p>While others race to build solutions, I search for hidden friction, unmet needs, and opportunities no one has named yet. Because breakthroughs don't come from better answers. They come from asking better questions.</p>
+              
               <p>Anyone can solve a known problem. The real edge is finding the problem before everyone else does.</p>
-              <span className="grad" style={{fontFamily:'var(--syne)', fontWeight:800, letterSpacing:'1px', display:'block', marginTop:'8px', fontSize:'1.05rem'}}>PROBLEM → OPPORTUNITY → PRODUCT → IMPACT</span>
+              
+              <span className="grad" style={{fontFamily:'var(--syne)', fontWeight:800, letterSpacing:'1px', display:'block', marginTop:'6px', fontSize:'1.1rem'}}>PROBLEM → OPPORTUNITY → PRODUCT → IMPACT</span>
             </motion.div>
 
             <motion.div className="hero__cta" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1}}>

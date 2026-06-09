@@ -1,0 +1,16 @@
+{
+  "name": "Abhilash Reddy - Portfolio",
+  "short_name": "Abhilash AR_",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#030507",
+  "theme_color": "#030507",
+  "description": "Portfolio of Abhilash Reddy Sannareddy",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

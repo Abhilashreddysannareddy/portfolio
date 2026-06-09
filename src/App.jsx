@@ -161,6 +161,7 @@ export default function App() {
             </motion.p>
 
             <motion.div className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.85}} style={{display: 'flex', flexDirection: 'column', gap: '14px', lineHeight: '1.6'}}>
+              <p>Hey, I'm <strong>Abhilash Reddy</strong>. I build AI systems, automate operations, and lead a 700+ member innovation ecosystem.</p>
               <p><strong>I don't wait for problems. I hunt them.</strong></p>
               <p>While others race to build solutions, I search for hidden friction, unmet needs, and opportunities no one has named yet. Because breakthroughs don't come from better answers. They come from asking better questions.</p>
               <p>Anyone can solve a known problem. The real edge is finding the problem before everyone else does.</p>

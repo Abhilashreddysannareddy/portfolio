@@ -202,7 +202,7 @@ export default function App() {
             <div className="hero__frame">
               <span className="fc fc-tl"/><span className="fc fc-tr"/><span className="fc fc-bl"/><span className="fc fc-br"/>
               <div className="frame-scan"/>
-              <img src={`${import.meta.env.BASE_URL}professional_pic.png`} alt="Abhilash Reddy" style={{objectFit: 'cover'}}/>
+              <img src={`${import.meta.env.BASE_URL}hero_futuristic.png`} alt="Abhilash Reddy"/>
               <div className="frame-grad"/>
             </div>
             <div className="hero__glow"/>

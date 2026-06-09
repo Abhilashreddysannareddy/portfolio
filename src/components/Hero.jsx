@@ -112,6 +112,15 @@ const Hero = () => {
             Problem-Driven Builder | Agentic AI & Product Innovation | Ecosystem Builder
           </motion.p>
 
+          <motion.p
+            className="hero-impact-statement"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.55 }}
+          >
+            I discover problems, validate opportunities, and build products that create measurable impact.
+          </motion.p>
+
           <motion.div
             className="hero-meta"
             initial={{ opacity: 0 }}

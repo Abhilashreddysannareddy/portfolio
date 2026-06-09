@@ -156,6 +156,10 @@ export default function App() {
               <span className="grad">Abhilash Reddy<br/>Sannareddy</span>
             </motion.h1>
 
+            <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.55}} style={{fontSize: '1.35rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '16px'}}>
+              I discover problems, validate opportunities, and build products that create measurable impact.
+            </motion.p>
+
             <motion.div className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7}} style={{display: 'flex', flexDirection: 'column', gap: '18px', lineHeight: '1.6', marginTop: '16px', color: '#fff'}}>
               <p style={{fontSize: '1.6rem', fontWeight: 700, lineHeight: '1.3'}}>
                 <span className="grad">Everyone asks, "How do we solve this?"</span><br/>

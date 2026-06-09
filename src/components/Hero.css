@@ -115,6 +115,14 @@
   line-height: 1.5;
 }
 
+.hero-impact-statement {
+  font-size: 1.15rem;
+  color: #e5e7eb;
+  margin-bottom: 25px;
+  line-height: 1.6;
+  max-width: 90%;
+}
+
 .hero-meta {
   display: flex;
   gap: 24px;

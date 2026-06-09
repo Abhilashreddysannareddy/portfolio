@@ -157,35 +157,30 @@ export default function App() {
             </motion.h1>
 
             <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.55}} style={{fontSize: '1.35rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '16px'}}>
-              I discover problems, validate opportunities, and build products that create measurable impact.
+              I <span className="grad">hunt problems, validate opportunities,</span> and build products that create <span className="grad">measurable impact.</span>
             </motion.p>
 
             <motion.div className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7}} style={{display: 'flex', flexDirection: 'column', gap: '18px', lineHeight: '1.6', marginTop: '16px', color: '#fff'}}>
-              <p style={{fontSize: '1.6rem', fontWeight: 700, lineHeight: '1.3'}}>
-                <span className="grad">Everyone asks, "How do we solve this?"</span><br/>
-                I ask,<br/>
-                <span className="grad">"What problem is everyone else blind to?"</span>
+              <p style={{fontSize: '1.5rem', fontWeight: 700, lineHeight: '1.3'}}>
+                While others ask, <span style={{color: '#9ca3af', fontStyle: 'italic'}}>"How do we solve this?"</span> I ask:<br/>
+                <span className="grad" style={{display: 'inline-block', marginTop: '8px', fontSize: '1.8rem'}}>"What problem is everyone else blind to?"</span>
               </p>
 
-              <p style={{fontSize: '1.35rem', fontWeight: 800}}>
-                I don't wait for problems. I hunt them.
+              <p style={{fontSize: '1.25rem', fontWeight: 800}}>
+                I don't wait for problems. <span className="grad">I hunt them.</span>
               </p>
 
-              <p className="hero__typing" style={{margin: 0, fontSize: '1.1rem'}}>
-                I discover <span className="typed-word">{typed}<span className="cursor">|</span></span>
-              </p>
-
-              <p>While others race to build solutions, I search for hidden friction, unmet needs, and opportunities no one has named yet.</p>
+              <p>While others race to build solutions, I search for hidden friction, unmet needs, and opportunities no one has recognized yet.</p>
               
-              <p style={{fontSize: '1.15rem'}}><strong className="grad">Everyone wants to be a problem solver. I want to be a problem finder.</strong></p>
+              <p style={{fontSize: '1.15rem'}}><strong className="grad">Most people want to be problem solvers. I want to be a problem finder.</strong></p>
               
               <p>Because once a problem becomes obvious, everyone is already chasing the solution.</p>
               
-              <p style={{fontSize: '1.15rem'}}><strong className="grad">Hidden problems create the biggest opportunities.</strong></p>
+              <p>The biggest opportunities come from seeing what others don't—questioning assumptions, challenging the status quo, and looking where nobody else is looking.</p>
               
-              <p>The real advantage lies in seeing what others don't, questioning assumptions, challenging the status quo, and looking where nobody else is looking. Because breakthroughs don't come from better answers. They come from asking better questions.</p>
+              <p style={{fontSize: '1.15rem'}}><strong className="grad">Breakthroughs don't come from better answers. They come from asking better questions.</strong></p>
               
-              <p><strong className="grad">Anyone can solve a known problem. The real edge is finding the problem before everyone else does.</strong></p>
+              <p>Anyone can solve a known problem. The real edge is finding the problem before everyone else does.</p>
               
               <span className="grad" style={{fontFamily:'var(--syne)', fontWeight:800, letterSpacing:'1px', display:'block', marginTop:'4px', fontSize:'1.1rem'}}>PROBLEM → OPPORTUNITY → PRODUCT → IMPACT</span>
             </motion.div>

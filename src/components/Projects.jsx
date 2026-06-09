@@ -9,7 +9,7 @@ const Projects = () => {
       number: '01',
       title: "AI-Powered Smart Agriculture & Irrigation System",
       badge: "Winner — Prototyping Contest",
-      desc: "AI decision-support system integrating IoT sensing and ML to analyze 6+ agricultural parameters (NPK, soil moisture, temperature, humidity, pH). Enables data-driven crop recommendations and irrigation optimization.",
+      desc: "Identified challenges in irrigation planning, crop selection, and resource utilization that contribute to inefficient agricultural decision-making and water consumption. Developed an AI-powered decision-support system integrating IoT sensing and machine learning to analyze 6+ agricultural parameters, including NPK levels, soil moisture, temperature, humidity, and pH, enabling data-driven crop recommendations and irrigation optimization with 98.4% prediction accuracy.",
       accuracy: "98.4%",
       metric: "Prediction Accuracy",
       tech: ["Python", "Machine Learning", "IoT", "Data Analytics", "Decision Support"],
@@ -19,7 +19,7 @@ const Projects = () => {
       number: '02',
       title: "Precision Bid Management & Tender Analysis System",
       badge: "Pragyan Hackathon · Aurigo Software Technologies",
-      desc: "Decision-support platform analyzing 10+ bid evaluation parameters for competitor benchmarking, tender assessment, and strategic bid optimization — replacing manual multi-criteria decision-making.",
+      desc: "Identified inefficiencies in competitor analysis and tender evaluation during the Pragyan Hackathon in collaboration with Aurigo Software Technologies, where decision-making relied on manual assessment across multiple technical, financial, and strategic criteria. Developed a decision-support platform that analyzed 10+ bid evaluation parameters for competitor benchmarking, tender assessment, and strategic bid optimization, enabling faster and more structured decision-making.",
       metric: "Parameters Analyzed",
       accuracy: "10+",
       tech: ["React.js", "Node.js", "Python", "Data Analysis", "Decision Support"],
@@ -32,7 +32,7 @@ const Projects = () => {
       <div className="proj-inner">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
           <p className="section-label">PORTFOLIO</p>
-          <h2 className="section-title">Featured <span className="text-gradient">Projects</span></h2>
+          <h2 className="section-title">Impact-Driven <span className="text-gradient">Projects</span></h2>
         </motion.div>
 
         <div className="proj-grid">

@@ -14,10 +14,10 @@ const Experience = () => {
       type: "Full-Time · Hybrid",
       color: '#00d4ff',
       points: [
-        "Analyzed operational bottlenecks across 5+ business functions to identify automation opportunities and improve efficiency.",
-        "Developed Assist Pro — an AI-powered automation platform reducing manual effort by 70%+ across startup operations.",
-        "Designed intelligent workflow solutions across 20+ business processes using AI agents & full-stack technologies.",
-        "Collaborated directly with founders to translate business challenges into scalable, technology-driven solutions.",
+        "Analyzed operational bottlenecks across 5+ business functions to identify automation opportunities, define solution requirements, and improve operational efficiency.",
+        "Developed and enhanced Assist Pro, an AI-powered automation platform that reduced manual effort by over 70% across startup operations.",
+        "Designed and implemented intelligent workflow solutions across 20+ business processes using AI agents, workflow orchestration, and full-stack technologies.",
+        "Collaborated directly with founders and cross-functional stakeholders to translate business challenges into scalable technology-driven solutions aligned with operational and strategic objectives.",
       ],
     },
   ];

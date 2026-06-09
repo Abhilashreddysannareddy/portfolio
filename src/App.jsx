@@ -310,8 +310,12 @@ export default function App() {
             </div>
           </div>
           <div className="exp-story">
-            <p>The startup had a classic scaling problem: <strong>5+ business functions running on manual processes</strong>. Every team was drowning in repetitive tasks. I didn't just automate what they told me to — I mapped the entire operation, found the bottlenecks nobody was tracking, and built <span className="highlight">Assist Pro</span>.</p>
-            <p>Assist Pro became the backbone of their operations — an AI-powered automation platform that handles 20+ business processes using intelligent agents and workflow orchestration. The result? Their team got <strong>70% of their time back</strong>.</p>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <li>Analyzed operational bottlenecks across 5+ business functions to identify automation opportunities, define solution requirements, and improve operational efficiency.</li>
+              <li>Developed and enhanced Assist Pro, an AI-powered automation platform that reduced manual effort by over 70% across startup operations.</li>
+              <li>Designed and implemented intelligent workflow solutions across 20+ business processes using AI agents, workflow orchestration, and full-stack technologies.</li>
+              <li>Collaborated directly with founders and cross-functional stakeholders to translate business challenges into scalable technology-driven solutions aligned with operational and strategic objectives.</li>
+            </ul>
           </div>
         </motion.div>
 
@@ -357,21 +361,29 @@ export default function App() {
       <section id="projects" className="section">
         <motion.div {...fade()}>
           <p className="sec-label">03 / WHAT I'VE BUILT</p>
-          <h2 className="sec-title">Ideas are cheap.<br/><span className="grad">These actually work.</span></h2>
+          <h2 className="sec-title">Impact-Driven<br/><span className="grad">Projects.</span></h2>
         </motion.div>
         <div className="proj-grid">
-          {[{num:'01',title:'AI-Powered Smart Agriculture System',badge:'🥇 Winner — Prototyping Contest',c:'#22d3a6',
-            story:'Indian farmers lose crops every year because nobody can monitor 6 different soil parameters at once. So I built a system that does — using IoT sensors feeding into an ML model that recommends exactly what to plant and when to irrigate.',
-            metric:['98.4%','Prediction Accuracy'],tech:['Python','ML','IoT','Data Analytics']},
-            {num:'02',title:'Precision Bid Management Platform',badge:'Pragyan Hackathon · Aurigo Software',c:'#4f8ef7',
-            story:'Tender evaluation at construction firms involves manually comparing 10+ parameters across dozens of competitors. The process takes days. I built a platform that structures the chaos — scoring bids automatically across financial, technical, and strategic dimensions.',
-            metric:['10+','Parameters Analyzed'],tech:['React.js','Node.js','Python','Decision Support']}
+          {[{num:'01',title:'AI-Powered Smart Agriculture & Irrigation System',badge:'🥇 Winner — Prototyping Contest',c:'#22d3a6',
+            story:['Identified challenges in irrigation planning, crop selection, and resource utilization that contribute to inefficient agricultural decision-making and water consumption.', 'Developed an AI-powered decision-support system integrating IoT sensing and machine learning to analyze 6+ agricultural parameters, including NPK levels, soil moisture, temperature, humidity, and pH, enabling data-driven crop recommendations and irrigation optimization with 98.4% prediction accuracy.'],
+            metric:['98.4%','Prediction Accuracy'],tech:['Python','Machine Learning','IoT','Data Analytics','Decision Support']},
+            {num:'02',title:'Precision Bid Management & Tender Analysis System',badge:'Pragyan Hackathon · Aurigo Software Technologies',c:'#4f8ef7',
+            story:['Identified inefficiencies in competitor analysis and tender evaluation during the Pragyan Hackathon in collaboration with Aurigo Software Technologies, where decision-making relied on manual assessment across multiple technical, financial, and strategic criteria.', 'Developed a decision-support platform that analyzed 10+ bid evaluation parameters for competitor benchmarking, tender assessment, and strategic bid optimization, enabling faster and more structured decision-making.'],
+            metric:['10+','Parameters Analyzed'],tech:['React.js','Node.js','Python','Data Analysis','Decision Support']}
           ].map((p,i)=>(
             <motion.div key={i} className="proj-card card" {...fade(.1+i*.15)} style={{'--pc':p.c}} whileHover={{y:-6}}>
               <div className="proj-bar" style={{background:p.c}}/><div className="proj-num">{p.num}</div>
               <span className="proj-badge">{p.badge}</span>
               <h3 className="proj-title">{p.title}</h3>
-              <p className="proj-story dim">{p.story}</p>
+              <div className="proj-story dim">
+                {Array.isArray(p.story) ? (
+                  <ul style={{ listStyleType: 'disc', paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {p.story.map((st, idx) => <li key={idx}>{st}</li>)}
+                  </ul>
+                ) : (
+                  <p>{p.story}</p>
+                )}
+              </div>
               <div className="proj-metric card" style={{borderColor:`${p.c}40`}}>
                 <span style={{color:p.c,fontFamily:'var(--syne)',fontSize:'1.8rem',fontWeight:800}}>{p.metric[0]}</span>
                 <span className="dim" style={{fontSize:'.8rem'}}>{p.metric[1]}</span>

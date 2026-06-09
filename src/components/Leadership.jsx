@@ -37,6 +37,7 @@ const Leadership = () => {
     { icon: '🥈', text: 'Runner-Up — Project Idea Contest' },
     { icon: '⚡', text: 'Organizer — L&T Techgium Hackathon Preliminary Rounds' },
     { icon: '🎯', text: 'Evaluator — Innovation Marathon, KRM Public School (300+ submissions)' },
+    { icon: '🤝', text: 'Volunteer — SDIP 4.0 by EDII Tamil Nadu Govt' },
   ];
 
   return (

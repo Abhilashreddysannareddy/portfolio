@@ -151,28 +151,39 @@ export default function App() {
               <span className="badge__dot"/>Open to Opportunities
             </motion.div>
 
-            <motion.h1 className="hero__name" initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.4,duration:.9}}>
-              I don't wait for problems.<br/>
-              <span className="grad">I hunt them.</span>
+            <motion.h1 className="hero__name" initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.4,duration:.9}} style={{fontSize: 'clamp(2.2rem, 5vw, 4rem)', lineHeight: '1.2'}}>
+              <span style={{fontSize: 'clamp(1.2rem, 3vw, 2rem)', display: 'block', color: 'var(--text-muted)', marginBottom: '4px'}}>Hi, I am</span>
+              <span className="grad">Abhilash Reddy<br/>Sannareddy</span>
             </motion.h1>
 
-            <motion.p className="hero__typing" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7}}>
-              I discover <span className="typed-word">{typed}<span className="cursor">|</span></span>
-            </motion.p>
-
-            <motion.div className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.85}} style={{display: 'flex', flexDirection: 'column', gap: '16px', lineHeight: '1.6'}}>
-              <p style={{fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-bright)', lineHeight: '1.4'}}>
-                Everyone asks, "How do we solve this?"<br/>
-                I ask, <span className="grad">"What problem is everyone else blind to?"</span>
+            <motion.div className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7}} style={{display: 'flex', flexDirection: 'column', gap: '18px', lineHeight: '1.6', marginTop: '16px', color: '#fff'}}>
+              <p style={{fontSize: '1.6rem', fontWeight: 700, lineHeight: '1.3'}}>
+                <span className="grad">Everyone asks, "How do we solve this?"</span><br/>
+                I ask,<br/>
+                <span className="grad">"What problem is everyone else blind to?"</span>
               </p>
-              
-              <p>Hi, I am <strong className="grad" style={{fontSize: '1.35rem', fontWeight: 800}}>Abhilash Reddy Sannareddy</strong>. I build AI systems, automate business operations, and lead a 700+ member innovation ecosystem.</p>
 
-              <p>While others race to build solutions, I search for hidden friction, unmet needs, and opportunities no one has named yet. Because breakthroughs don't come from better answers. They come from asking better questions.</p>
+              <p style={{fontSize: '1.35rem', fontWeight: 800}}>
+                I don't wait for problems. I hunt them.
+              </p>
+
+              <p className="hero__typing" style={{margin: 0, fontSize: '1.1rem'}}>
+                I discover <span className="typed-word">{typed}<span className="cursor">|</span></span>
+              </p>
+
+              <p>While others race to build solutions, I search for hidden friction, unmet needs, and opportunities no one has named yet.</p>
               
-              <p>Anyone can solve a known problem. The real edge is finding the problem before everyone else does.</p>
+              <p style={{fontSize: '1.15rem'}}><strong className="grad">Everyone wants to be a problem solver. I want to be a problem finder.</strong></p>
               
-              <span className="grad" style={{fontFamily:'var(--syne)', fontWeight:800, letterSpacing:'1px', display:'block', marginTop:'6px', fontSize:'1.1rem'}}>PROBLEM → OPPORTUNITY → PRODUCT → IMPACT</span>
+              <p>Because once a problem becomes obvious, everyone is already chasing the solution.</p>
+              
+              <p style={{fontSize: '1.15rem'}}><strong className="grad">Hidden problems create the biggest opportunities.</strong></p>
+              
+              <p>The real advantage lies in seeing what others don't, questioning assumptions, challenging the status quo, and looking where nobody else is looking. Because breakthroughs don't come from better answers. They come from asking better questions.</p>
+              
+              <p><strong className="grad">Anyone can solve a known problem. The real edge is finding the problem before everyone else does.</strong></p>
+              
+              <span className="grad" style={{fontFamily:'var(--syne)', fontWeight:800, letterSpacing:'1px', display:'block', marginTop:'4px', fontSize:'1.1rem'}}>PROBLEM → OPPORTUNITY → PRODUCT → IMPACT</span>
             </motion.div>
 
             <motion.div className="hero__cta" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1}}>
@@ -191,7 +202,7 @@ export default function App() {
             <div className="hero__frame">
               <span className="fc fc-tl"/><span className="fc fc-tr"/><span className="fc fc-bl"/><span className="fc fc-br"/>
               <div className="frame-scan"/>
-              <img src={`${import.meta.env.BASE_URL}hero_futuristic.png`} alt="Abhilash Reddy"/>
+              <img src={`${import.meta.env.BASE_URL}professional_pic.png`} alt="Abhilash Reddy" style={{objectFit: 'cover'}}/>
               <div className="frame-grad"/>
             </div>
             <div className="hero__glow"/>
@@ -212,27 +223,31 @@ export default function App() {
           <div className="story-narrative">
             <motion.div className="nblock" {...fade(.1)}>
               <span className="nblock-tag">PROBLEM-DRIVEN BUILDER</span>
-              <p>I am focused on <strong>Product Innovation, Agentic AI Systems, Entrepreneurship, and Digital Transformation</strong>. My passion lies in discovering meaningful problems, uncovering their root causes, understanding user and business needs, and transforming insights into scalable products, intelligent systems, and impactful ventures.</p>
-              <p>Currently, I design and build <strong>AI-powered automation systems and intelligent workflows</strong>, leveraging Agentic AI, workflow orchestration, and full-stack technologies to improve operational efficiency, decision-making, and business outcomes.</p>
+              <p>I am a <strong>Problem-Driven Builder</strong> and Computer Science Engineering student specializing in Artificial Intelligence, Machine Learning, Agentic AI Systems, and Full-Stack Development.</p>
+              <p>Passionate about problem discovery, uncovering root causes, understanding user and business needs, and building scalable solutions at the intersection of technology, product innovation, and entrepreneurship.</p>
+              <p>Experienced in developing AI-powered automation systems, intelligent workflows, and product-driven solutions, with hands-on experience in Agentic AI, workflow orchestration, startup operations, and business process automation.</p>
+              <p>Skilled at translating ambiguous challenges into practical, user-centric solutions through a combination of technical expertise, product thinking, stakeholder collaboration, and entrepreneurial problem-solving.</p>
             </motion.div>
 
             <motion.div className="nblock" {...fade(.2)}>
               <span className="nblock-tag">ECOSYSTEM BUILDER</span>
-              <p>Beyond technology, I am the <strong>Founder, Chairman & President of Yantriksha X Hub</strong>, a multidisciplinary innovation ecosystem helping students transform real-world problems into validated ideas, products, patents, startups, and ventures. We've built a community of <strong>700+ active students and 300+ alumni</strong>.</p>
-              <p>At Yantriksha X Hub, we created the <span className="highlight">-1 → 0 → 1 Framework</span>:</p>
+              <p>I identified critical gaps in interdisciplinary collaboration and structured problem discovery within the student ecosystem. To solve this, I founded <strong>Yantriksha X Hub</strong> to help students transform real-world problems into validated ideas, products, and ventures through collaboration among engineering, management, and law students.</p>
+              <p>As Founder, Chairman & President, I scaled this into a multidisciplinary ecosystem of <strong>1000+ students (700+ active, 300+ alumni)</strong>. We facilitated <strong>100+ internships</strong>, supported <strong>10+ patentable projects</strong>, enabled student-led startups, and built a network of <strong>20+ industry experts</strong>.</p>
+              <p>I also developed the <span className="highlight">-1 → 0 → 1 Framework</span> to guide this process:</p>
               <div className="framework-visual">
-                <div className="fw-step"><span className="fw-num grad">-1</span><span className="fw-label">Identify</span><p className="dim">Deeply understand problems.</p></div>
+                <div className="fw-step"><span className="fw-num grad">-1</span><span className="fw-label" style={{fontWeight: 600}}>Confusion & Ambiguity</span><p className="dim" style={{fontSize: '0.8rem', marginTop: '4px'}}>Identifying the raw problem.</p></div>
                 <div className="fw-arrow">→</div>
-                <div className="fw-step"><span className="fw-num grad">0</span><span className="fw-label">Validate</span><p className="dim">Validate opportunities & assumptions.</p></div>
+                <div className="fw-step"><span className="fw-num grad">0</span><span className="fw-label" style={{fontWeight: 600}}>Validated Idea</span><p className="dim" style={{fontSize: '0.8rem', marginTop: '4px'}}>Integrating tech, business & legal.</p></div>
                 <div className="fw-arrow">→</div>
-                <div className="fw-step"><span className="fw-num grad">1</span><span className="fw-label">Build</span><p className="dim">Build products, ventures & impact.</p></div>
+                <div className="fw-step"><span className="fw-num grad">1</span><span className="fw-label" style={{fontWeight: 600}}>Working Product</span><p className="dim" style={{fontSize: '0.8rem', marginTop: '4px'}}>Development & execution.</p></div>
               </div>
             </motion.div>
 
             <motion.div className="nblock" {...fade(.3)}>
               <span className="nblock-tag">LEADERSHIP & VISION</span>
-              <p>I also serve as <strong>Show Director of Just Between Us (JBU)</strong>, a student-led town hall platform connecting students with leaders and changemakers.</p>
-              <p style={{marginTop: '16px', fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-bright)'}}>I believe the future belongs not only to those who build great solutions—but to those who discover the right problems first.</p>
+              <p>I identified another gap: students lacked unfiltered access to accomplished leaders, entrepreneurs, and public personalities. To bridge this, I co-created and serve as Show Director for <strong>Just Between Us (JBU)</strong>.</p>
+              <p>JBU is a student-led town hall platform facilitating meaningful conversations on leadership, innovation, and personal growth. I led end-to-end execution, delivering 4 episodes that engaged hundreds of students.</p>
+              <p style={{marginTop: '16px', fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-bright)'}}>I believe the future belongs to those who discover the right problems before everyone else does.</p>
             </motion.div>
           </div>
 

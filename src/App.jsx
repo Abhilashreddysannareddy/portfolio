@@ -427,8 +427,8 @@ export default function App() {
           <div className="contact-links">
             {[[<Mail size={18}/>,'Email','sannareddyabhilashreddy@gmail.com','mailto:sannareddyabhilashreddy@gmail.com'],
               [<Phone size={18}/>,'Phone','+91 7032026509','tel:+917032026509'],
-              ['🔗','LinkedIn','Connect with me','https://www.linkedin.com/in/abhilash-reddy-sannareddy-546005320'],
-              ['💻','GitHub','See my code','https://github.com']].map(([icon,label,val,href],i)=>(
+              ['🔗','LinkedIn','Connect with me','https://www.linkedin.com/in/abhilash-reddy-sannareddy/'],
+              ['💻','GitHub','See my code','https://github.com/Abhilashreddysannareddy']].map(([icon,label,val,href],i)=>(
               <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer" className="clink card" {...fade(.08+i*.06)} whileHover={{x:6}}>
                 <span className="clink-icon">{icon}</span>
                 <div><p className="mono dim" style={{fontSize:'.68rem',letterSpacing:'.12em',textTransform:'uppercase'}}>{label}</p><p style={{fontSize:'.95rem'}}>{val}</p></div>

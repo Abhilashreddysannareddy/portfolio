@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { 
   ArrowRight, ArrowUpRight, Download, Menu, X, Mail, Phone, 
   ChevronDown, ChevronUp, Brain, Rocket, Crosshair, Users, 
-  Code, Globe, Database, PenTool, Lightbulb, Workflow, Languages
+  Code, Globe, Database, PenTool, Lightbulb, Workflow, Languages, BarChart
 } from 'lucide-react';
 import './App.css';
 
@@ -133,7 +133,7 @@ function Hero() {
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7 }}>
         {[
           { val: '700+', lbl: 'Students in Ecosystem' },
-          { val: '70%+', lbl: 'Manual Work Eliminated' },
+          { val: 'Over 75%', lbl: 'Manual Work Eliminated' },
           { val: '98.4%', lbl: 'AI Prediction Accuracy' },
           { val: '9.19', lbl: 'CGPA' },
         ].map(({ val, lbl }) => (
@@ -151,6 +151,15 @@ function Hero() {
 }
 
 /* ── How I Think ───────────────────────────────── */
+const THINK_STEPS = [
+  { num: '01', title: 'Find the Problem', desc: "Not the symptom. The root cause others overlook." },
+  { num: '02', title: 'Understand the System', desc: "Who is affected? What creates this? What does the current system get wrong?" },
+  { num: '03', title: 'Identify the Opportunity', desc: "Where is the value gap? What is underserved, misunderstood, or unseen?" },
+  { num: '04', title: 'Design the Product', desc: "What specifically should be built? For whom? With what trade-offs?" },
+  { num: '05', title: 'Build the System', desc: "Turn the design into functioning technology. Execute with precision." },
+  { num: '06', title: 'Measure the Outcome', desc: "Did it solve the right problem? What does the evidence say? What changes next?" },
+];
+
 function HowIThink() {
   return (
     <section id="how-i-think" className="section section--tight" aria-labelledby="how-i-think-heading">
@@ -158,11 +167,23 @@ function HowIThink() {
         <motion.div className="section__header" {...inView()}>
           <div className="sec-label">How I Think</div>
           <h2 id="how-i-think-heading" className="section__title">The Problem-First<br />Advantage.</h2>
-          <p className="section__subtitle">
-            Most builders start with a solution and search for a problem. I start with the root cause.
-          </p>
+          <div className="problem-statement-quote">
+            "Anybody can build a solution to a given problem. I focus on identifying the right problem and understanding it deeply. While every engineer asks 'how do we solve this?', I ask 'is this really a problem worth solving?'"
+          </div>
         </motion.div>
         
+        {/* The 6 Steps Grid */}
+        <motion.div className="thinking-grid" {...inView(0.1)} style={{ marginBottom: '64px' }}>
+          {THINK_STEPS.map((step, i) => (
+            <motion.div key={step.num} className="thinking-step" {...inView(0.06 * i)}>
+              <span className="thinking-step__num">{step.num}</span>
+              <div className="thinking-step__title">{step.title}</div>
+              <div className="thinking-step__desc">{step.desc}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* The Comparison Section */}
         <div className="think-comparison">
           <motion.div className="think-others" {...inViewX(0.1)}>
             <div className="think-header">
@@ -200,24 +221,24 @@ function HowIThink() {
 /* ── Skills ────────────────────────────────────── */
 const SKILL_CATEGORIES = [
   {
-    title: "Product & Strategy",
+    title: "Product Management",
     icon: <Crosshair size={22} strokeWidth={1.5} />,
-    skills: ["Problem Discovery", "Opportunity Sizing", "Roadmap Planning", "GTM Strategy", "User Research", "Agile & Scrum"]
+    skills: ["Product Discovery", "User Research", "Problem Framing", "Roadmapping", "Prioritization", "Stakeholder Management", "A/B Testing"]
   },
   {
-    title: "AI & Systems Engineering",
+    title: "AI & Agentic Systems",
     icon: <Brain size={22} strokeWidth={1.5} />,
-    skills: ["Agentic AI (LangGraph/LangChain)", "LLM Integration", "RAG Systems", "Prompt Engineering", "Python", "Multi-Agent Architecture"]
+    skills: ["LLMs", "Agentic AI (LangGraph, LangChain, LangSmith)", "AI Workflow Automation (n8n)", "Prompt Engineering"]
   },
   {
-    title: "Prototyping & Design",
-    icon: <PenTool size={22} strokeWidth={1.5} />,
-    skills: ["React & Frontend UI", "Node.js", "IoT (ESP/MQTT)", "Figma / UI/UX Design", "API Design", "Rapid Prototyping"]
+    title: "Business & Analytics",
+    icon: <BarChart size={22} strokeWidth={1.5} />,
+    skills: ["SQL", "Power BI", "MS Excel", "Go-to-Market Strategy", "KPI Tracking", "Competitive Analysis"]
   },
   {
-    title: "Leadership & Execution",
-    icon: <Rocket size={22} strokeWidth={1.5} />,
-    skills: ["Cross-functional Leadership", "0 to 1 Execution", "Event Production", "Ecosystem Building", "Public Speaking", "Stakeholder Management"]
+    title: "Development & Cloud",
+    icon: <Code size={22} strokeWidth={1.5} />,
+    skills: ["Python", "Java", "JavaScript (React, Node.js)", "AWS", "GCP", "Firebase", "Git"]
   }
 ];
 
@@ -563,6 +584,54 @@ const BUILT_SYSTEMS = [
   },
 ];
 
+function BuiltSystemCard({ s, i }) {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <motion.div className="built-card" {...inView(0.08 * i)}>
+      <span className="built-card__label">{s.label}</span>
+      <h3 className="built-card__title">{s.title}</h3>
+      
+      <div className="built-card__brief">
+        <strong>Problem:</strong> {s.brief}
+      </div>
+      
+      <div className="built-card__metric" style={{marginTop: '16px'}}>
+        <span className="built-metric-val">{s.metric.val}</span>
+        <div>
+          <span className="built-metric-lbl">{s.metric.lbl}</span><br />
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--text-tertiary)' }}>{s.metric.context}</span>
+        </div>
+      </div>
+      
+      <button className="btn-secondary" style={{ marginTop: '20px', marginBottom: expanded ? '24px' : '0' }} onClick={() => setExpanded(!expanded)}>
+        {expanded ? 'Close Details' : 'Read More'} {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+      </button>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            style={{ overflow: 'hidden' }}
+          >
+            <p className="built-card__desc">{s.desc}</p>
+            <div className="built-card__tech" style={{ marginTop: '16px', marginBottom: '16px' }}>
+              {s.tech.map(t => <span key={t} className="built-tech-tag">{t}</span>)}
+            </div>
+            
+            {s.recognition && (
+              <div style={{ padding: '6px 12px', background: 'var(--link-soft)', border: '1px solid var(--link-line)', borderRadius: 'var(--r-xs)', fontFamily: 'var(--font-mono)', fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-link)' }}>
+                {s.recognition}
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
 
 function BuiltSystems() {
   return (
@@ -577,32 +646,7 @@ function BuiltSystems() {
         </motion.div>
         <div className="built-grid">
           {BUILT_SYSTEMS.map((s, i) => (
-            <motion.div key={s.title} className="built-card" {...inView(0.08 * i)}>
-              <span className="built-card__label">{s.label}</span>
-              <h3 className="built-card__title">{s.title}</h3>
-              
-              <div className="built-card__brief">
-                <strong>Problem:</strong> {s.brief}
-              </div>
-              <p className="built-card__desc">{s.desc}</p>
-              
-              <div className="built-card__tech">
-                {s.tech.map(t => <span key={t} className="built-tech-tag">{t}</span>)}
-              </div>
-
-              <div className="built-card__metric">
-                <span className="built-metric-val">{s.metric.val}</span>
-                <div>
-                  <span className="built-metric-lbl">{s.metric.lbl}</span><br />
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--text-tertiary)' }}>{s.metric.context}</span>
-                </div>
-              </div>
-              {s.recognition && (
-                <div style={{ marginTop: 12, padding: '6px 12px', background: 'var(--link-soft)', border: '1px solid var(--link-line)', borderRadius: 'var(--r-xs)', fontFamily: 'var(--font-mono)', fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-link)' }}>
-                  {s.recognition}
-                </div>
-              )}
-            </motion.div>
+            <BuiltSystemCard key={s.title} s={s} i={i} />
           ))}
         </div>
       </div>
@@ -615,7 +659,7 @@ const EXP_STEPS = [
   { n: '01', title: 'Process Discovery', desc: 'Worked directly with founders to map fragmented, manual workflows across 5+ startup operations. Identified root causes and prioritized high-impact automation targets.' },
   { n: '02', title: 'Product Requirements', desc: 'Translated operational pain points into structured product requirements — defining scope, success metrics, and integration constraints for each AI workflow.' },
   { n: '03', title: 'Agentic AI Build', desc: 'Designed and implemented 20+ intelligent workflows using LangGraph, LangChain, n8n and LLMs — converting fragmented manual processes into scalable AI-enabled systems.' },
-  { n: '04', title: 'Assist Pro Platform', desc: 'Developed and enhanced Assist Pro — an AI-powered automation platform for startup operations — achieving 70%+ manual effort reduction.' },
+  { n: '04', title: 'Assist Pro Platform', desc: 'Developed and enhanced Assist Pro — an AI-powered automation platform for startup operations — achieving over 75% manual effort reduction.' },
 ];
 
 function Experience() {
@@ -630,7 +674,7 @@ function Experience() {
           <motion.div className="exp-left" {...inViewX(0.1)}>
             <span className="exp-story-label">Modern Agriculture Technology Innovation Center</span>
             <h3 className="exp-company-name">MATIC</h3>
-            <p className="exp-company-meta">Agentic AI Developer Intern · MADeIT Incubated · IIITDM Kancheepuram<br />Chennai, Tamil Nadu · Jun 2025 – Oct 2025</p>
+            <p className="exp-company-meta"><span className="highlight-role">Agentic AI Developer Intern</span> · MADeIT Incubated · IIITDM Kancheepuram<br />Chennai, Tamil Nadu · Jun 2025 – Oct 2025</p>
             <div className="exp-journey">
               {EXP_STEPS.map((step) => (
                 <div key={step.n} className="exp-journey-step">
@@ -645,7 +689,7 @@ function Experience() {
           </motion.div>
           <motion.div className="exp-right" {...inViewX(0.2, 24)}>
             <div className="exp-metric-block">
-              <span className="exp-big-metric">70%+</span>
+              <span className="exp-big-metric">Over 75%</span>
               <p className="exp-metric-context">Manual effort reduction across startup operations through AI workflow automation</p>
             </div>
             <div className="exp-detail-row">
@@ -682,7 +726,7 @@ function Ventures() {
         <div className="ventures-split">
           <motion.div className="venture-card-large" {...inViewX(0.1)}>
             <div className="vc-header">
-              <span className="vc-date">Feb 2025 – Present · Founder, Chairman & President</span>
+              <span className="vc-date">Feb 2025 – Present · <span className="highlight-role">Founder, Chairman & President</span></span>
               <a href="https://yantrikshaxhub.veltech.edu.in" target="_blank" rel="noopener noreferrer" className="vc-title-link">
                 <h3 className="vc-title">Yantriksha X Hub</h3>
                 <ArrowUpRight size={24} className="vc-arrow"/>
@@ -727,7 +771,7 @@ function Ventures() {
 
           <motion.div className="venture-card-large" {...inViewX(0.2, 24)}>
              <div className="vc-header">
-              <span className="vc-date">Feb 2026 – Present · Show Director</span>
+              <span className="vc-date">Feb 2026 – Present · <span className="highlight-role">Show Director</span></span>
               <a href="https://justbetweenus.veltech.edu.in" target="_blank" rel="noopener noreferrer" className="vc-title-link">
                 <h3 className="vc-title">Just Between Us (JBU)</h3>
                 <ArrowUpRight size={24} className="vc-arrow"/>
@@ -878,7 +922,7 @@ function MyStory() {
                 <Languages size={14} /> Languages
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                {[['English', 'Professional'], ['Telugu', 'Native'], ['Hindi', 'Professional'], ['Tamil', 'Working'], ['German', 'Basic'], ['Kannada', 'Basic']].map(([l, lv]) => (
+                {[['English', 'Professional'], ['Telugu', 'Native'], ['Hindi', 'Professional'], ['Tamil', 'Working'], ['German', 'Basic']].map(([l, lv]) => (
                   <span key={l} className="cs-tag" style={{ background: 'var(--bg-0)' }}>{l} · <span style={{ color: 'var(--text-tertiary)' }}>{lv}</span></span>
                 ))}
               </div>

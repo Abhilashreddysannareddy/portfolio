@@ -24,7 +24,6 @@ const inViewX = (delay = 0, x = -24) => ({
 
 /* ── Nav ───────────────────────────────────────── */
 const NAV_ITEMS = [
-  { label: 'About', href: '#about' },
   { label: 'Work', href: '#work' },
   { label: 'How I Think', href: '#how-i-think' },
   { label: 'Skills', href: '#skills' },
@@ -95,8 +94,7 @@ function Hero() {
           </motion.p>
           <motion.p className="hero__thesis"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.7 }}>
-            I identify meaningful problems, understand the systems behind them, and turn them into{' '}
-            <strong>products, AI systems, and ventures.</strong>
+            Problem-driven engineer specializing in AI, Agentic Systems, and Full-Stack Development. I focus on discovering root causes and building scalable solutions at the intersection of technology, product, and entrepreneurship. Experienced in AI automation, intelligent workflows, and founder of a 700+ member innovation ecosystem transforming problems into validated ventures.
           </motion.p>
           <motion.div className="hero__flow"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75, duration: 0.6 }}>
@@ -143,39 +141,12 @@ function Hero() {
           </div>
         ))}
       </motion.div>
-      <a href="#about" className="scroll-cue" aria-label="Scroll down">
+      <a href="#how-i-think" className="scroll-cue" aria-label="Scroll down">
         <div className="scroll-line" aria-hidden="true" />
       </a>
     </section>
   );
 }
-
-/* ── About Manifesto ───────────────────────────── */
-function About() {
-  return (
-    <section id="about" className="section section--tight" style={{ paddingBottom: 0 }}>
-      <div className="container">
-        <motion.div className="about-manifesto" {...inView()}>
-          <h2 className="about-greeting">
-            I am Abhilash Reddy Sannareddy — an engineer who doesn't just build solutions, but deeply investigates whether we are solving the right problem.
-          </h2>
-          <div className="about-text-cols">
-            <p>
-              <strong>Problem-driven Computer Science Engineering student</strong> specializing in Artificial Intelligence, Machine Learning, Agentic AI Systems, and Full-Stack Development. Passionate about problem discovery, uncovering root causes, understanding user and business needs, and building scalable solutions at the intersection of technology, product innovation, and entrepreneurship.
-            </p>
-            <p>
-              <strong>Experienced in AI-powered automation systems</strong>, intelligent workflows, and product-driven solutions. With hands-on experience in Agentic AI, workflow orchestration, startup operations, and business process automation. Skilled at translating ambiguous challenges into practical, user-centric solutions through technical expertise and product thinking.
-            </p>
-            <p>
-              <strong>Founder of a 700+ member innovation ecosystem.</strong> Facilitating 100+ internships, supporting 10+ patentable projects, and helping students transform identified problems into validated ideas, products, and ventures through interdisciplinary collaboration, industry engagement, and startup-driven innovation.
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
 
 /* ── How I Think ───────────────────────────────── */
 const THINK_STEPS = [
@@ -1041,7 +1012,6 @@ export default function App() {
       <Nav />
       <main id="main-content">
         <Hero />
-        <About />
         <div className="divider" />
         <HowIThink />
         <div className="divider" />

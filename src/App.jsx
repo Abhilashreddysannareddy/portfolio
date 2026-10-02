@@ -841,9 +841,14 @@ function Ventures() {
 
 /* ── Achievements ──────────────────────────────── */
 const ACHIEVEMENTS = [
-  { badge: 'Winner', text: 'Prototyping Contest; Winner– Cybersecurity Bootcamp, IIITDM Kancheepuram; Runner-Up– Project Idea Contest' },
-  { badge: 'Organizer', text: 'VISAI 2026 (720+ students, 240+ teams, 44 institutions, 14 industry partners); SIH 2026 Internal Hackathon (70 → 200+ teams); L&T Techgium 2025 & 2026' },
-  { badge: 'Evaluator', text: 'Innovation Marathon, KRM Public School (300+ submissions); Volunteer– SDIP 4.0, EDII-Tamil Nadu' },
+  { badge: 'Winner', text: 'Prototyping Contest' },
+  { badge: 'Winner', text: 'Cybersecurity Bootcamp, IIITDM Kancheepuram' },
+  { badge: 'Runner-Up', text: 'Project Idea Contest' },
+  { badge: 'Organizer', text: 'VISAI 2026 (720+ students, 240+ teams, 44 institutions, 14 industry partners)' },
+  { badge: 'Organizer', text: 'SIH 2026 Internal Hackathon (70 → 200+ teams)' },
+  { badge: 'Organizer', text: 'L&T Techgium 2025 & 2026' },
+  { badge: 'Evaluator', text: 'Innovation Marathon, KRM Public School (300+ submissions)' },
+  { badge: 'Volunteer', text: 'SDIP 4.0, EDII-Tamil Nadu' },
 ];
 
 function Achievements() {

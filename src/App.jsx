@@ -1,446 +1,930 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Download, ArrowRight, ArrowUpRight, Menu, X, Mail, Phone, MapPin, ChevronDown, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Download, Menu, X, Mail, Phone, ChevronDown, ChevronUp } from 'lucide-react';
 import './App.css';
 
-/* ── Data ─────────────────────────────────── */
-const NAV = ['Story','Impact','Projects','Arsenal','Connect'];
+/* ── Animation helpers ─────────────────────────── */
+const inView = (delay = 0, y = 28) => ({
+  initial: { opacity: 0, y },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
+});
 
-const TYPED_WORDS = ['problems.', 'patterns.', 'root causes.', 'opportunities.', 'the invisible.'];
+const inViewX = (delay = 0, x = -24) => ({
+  initial: { opacity: 0, x },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
+});
 
-const TECH = [
-  {n:'Python',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'},
-  {n:'JavaScript',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'},
-  {n:'React',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'},
-  {n:'Node.js',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'},
-  {n:'Java',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg'},
-  {n:'Spring',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg'},
-  {n:'MySQL',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'},
-  {n:'Firebase',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg'},
-  {n:'AWS',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg'},
-  {n:'GCP',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg'},
-  {n:'Git',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'},
-  {n:'Figma',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg'},
-  {n:'Jira',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg'},
-  {n:'Notion',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg'},
-  {n:'Canva',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg'},
-  {n:'Photoshop',i:'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg'},
+/* ── Nav ───────────────────────────────────────── */
+const NAV_ITEMS = [
+  { label: 'Work', href: '#work' },
+  { label: 'How I Think', href: '#how-i-think' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Ventures', href: '#ventures' },
+  { label: 'Story', href: '#story' },
 ];
 
-const SKILLS = [
-  {label:'Product & Strategy',c:'#22d3a6',tags:['Problem Discovery','Product Thinking','User Research','Market Research','Competitive Analysis','Product Validation','Stakeholder Management']},
-  {label:'AI & Emerging Tech',c:'#a855f7',tags:['Agentic AI','LLM Applications','Prompt Engineering','Machine Learning','Intelligent Automation']},
-  {label:'Data & Analytics',c:'#f59e0b',tags:['SQL','Power BI','Google Analytics','Data Analysis','KPI Tracking','Dashboarding','Decision Support']},
-  {label:'Dev Stack',c:'#00e5ff',tags:['Python','Java','JavaScript','React.js','Node.js','Spring','HTML/CSS']},
-  {label:'Cloud & DevOps',c:'#ec4899',tags:['MySQL','Firebase','AWS','GCP','GitHub Actions','Git']},
-  {label:'Business & Ops',c:'#4f8ef7',tags:['Business Analysis','Innovation Management','Startup Ops','Process Optimization','SEO','Agile/Scrum','Jira','Confluence']},
-];
-
-/* ── Typing animation hook ────────────────── */
-function useTyping(words, typeSpeed=100, pauseMs=2200) {
-  const [text, setText] = useState('');
-  const [wordIdx, setWordIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const word = words[wordIdx];
-    const timeout = setTimeout(() => {
-      if (!deleting) {
-        setText(word.slice(0, charIdx + 1));
-        if (charIdx + 1 === word.length) {
-          setTimeout(() => setDeleting(true), pauseMs);
-        } else {
-          setCharIdx(c => c + 1);
-        }
-      } else {
-        setText(word.slice(0, charIdx));
-        if (charIdx === 0) {
-          setDeleting(false);
-          setWordIdx((wordIdx + 1) % words.length);
-        } else {
-          setCharIdx(c => c - 1);
-        }
-      }
-    }, deleting ? 50 : typeSpeed);
-    return () => clearTimeout(timeout);
-  }, [charIdx, deleting, wordIdx, words, typeSpeed, pauseMs]);
-
-  return text;
-}
-
-/* ── Particle Canvas ──────────────────────── */
-function Particles() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const c = ref.current, ctx = c.getContext('2d');
-    const resize = () => { c.width = window.innerWidth; c.height = window.innerHeight; };
-    resize(); window.addEventListener('resize', resize);
-    const pts = Array.from({length:50}, () => ({
-      x: Math.random()*c.width, y: Math.random()*c.height,
-      vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.3,
-      s: Math.random()*1.5+.5, o: Math.random()*.4+.1
-    }));
-    let id;
-    const draw = () => {
-      ctx.clearRect(0,0,c.width,c.height);
-      pts.forEach(p => {
-        p.x+=p.vx; p.y+=p.vy;
-        if(p.x<0)p.x=c.width; if(p.x>c.width)p.x=0;
-        if(p.y<0)p.y=c.height; if(p.y>c.height)p.y=0;
-        ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
-        ctx.fillStyle=`rgba(0,229,255,${p.o})`; ctx.fill();
-      });
-      pts.forEach((a,i) => pts.slice(i+1).forEach(b => {
-        const d = Math.hypot(a.x-b.x, a.y-b.y);
-        if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-          ctx.strokeStyle=`rgba(0,229,255,${.08*(1-d/120)})`;ctx.lineWidth=.5;ctx.stroke();}
-      }));
-      id=requestAnimationFrame(draw);
-    };
-    draw();
-    return ()=>{cancelAnimationFrame(id);window.removeEventListener('resize',resize);};
-  },[]);
-  return <canvas ref={ref} className="particles"/>;
-}
-
-/* ── Helpers ───────────────────────────────── */
-const fade = (d=0) => ({initial:{opacity:0,y:40},whileInView:{opacity:1,y:0},viewport:{once:true},transition:{duration:1,delay:d,ease:[0.16,1,0.3,1]}});
-
-/* ══════════════════════════════════════════════
-   APP
-   ══════════════════════════════════════════════ */
-export default function App() {
+function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const typed = useTyping(TYPED_WORDS);
-  const heroRef = useRef(null);
-  const {scrollYProgress} = useScroll({target:heroRef,offset:['start start','end start']});
-  const heroOpacity = useTransform(scrollYProgress,[0,.8],[1,0]);
-  const imgY = useTransform(scrollYProgress,[0,1],[0,60]);
-
-  useEffect(()=>{const h=()=>setScrolled(window.scrollY>60);window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h);},[]);
-
+  useEffect(() => {
+    const h = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', h, { passive: true });
+    return () => window.removeEventListener('scroll', h);
+  }, []);
   return (
-    <>
-      {/* ═══ NAV ═══ */}
-      <nav className={`nav${scrolled?' nav--solid':''}`}>
-        <div className="nav__inner">
-          <a href="#" className="nav__logo">AR<span className="blink">_</span></a>
-          <ul className="nav__links">
-            {NAV.map(n=><li key={n}><a href={`#${n.toLowerCase()}`}>{n}</a></li>)}
-          </ul>
-          <a href={`${import.meta.env.BASE_URL}resume.pdf`} download className="btn btn-outline nav__cta">Resume ↓</a>
-          <button className="nav__burger" onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X size={20}/>:<Menu size={20}/>}</button>
-        </div>
-        <AnimatePresence>
-          {menuOpen&&<motion.div className="nav__mobile" initial={{opacity:0,y:-10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-10}}>
-            {NAV.map(n=><a key={n} href={`#${n.toLowerCase()}`} onClick={()=>setMenuOpen(false)}>{n}</a>)}
-          </motion.div>}
-        </AnimatePresence>
-      </nav>
-
-      {/* ═══ HERO ═══ */}
-      <section id="hero" className="hero" ref={heroRef}>
-        <Particles/>
-        <div className="orb orb1"/><div className="orb orb2"/><div className="orb orb3"/>
-
-        <motion.div className="hero__inner" style={{opacity:heroOpacity}}>
-          <div className="hero__left">
-            <motion.div className="badge" initial={{opacity:0,scale:.9}} animate={{opacity:1,scale:1}} transition={{delay:.2}}>
-              <span className="badge__dot"/>Open to Opportunities
-            </motion.div>
-
-            <motion.h1 className="hero__name" initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.4,duration:.9}} style={{fontSize: 'clamp(2.2rem, 5vw, 4rem)', lineHeight: '1.2'}}>
-              <span style={{fontSize: 'clamp(1.2rem, 3vw, 2rem)', display: 'block', color: 'var(--text-muted)', marginBottom: '4px'}}>Hi, I am</span>
-              <span className="grad">Abhilash Reddy<br/>Sannareddy</span>
-            </motion.h1>
-
-            <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.55}} style={{fontSize: '1.35rem', fontWeight: 600, color: '#e5e7eb', marginBottom: '16px'}}>
-              I <span className="grad">hunt problems, validate opportunities,</span> and build products that create <span className="grad">measurable impact.</span>
-            </motion.p>
-
-            <motion.div className="hero__sub" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.7}} style={{display: 'flex', flexDirection: 'column', gap: '18px', lineHeight: '1.6', marginTop: '16px', color: '#fff'}}>
-              <p style={{fontSize: '1.5rem', fontWeight: 700, lineHeight: '1.3'}}>
-                While others ask, <span style={{color: '#9ca3af', fontStyle: 'italic'}}>"How do we solve this?"</span> I ask:<br/>
-                <span className="grad" style={{display: 'inline-block', marginTop: '8px', fontSize: '1.8rem'}}>"What problem is everyone else blind to?"</span>
-              </p>
-
-              <p style={{fontSize: '1.25rem', fontWeight: 800}}>
-                I don't wait for problems. <span className="grad">I hunt them.</span>
-              </p>
-
-              <p>While others race to build solutions, I search for hidden friction, unmet needs, and opportunities no one has recognized yet.</p>
-              
-              <p style={{fontSize: '1.15rem'}}><strong className="grad">Most people want to be problem solvers. I want to be a problem finder.</strong></p>
-              
-              <p>Because once a problem becomes obvious, everyone is already chasing the solution.</p>
-              
-              <p>The biggest opportunities come from seeing what others don't—questioning assumptions, challenging the status quo, and looking where nobody else is looking.</p>
-              
-              <p style={{fontSize: '1.15rem'}}><strong className="grad">Breakthroughs don't come from better answers. They come from asking better questions.</strong></p>
-              
-              <p>Anyone can solve a known problem. The real edge is finding the problem before everyone else does.</p>
-              
-              <span className="grad" style={{fontFamily:'var(--syne)', fontWeight:800, letterSpacing:'1px', display:'block', marginTop:'4px', fontSize:'1.1rem'}}>PROBLEM → OPPORTUNITY → PRODUCT → IMPACT</span>
-            </motion.div>
-
-            <motion.div className="hero__cta" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1}}>
-              <a href="#story" className="btn btn-fill">My Story <ArrowRight size={15}/></a>
-              <a href={`${import.meta.env.BASE_URL}resume.pdf`} download className="btn btn-outline"><Download size={14}/> Resume</a>
-            </motion.div>
-
-            <motion.div className="hero__stats" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.2}}>
-              {[['700+','Community Built'],['70%','Manual Work Eliminated'],['98.4%','AI Accuracy Achieved'],['9.2','CGPA']].map(([v,l])=>(
-                <div key={l} className="hstat"><span className="hstat__v grad">{v}</span><span className="hstat__l">{l}</span></div>
-              ))}
-            </motion.div>
-          </div>
-
-          <motion.div className="hero__right" style={{y:imgY}} initial={{opacity:0,scale:.85}} animate={{opacity:1,scale:1}} transition={{delay:.5,duration:1}}>
-            <div className="hero__frame">
-              <span className="fc fc-tl"/><span className="fc fc-tr"/><span className="fc fc-bl"/><span className="fc fc-br"/>
-              <div className="frame-scan"/>
-              <img src={`${import.meta.env.BASE_URL}hero_futuristic.png`} alt="Abhilash Reddy"/>
-              <div className="frame-grad"/>
-            </div>
-            <div className="hero__glow"/>
+    <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} role="navigation" aria-label="Main navigation">
+      <div className="nav__inner">
+        <a href="#" className="nav__logo" aria-label="Abhilash Reddy — Home">Abhilash</a>
+        <ul className="nav__links" role="list">
+          {NAV_ITEMS.map(n => <li key={n.label}><a href={n.href}>{n.label}</a></li>)}
+        </ul>
+        <a href={`${import.meta.env.BASE_URL}resume.pdf`} download className="btn-resume" aria-label="Download resume">
+          <Download size={11} /> Resume
+        </a>
+        <button className="nav__burger" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle menu">
+          {menuOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
+      </div>
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div className="nav__mobile" role="menu"
+            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
+            {NAV_ITEMS.map(n => (
+              <a key={n.label} href={n.href} role="menuitem" onClick={() => setMenuOpen(false)}>{n.label}</a>
+            ))}
           </motion.div>
-        </motion.div>
-        <a href="#story" className="scroll-cue"><div className="scroll-line"/><ChevronDown size={14}/></a>
-      </section>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+}
 
-      {/* ═══ STORY ═══ */}
-      <section id="story" className="section">
-        <motion.div {...fade()}>
-          <p className="sec-label">01 / THE ORIGIN</p>
-          <h2 className="sec-title">Most people solve problems<br/>they're given.<br/><span className="grad">I find the ones nobody saw.</span></h2>
-        </motion.div>
+/* ── Hero ──────────────────────────────────────── */
+const FLOW_STEPS = ['Problem', 'Insight', 'Product', 'System', 'Outcome'];
 
-        <div className="story-grid">
-          {/* Left — narrative text blocks */}
-          <div className="story-narrative">
-            <motion.div className="nblock" {...fade(.1)}>
-              <span className="nblock-tag">PROBLEM-DRIVEN BUILDER</span>
-              <p>I am a <strong>Problem-Driven Builder</strong> and Computer Science Engineering student specializing in Artificial Intelligence, Machine Learning, Agentic AI Systems, and Full-Stack Development.</p>
-              <p>Passionate about problem discovery, uncovering root causes, understanding user and business needs, and building scalable solutions at the intersection of technology, product innovation, and entrepreneurship.</p>
-              <p>Experienced in developing AI-powered automation systems, intelligent workflows, and product-driven solutions, with hands-on experience in Agentic AI, workflow orchestration, startup operations, and business process automation.</p>
-              <p>Skilled at translating ambiguous challenges into practical, user-centric solutions through a combination of technical expertise, product thinking, stakeholder collaboration, and entrepreneurial problem-solving.</p>
-            </motion.div>
-
-            <motion.div className="nblock" {...fade(.2)}>
-              <span className="nblock-tag">ECOSYSTEM BUILDER</span>
-              <p>I identified critical gaps in interdisciplinary collaboration and structured problem discovery within the student ecosystem. To solve this, I founded <strong>Yantriksha X Hub</strong> to help students transform real-world problems into validated ideas, products, and ventures through collaboration among engineering, management, and law students.</p>
-              <p>As Founder, Chairman & President, I scaled this into a multidisciplinary ecosystem of <strong>1000+ students (700+ active, 300+ alumni)</strong>. We facilitated <strong>100+ internships</strong>, supported <strong>10+ patentable projects</strong>, enabled student-led startups, and built a network of <strong>20+ industry experts</strong>.</p>
-              <p>I also developed the <span className="highlight">-1 → 0 → 1 Framework</span> to guide this process:</p>
-              <div className="framework-visual">
-                <div className="fw-step"><span className="fw-num grad">-1</span><span className="fw-label" style={{fontWeight: 600}}>Confusion & Ambiguity</span><p className="dim" style={{fontSize: '0.8rem', marginTop: '4px'}}>Identifying the raw problem.</p></div>
-                <div className="fw-arrow">→</div>
-                <div className="fw-step"><span className="fw-num grad">0</span><span className="fw-label" style={{fontWeight: 600}}>Validated Idea</span><p className="dim" style={{fontSize: '0.8rem', marginTop: '4px'}}>Integrating tech, business & legal.</p></div>
-                <div className="fw-arrow">→</div>
-                <div className="fw-step"><span className="fw-num grad">1</span><span className="fw-label" style={{fontWeight: 600}}>Working Product</span><p className="dim" style={{fontSize: '0.8rem', marginTop: '4px'}}>Development & execution.</p></div>
+function Hero() {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  return (
+    <section id="hero" className="hero" ref={heroRef} aria-label="Introduction">
+      <div className="hero__bg-line" aria-hidden="true" />
+      <motion.div className="hero__inner" style={{ opacity }}>
+        <div className="hero__content">
+          <motion.div className="hero__availability"
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
+            <span className="avail-dot" aria-hidden="true" />
+            Open to opportunities
+          </motion.div>
+          <motion.h1 className="hero__name"
+            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.8, ease: [0.16,1,0.3,1] }}>
+            Abhilash Reddy<br />Sannareddy
+          </motion.h1>
+          <motion.p className="hero__positioning"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.6 }}>
+            Problem-First Builder &middot; Product Strategy &times; AI Systems &times; Entrepreneurship
+          </motion.p>
+          <motion.p className="hero__thesis"
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.7 }}>
+            I identify meaningful problems, understand the systems behind them, and turn them into{' '}
+            <strong>products, AI systems, and ventures.</strong>
+          </motion.p>
+          <motion.div className="hero__flow"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75, duration: 0.6 }}>
+            {FLOW_STEPS.map((step, i) => (
+              <div key={step} className="hero__flow-step">
+                <div className="flow-node">
+                  <div className="flow-node-dot" />
+                  <span className="flow-node-label">{step}</span>
+                </div>
+                {i < FLOW_STEPS.length - 1 && <div className="flow-arrow" aria-hidden="true" />}
               </div>
-            </motion.div>
-
-            <motion.div className="nblock" {...fade(.3)}>
-              <span className="nblock-tag">LEADERSHIP & VISION</span>
-              <p>I identified another gap: students lacked unfiltered access to accomplished leaders, entrepreneurs, and public personalities. To bridge this, I co-created and serve as Show Director for <strong>Just Between Us (JBU)</strong>.</p>
-              <p>JBU is a student-led town hall platform facilitating meaningful conversations on leadership, innovation, and personal growth. I led end-to-end execution, delivering 4 episodes that engaged hundreds of students.</p>
-              <p style={{marginTop: '16px', fontSize: '1.15rem', fontWeight: 700, color: 'var(--text-bright)'}}>I believe the future belongs to those who discover the right problems before everyone else does.</p>
-            </motion.div>
+            ))}
+          </motion.div>
+          <motion.div className="hero__cta"
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }}>
+            <a href="#work" className="btn-primary" id="explore-work-btn">Explore Work <ArrowRight size={14} /></a>
+            <a href="#contact" className="btn-secondary" id="contact-btn">Get in Touch</a>
+            <a href={`${import.meta.env.BASE_URL}resume.pdf`} download className="btn-secondary" id="download-resume-btn">
+              <Download size={13} /> Resume
+            </a>
+          </motion.div>
+        </div>
+        <motion.div className="hero__portrait"
+          initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.9, ease: [0.16,1,0.3,1] }}>
+          <div className="hero__portrait-frame">
+            <img src={`${import.meta.env.BASE_URL}photo.png`} alt="Abhilash Reddy Sannareddy" loading="eager" />
+            <div className="hero__portrait-overlay" aria-hidden="true" />
           </div>
+          <div className="hero__portrait-tag" aria-hidden="true">Product &middot; AI &middot; Entrepreneurship</div>
+        </motion.div>
+      </motion.div>
+      <motion.div className="hero__metrics"
+        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7 }}>
+        {[
+          { val: '700+', lbl: 'Students in Ecosystem' },
+          { val: '70%+', lbl: 'Manual Work Eliminated' },
+          { val: '98.4%', lbl: 'AI Prediction Accuracy' },
+          { val: '9.19', lbl: 'CGPA' },
+        ].map(({ val, lbl }) => (
+          <div key={lbl} className="hero__metric">
+            <span className="hero__metric-val">{val}</span>
+            <span className="hero__metric-lbl">{lbl}</span>
+          </div>
+        ))}
+      </motion.div>
+      <a href="#how-i-think" className="scroll-cue" aria-label="Scroll down">
+        <div className="scroll-line" aria-hidden="true" />
+      </a>
+    </section>
+  );
+}
 
-          {/* Right — image + quick facts */}
-          <div className="story-aside">
-            <motion.div className="story-img-wrap" {...fade(.15)}>
-              <img src={`${import.meta.env.BASE_URL}hero_action.png`} alt="Abhilash thinking" className="story-img"/>
-              <div className="story-img-label card">
-                <Sparkles size={14} style={{color:'#f59e0b'}}/>
-                <span>Problem Discovery Mode</span>
-              </div>
+/* ── How I Think ───────────────────────────────── */
+const THINK_STEPS = [
+  { num: '01', title: 'Find the Problem', desc: "Not the symptom. The root cause others overlook." },
+  { num: '02', title: 'Understand the System', desc: "Who is affected? What creates this? What does the current system get wrong?" },
+  { num: '03', title: 'Identify the Opportunity', desc: "Where is the value gap? What is underserved, misunderstood, or unseen?" },
+  { num: '04', title: 'Design the Product', desc: "What specifically should be built? For whom? With what trade-offs?" },
+  { num: '05', title: 'Build the System', desc: "Turn the design into functioning technology. Execute with precision." },
+  { num: '06', title: 'Measure the Outcome', desc: "Did it solve the right problem? What does the evidence say? What changes next?" },
+];
+
+function HowIThink() {
+  return (
+    <section id="how-i-think" className="section section--tight" aria-labelledby="how-i-think-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">How I Think</div>
+          <h2 id="how-i-think-heading" className="section__title">A consistent method,<br />across every problem.</h2>
+          <p className="section__subtitle">
+            This sequence connects every case study, every system, every venture. Not a framework I adopted — it is how I naturally approach problems.
+          </p>
+        </motion.div>
+        <motion.div className="thinking-grid" {...inView(0.1)}>
+          {THINK_STEPS.map((step, i) => (
+            <motion.div key={step.num} className="thinking-step" {...inView(0.06 * i)}>
+              <span className="thinking-step__num">{step.num}</span>
+              <div className="thinking-step__title">{step.title}</div>
+              <div className="thinking-step__desc">{step.desc}</div>
             </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
-            <motion.div className="story-edu card" {...fade(.25)}>
-              <div className="edu-row">
-                <div>
-                  <span className="mono dim" style={{fontSize:'.65rem',letterSpacing:'.15em'}}>EDUCATION</span>
-                  <h4 style={{marginTop:4,fontSize:'1rem'}}>Vel Tech R&D Institute</h4>
-                  <p className="dim" style={{fontSize:'.85rem'}}>B.Tech CSE (AI & ML) · Expected 2027</p>
-                </div>
-                <div className="edu-cgpa">
-                  <span className="grad" style={{fontFamily:'var(--syne)',fontSize:'2.4rem',fontWeight:800,lineHeight:1}}>9.2</span>
-                  <span className="mono dim" style={{fontSize:'.6rem',letterSpacing:'.15em'}}>CGPA</span>
-                </div>
+/* ── Skills ────────────────────────────────────── */
+const SKILL_CATEGORIES = [
+  {
+    title: "Product & Strategy",
+    icon: "🎯",
+    skills: ["Problem Discovery", "Opportunity Sizing", "Roadmap Planning", "GTM Strategy", "User Research", "Agile & Scrum"]
+  },
+  {
+    title: "AI & Systems Engineering",
+    icon: "🧠",
+    skills: ["Agentic AI (LangGraph/LangChain)", "LLM Integration", "RAG Systems", "Prompt Engineering", "Python", "Multi-Agent Architecture"]
+  },
+  {
+    title: "Prototyping & Design",
+    icon: "🛠️",
+    skills: ["React & Frontend UI", "Node.js", "IoT (ESP/MQTT)", "Figma / UI/UX Design", "API Design", "Rapid Prototyping"]
+  },
+  {
+    title: "Leadership & Execution",
+    icon: "⚡",
+    skills: ["Cross-functional Leadership", "0 to 1 Execution", "Event Production", "Ecosystem Building", "Public Speaking", "Stakeholder Management"]
+  }
+];
+
+function Skills() {
+  return (
+    <section id="skills" className="section section--tight" aria-labelledby="skills-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">Skills & Capabilities</div>
+          <h2 id="skills-heading" className="section__title">The toolkit to build<br />from 0 to 1.</h2>
+          <p className="section__subtitle">
+            A cross-disciplinary stack bridging product strategy, AI engineering, and execution.
+          </p>
+        </motion.div>
+        <div className="skills-grid">
+          {SKILL_CATEGORIES.map((cat, i) => (
+            <motion.div key={cat.title} className="skill-card" {...inView(0.06 * i)}>
+              <div className="skill-card-header">
+                <span className="skill-icon" aria-hidden="true">{cat.icon}</span>
+                <h3 className="skill-title">{cat.title}</h3>
               </div>
+              <ul className="skill-list" role="list">
+                {cat.skills.map(skill => (
+                  <li key={skill} className="skill-item">
+                    <span className="skill-dot" aria-hidden="true"/>{skill}
+                  </li>
+                ))}
+              </ul>
             </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-            <motion.div className="story-lang card" {...fade(.3)}>
-              <span className="mono dim" style={{fontSize:'.65rem',letterSpacing:'.15em',marginBottom:10,display:'block'}}>LANGUAGES I SPEAK</span>
-              <div className="lang-tags">
-                {[['English','Pro'],['Telugu','Native'],['Hindi','Pro'],['Tamil','Working'],['German','Basic'],['Kannada','Basic']].map(([l,lv])=>(
-                  <span key={l} className="lang-tag"><strong>{l}</strong> <span className="dim">· {lv}</span></span>
+
+/* ── Case Studies ──────────────────────────────── */
+const CASE_STUDIES = [
+  {
+    index: '01',
+    type: 'CONCEPTUAL FRAMEWORK',
+    title: 'OpportunityOS',
+    subtitle: 'Agentic AI for Problem Discovery',
+    hook: 'Most teams ask: "How do we build this?" The better question is: "Should we build this at all — and what should we build instead?"',
+    sections: [
+      {
+        label: 'The Problem',
+        icon: '⚑',
+        content: 'Every product team is drowning in noise — app store reviews, Reddit threads, support tickets, Twitter complaints. Inside that noise are real, unmet problems. But nobody has a systematic way to find them before the market validates them.',
+      },
+      {
+        label: 'The Insight',
+        icon: '◈',
+        content: 'The best product opportunities are visible before they\'re obvious. Weak signals across multiple unrelated products point to the same hidden problem. The challenge is extracting signal from noise at scale.',
+      },
+      {
+        label: 'The Approach',
+        icon: '◎',
+        content: 'OpportunityOS is an agentic AI framework: Signal Ingestion (forums, social, support) → Agentic Extraction (specialized agents) → Problem Clustering → Opportunity Scoring (Severity × Prevalence × Growth) → Opportunity Intelligence (a ranked map of problems).',
+      },
+      {
+        label: 'Why It Matters',
+        icon: '◇',
+        content: 'Every product decision downstream of opportunity selection is constrained by that selection. OpportunityOS makes the most important product decision — "what to build" — rigorous and data-driven.',
+      },
+    ],
+    flow: [
+      { stage: 'Signal Ingestion', desc: 'App reviews · Forums · Social · Support tickets · Search trends' },
+      { stage: 'Agentic Extraction', desc: 'Extraction → Validation → Deduplication → Clustering agents' },
+      { stage: 'Opportunity Scoring', desc: 'Severity · Prevalence · Growth · Underservedness · Feasibility · Novelty' },
+      { stage: 'Opportunity Intelligence', desc: 'Ranked, validated problem-opportunity map for product strategy' },
+    ],
+    tags: ['Agentic AI', 'LangGraph', 'Signal Mining', 'Product Strategy', 'LLMs', 'Multi-Agent Systems'],
+  },
+  {
+    index: '02',
+    type: 'PRODUCT CASE STUDY',
+    title: 'AI Salesperson for E-Commerce',
+    subtitle: 'Customer Decision Engine for Commerce',
+    hook: 'E-commerce solved logistics and payments. It never solved decision-making. The customer still does all the cognitive work.',
+    sections: [
+      {
+        label: 'The Problem',
+        icon: '⚑',
+        content: 'A customer wants to buy a laptop. They get 240 results. They filter, compare specs, open 8 tabs, and read reviews. An hour later, they abandon the purchase out of confusion. This is a decision problem.',
+      },
+      {
+        label: 'The Insight',
+        icon: '◈',
+        content: 'A great physical salesperson does something different: they ask "What will you use it for?" and surface 2-3 tailored options, explaining the trade-offs. They translate vague intent into structured requirements.',
+      },
+      {
+        label: 'The Approach',
+        icon: '◎',
+        content: 'The AI Salesperson recreates this: Intent Understanding → Decision-Relevant Questions → Requirement Structuring → Personalized Shortlisting (2-3 confident options) → Rejection Learning (refining based on feedback).',
+      },
+      {
+        label: 'The Impact',
+        icon: '◇',
+        content: 'A customer who receives a confident, contextually matched recommendation converts at significantly higher rates and returns less often. The real win is trust and retention.',
+      },
+    ],
+    flow: [
+      { stage: 'From', desc: 'Search → 240 results → 8 tabs → spec comparison → confusion → abandonment' },
+      { stage: 'Conversation', desc: 'Intent questions → structured requirements → preference learning' },
+      { stage: 'Shortlist', desc: '2–3 confident, contextually matched options with trade-off explanations' },
+      { stage: 'Refinement', desc: 'Rejection feedback → preference update → better recommendations' },
+    ],
+    tags: ['Product Thinking', 'Conversational AI', 'Recommendation Systems', 'E-Commerce', 'Intent Understanding'],
+  },
+  {
+    index: '03',
+    type: 'PM CASE STUDY',
+    title: 'Delivery ETA Intelligence Platform',
+    subtitle: 'Translating Internal Logistics Data into Customer Intelligence',
+    hook: '"Your order will be delivered today." That sentence is almost useless. Logistics companies have the data to do far better.',
+    sections: [
+      {
+        label: 'The Problem',
+        icon: '⚑',
+        content: 'Logistics companies know rider locations, package sequences, and traffic. Yet customers see "Delivery by 11 PM." This opacity generates WISMO (Where Is My Order) tickets that cost money and damage trust.',
+      },
+      {
+        label: 'The Insight',
+        icon: '◈',
+        content: 'This is a translation problem. Internal logistics data is precise, but customer communication is vague. We need a prediction layer that converts operational data into dynamic, confidence-scored delivery windows.',
+      },
+      {
+        label: 'The Approach',
+        icon: '◎',
+        content: 'The platform aggregates Route assignment + GPS + Traffic + Historical completion rates to produce a confidence-scored window that narrows in real-time (e.g., "Expected 2:30–3:15 PM, 92% confidence").',
+      },
+      {
+        label: 'The Impact [Projected]',
+        icon: '◇',
+        content: 'Projected outcomes: 30-40% reduction in WISMO support tickets and 15-25% reduction in failed deliveries through proactive re-scheduling. Direct operational cost savings.',
+      },
+    ],
+    flow: [
+      { stage: 'Data Inputs', desc: 'Route · GPS · Package sequence · Traffic · Historical patterns · Rider velocity' },
+      { stage: 'Prediction Engine', desc: 'Dynamic confidence-scored windows that narrow in real time' },
+      { stage: 'Customer Layer', desc: '"Expected 2:30–3:15 PM (92% confidence)" not "Delivery by 11 PM"' },
+      { stage: 'Proactive Actions', desc: 'Push notifications at thresholds · Pre-failure re-scheduling triggers' },
+    ],
+    tags: ['Product Strategy', 'Last-Mile Logistics', 'ML', 'ETA Prediction', 'Customer Experience'],
+  },
+  {
+    index: '04',
+    type: 'STRATEGIC ANALYSIS',
+    title: 'Intics — Enterprise AI Product Strategy',
+    subtitle: 'From Document Intelligence to Outcome Intelligence',
+    hook: 'Most enterprise AI tools produce recommendations. Very few measure whether those recommendations led to better outcomes.',
+    sections: [
+      {
+        label: 'The Problem',
+        icon: '⚑',
+        content: 'Enterprise AI extracts insights from documents. But the workflow stops there. The system never learns whether a recommended action led to a good outcome. It is intelligence without accountability.',
+      },
+      {
+        label: 'The Insight',
+        icon: '◈',
+        content: 'The real value is in the feedback loop. Connecting documents to decisions, to outcomes, to learning. This is Outcome Intelligence.',
+      },
+      {
+        label: 'The Approach',
+        icon: '◎',
+        content: 'Five strategic pillars: Intelligence Compounding, Outcome Intelligence, System of Action (execution capability), Trust & Explainability, and Enterprise Operating Intelligence.',
+      },
+      {
+        label: 'The Strategic Bet',
+        icon: '◇',
+        content: 'The market will bifurcate: commodity document intelligence vs outcome-aware decision intelligence. The latter builds defensible moats through organizational context and historical outcome data.',
+      },
+    ],
+    flow: [
+      { stage: 'Document', desc: 'Knowledge extracted from enterprise documents and data sources' },
+      { stage: 'Decision', desc: 'AI-surfaced insights translated into decision-relevant recommendations' },
+      { stage: 'Outcome', desc: 'Decisions measured against actual business results — the missing link' },
+      { stage: 'Learning', desc: 'Outcomes feed back to improve future recommendations — compounding intelligence [STRATEGIC]' },
+    ],
+    tags: ['Enterprise AI', 'Product Strategy', 'Outcome Intelligence', 'AI Governance', 'Trust & Explainability'],
+  },
+  {
+    index: '05',
+    type: 'STARTUP STRATEGY · RESEARCH',
+    title: 'India Battery Lifecycle & Recovery Platform',
+    subtitle: 'The Missing Middle in EV Battery Circular Economy',
+    hook: 'India is generating thousands of end-of-life EV batteries. The opportunity is not recycling — it is the platform layer nobody has built yet.',
+    sections: [
+      {
+        label: 'The Problem',
+        icon: '⚑',
+        content: 'End-of-life EV batteries are scattered across dealers, service centers, and scrapyards. Downstream processors (recyclers, refurbishers) want feedstock but cannot access it reliably. The connection infrastructure is missing.',
+      },
+      {
+        label: 'The Insight',
+        icon: '◈',
+        content: 'The opportunity is an asset-light aggregation and routing layer. The value is in information, coordination, and grading — not in the capital-intensive recycling processing itself.',
+      },
+      {
+        label: 'The Approach',
+        icon: '◎',
+        content: 'Find (source batteries) → Collect (chain-of-custody tracking) → Identify & Grade (capacity, chemistry, safety) → Aggregate → Route (Refurbisher, Second-life integrator, or Recycler).',
+      },
+      {
+        label: 'The Strategic Thesis',
+        icon: '◇',
+        content: 'As EV market grows and Extended Producer Responsibility (EPR) norms tighten, an orchestrator platform builds structural moats by connecting fragmented supply with high-demand sinks.',
+      },
+    ],
+    flow: [
+      { stage: 'Source', desc: 'OEMs · Dealers · Fleet operators · Service centers — all fragmented, uncoordinated' },
+      { stage: 'Grade', desc: 'Standardized assessment: capacity · chemistry · condition · safety profile' },
+      { stage: 'Aggregate', desc: 'Asset-light batching with full chain-of-custody tracking' },
+      { stage: 'Route', desc: 'Refurbishable → Refurbisher · Second-life → Partner · EOL → Recycler [RESEARCH]' },
+    ],
+    tags: ['Startup Strategy', 'Circular Economy', 'EV Batteries', 'Platform Thinking', 'Asset-Light Model'],
+  },
+];
+
+function CaseStudyCard({ cs, i }) {
+  const [expanded, setExpanded] = useState(false);
+  
+  return (
+    <motion.article className="case-study-card" {...inView(0.04 * i)} aria-labelledby={`cs-title-${cs.index}`}>
+      <div className="cs-meta">
+        <span className="cs-index">{cs.index} / {CASE_STUDIES.length}</span>
+        <span className="cs-type-badge">{cs.type}</span>
+      </div>
+      <h3 id={`cs-title-${cs.index}`} className="cs-title">{cs.title}</h3>
+      <p className="cs-subtitle">{cs.subtitle}</p>
+      <p className="cs-hook">{cs.hook}</p>
+
+      <div className="cs-flow-section">
+        <span className="cs-problem-label">How It Works</span>
+        <div className="cs-flow">
+          {cs.flow.map((f, j) => (
+            <div key={j} className="cs-flow-item">
+              <div className="cs-flow-dot" aria-hidden="true">{String(j + 1).padStart(2, '0')}</div>
+              <div className="cs-flow-text">
+                <span className="cs-flow-stage">{f.stage}</span>
+                <span className="cs-flow-desc">{f.desc}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button className="btn-secondary" style={{ marginBottom: expanded ? '24px' : '0' }} onClick={() => setExpanded(!expanded)}>
+        {expanded ? 'Close Deep Dive' : 'Read Deep Dive'} {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+      </button>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            style={{ overflow: 'hidden' }}
+          >
+            <div className="cs-sections">
+              {cs.sections.map((sec, j) => (
+                <div key={j} className="cs-section-block">
+                  <div className="cs-section-header">
+                    <span className="cs-section-icon">{sec.icon}</span>
+                    <span className="cs-section-label">{sec.label}</span>
+                  </div>
+                  <p className="cs-section-text">{sec.content}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="cs-tags">
+        {cs.tags.map(t => <span key={t} className="cs-tag">{t}</span>)}
+      </div>
+    </motion.article>
+  );
+}
+
+function CaseStudies() {
+  return (
+    <section id="work" className="section" aria-labelledby="case-studies-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">Case Studies</div>
+          <h2 id="case-studies-heading" className="section__title">Problem first.<br />Always.</h2>
+          <p className="section__subtitle">
+            Each case study begins with a real problem. Not a feature request. Not a technology looking for an application. A problem worth understanding.
+          </p>
+        </motion.div>
+        <div className="case-studies-list">
+          {CASE_STUDIES.map((cs, i) => (
+            <CaseStudyCard key={cs.index} cs={cs} i={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Built Systems ─────────────────────────────── */
+const BUILT_SYSTEMS = [
+  {
+    label: 'BUILT · Full-Stack + IoT',
+    title: 'Cloud Billing & Order Management',
+    desc: 'Local restaurants faced expensive, hardware-heavy POS systems. Root constraint: printers required dedicated computers. Built a cloud-based billing platform using MQTT over ESP — enabling thermal printers to receive orders directly from the cloud without dedicated hardware.',
+    metric: { val: '6x', lbl: 'Order volume scaled', context: '~25 to 100–150+ orders/day in documented pilot' },
+    flow: ['Restaurant', 'Cloud Platform', 'MQTT', 'ESP', 'Thermal Printer'],
+    recognition: null,
+  },
+  {
+    label: 'BUILT · AI + IoT · Winner',
+    title: 'AI Smart Agriculture Platform',
+    desc: 'Fragmented agricultural value chain: seed procurement, crop planning, monitoring and selling were disconnected. Built an ML + IoT platform analyzing 6+ soil and environmental parameters to enable data-driven crop recommendations and irrigation optimization.',
+    metric: { val: '98.4%', lbl: 'ML prediction accuracy', context: 'NPK · Soil moisture · Temperature · Humidity · pH' },
+    flow: ['Seed Procurement', 'Crop Planning', 'Farm Monitoring', 'AI Irrigation', 'Produce Selling'],
+    recognition: 'Winner — Prototyping Contest',
+  },
+  {
+    label: 'BUILT · AI/ML Decision Support',
+    title: 'Precision Bid Management System',
+    desc: 'Manual bid evaluation created suboptimal contractor strategies. Built an AI/ML decision-support platform analyzing historical bids, competitor pricing, material costs and 10+ parameters to surface competitive, profitable bidding strategies.',
+    metric: { val: '10+', lbl: 'Parameters analyzed', context: 'Historical · Competitor · Pricing · Technical criteria' },
+    flow: ['Historical Bids', 'Competitor Data', 'Pricing Trends', 'ML Engine', 'Decision Support'],
+    recognition: 'Pragyan Hackathon · Aurigo Software Technologies',
+  },
+];
+
+function BuiltSystems() {
+  return (
+    <section id="build" className="section section--tight" aria-labelledby="built-systems-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">Built Systems</div>
+          <h2 id="built-systems-heading" className="section__title">Not just strategy.<br />Actual execution.</h2>
+          <p className="section__subtitle">
+            These are systems I actually built and tested — distinct from the case studies above, which are research and strategy frameworks.
+          </p>
+        </motion.div>
+        <div className="built-grid">
+          {BUILT_SYSTEMS.map((s, i) => (
+            <motion.div key={s.title} className="built-card" {...inView(0.08 * i)}>
+              <span className="built-card__label">{s.label}</span>
+              <h3 className="built-card__title">{s.title}</h3>
+              <p className="built-card__desc">{s.desc}</p>
+              <div className="built-flow">
+                {s.flow.map((step, j) => (
+                  <div key={j} className="built-flow-step">
+                    <span>{step}</span>
+                    {j < s.flow.length - 1 && <div className="built-flow-arrow" aria-hidden="true" />}
+                  </div>
                 ))}
               </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ IMPACT ═══ */}
-      <section id="impact" className="section">
-        <motion.div {...fade()}>
-          <p className="sec-label">02 / REAL IMPACT</p>
-          <h2 className="sec-title">I don't just build things.<br/><span className="grad">I eliminate inefficiency.</span></h2>
-        </motion.div>
-
-        {/* Internship card */}
-        <motion.div className="exp-card card" {...fade(.1)}>
-          <div className="exp-stripe"/>
-          <div className="exp-top">
-            <div>
-              <span className="exp-type">INTERNSHIP · FULL-TIME · HYBRID</span>
-              <h3 className="exp-role">Agentic AI Developer</h3>
-              <p className="grad" style={{fontSize:'1rem',fontWeight:600}}>MATIC — MADeIT Incubated Startup · IIITDM Kancheepuram</p>
-              <p className="dim" style={{fontSize:'.85rem',marginTop:4}}>Chennai, Tamil Nadu · Jun 2025 – Oct 2025</p>
-            </div>
-            <div className="exp-metric-box card">
-              <span className="grad" style={{fontFamily:'var(--syne)',fontSize:'2.8rem',fontWeight:800,lineHeight:1}}>70%</span>
-              <span className="mono dim" style={{fontSize:'.6rem',letterSpacing:'.15em'}}>MANUAL EFFORT<br/>ELIMINATED</span>
-            </div>
-          </div>
-          <div className="exp-story">
-            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <li>Analyzed operational bottlenecks across 5+ business functions to identify automation opportunities, define solution requirements, and improve operational efficiency.</li>
-              <li>Developed and enhanced Assist Pro, an AI-powered automation platform that reduced manual effort by over 70% across startup operations.</li>
-              <li>Designed and implemented intelligent workflow solutions across 20+ business processes using AI agents, workflow orchestration, and full-stack technologies.</li>
-              <li>Collaborated directly with founders and cross-functional stakeholders to translate business challenges into scalable technology-driven solutions aligned with operational and strategic objectives.</li>
-            </ul>
-          </div>
-        </motion.div>
-
-        {/* Leadership cards */}
-        <div className="lead-row">
-          <motion.div className="lead-card card" {...fade(.15)} style={{'--lc':'#a855f7'}}>
-            <div className="lead-bar" style={{background:'#a855f7'}}/>
-            <span className="mono dim" style={{fontSize:'.65rem',letterSpacing:'.12em'}}>FEB 2025 – PRESENT</span>
-            <h3 style={{fontSize:'1.25rem',marginTop:8}}>Founder, Chairman & President</h3>
-            <p style={{color:'#a855f7',fontSize:'.9rem',fontWeight:600,marginBottom:16}}>Yantriksha X Hub</p>
-            <p className="dim" style={{fontSize:'.88rem',lineHeight:1.7}}>Built a 700+ member innovation ecosystem from scratch — bridging engineering, management, and law students to transform real problems into validated ventures.</p>
-          </motion.div>
-          <motion.div className="lead-card card" {...fade(.2)} style={{'--lc':'#ec4899'}}>
-            <div className="lead-bar" style={{background:'#ec4899'}}/>
-            <span className="mono dim" style={{fontSize:'.65rem',letterSpacing:'.12em'}}>FEB 2026 – PRESENT</span>
-            <h3 style={{fontSize:'1.25rem',marginTop:8}}>Show Director</h3>
-            <a href="https://justbetweenus.veltech.edu.in/" target="_blank" rel="noopener noreferrer" style={{color:'#ec4899',fontSize:'.9rem',fontWeight:600,marginBottom:16,display:'inline-block'}}>Just Between Us (JBU) ↗</a>
-            <p className="dim" style={{fontSize:'.88rem',lineHeight:1.7}}>Created a student-led town hall platform connecting students with accomplished leaders — 4 episodes, end-to-end production, real conversations on innovation and growth.</p>
-          </motion.div>
-        </div>
-
-        {/* Achievements */}
-        <motion.div className="achieve card" {...fade(.3)}>
-          <h3 style={{marginBottom:20,fontFamily:'var(--syne)'}}>⚡ Achievements & Recognition</h3>
-          <div className="achieve-grid">
-            {[['🏆','Winner','Prototyping Contest — AI Smart Agriculture System'],
-              ['🛡️','Winner','Cybersecurity Bootcamp — IIITDM Kancheepuram'],
-              ['🥈','Runner-Up','Project Idea Contest'],
-              ['🎯','Organizer','VISAI 2026 — 720+ students, 44 institutions, 14 industry partners'],
-              ['⚡','Organizer','L&T Techgium Hackathon Preliminary Rounds'],
-              ['📋','Evaluator','Innovation Marathon — 300+ student submissions reviewed'],
-              ['🤝','Volunteer','SDIP 4.0 by EDII Tamil Nadu Govt']].map(([icon,badge,text],i)=>(
-              <motion.div key={i} className="achieve-item" initial={{opacity:0,x:-10}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:.05*i}}>
-                <span className="achieve-icon">{icon}</span>
-                <div><span className="achieve-badge">{badge}</span><p className="dim" style={{fontSize:'.82rem',marginTop:3}}>{text}</p></div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ═══ PROJECTS ═══ */}
-      <section id="projects" className="section">
-        <motion.div {...fade()}>
-          <p className="sec-label">03 / WHAT I'VE BUILT</p>
-          <h2 className="sec-title">Impact-Driven<br/><span className="grad">Projects.</span></h2>
-        </motion.div>
-        <div className="proj-grid">
-          {[{num:'01',title:'AI-Powered Smart Agriculture & Irrigation System',badge:'🥇 Winner — Prototyping Contest',c:'#22d3a6',
-            story:['Identified challenges in irrigation planning, crop selection, and resource utilization that contribute to inefficient agricultural decision-making and water consumption.', 'Developed an AI-powered decision-support system integrating IoT sensing and machine learning to analyze 6+ agricultural parameters, including NPK levels, soil moisture, temperature, humidity, and pH, enabling data-driven crop recommendations and irrigation optimization with 98.4% prediction accuracy.'],
-            metric:['98.4%','Prediction Accuracy'],tech:['Python','Machine Learning','IoT','Data Analytics','Decision Support']},
-            {num:'02',title:'Precision Bid Management & Tender Analysis System',badge:'Pragyan Hackathon · Aurigo Software Technologies',c:'#4f8ef7',
-            story:['Identified inefficiencies in competitor analysis and tender evaluation during the Pragyan Hackathon in collaboration with Aurigo Software Technologies, where decision-making relied on manual assessment across multiple technical, financial, and strategic criteria.', 'Developed a decision-support platform that analyzed 10+ bid evaluation parameters for competitor benchmarking, tender assessment, and strategic bid optimization, enabling faster and more structured decision-making.'],
-            metric:['10+','Parameters Analyzed'],tech:['React.js','Node.js','Python','Data Analysis','Decision Support']}
-          ].map((p,i)=>(
-            <motion.div key={i} className="proj-card card" {...fade(.1+i*.15)} style={{'--pc':p.c}} whileHover={{y:-6}}>
-              <div className="proj-bar" style={{background:p.c}}/><div className="proj-num">{p.num}</div>
-              <span className="proj-badge">{p.badge}</span>
-              <h3 className="proj-title">{p.title}</h3>
-              <div className="proj-story dim">
-                {Array.isArray(p.story) ? (
-                  <ul style={{ listStyleType: 'disc', paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {p.story.map((st, idx) => <li key={idx}>{st}</li>)}
-                  </ul>
-                ) : (
-                  <p>{p.story}</p>
-                )}
+              <div className="built-card__metric">
+                <span className="built-metric-val">{s.metric.val}</span>
+                <div>
+                  <span className="built-metric-lbl">{s.metric.lbl}</span><br />
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.58rem', color: 'var(--text-tertiary)' }}>{s.metric.context}</span>
+                </div>
               </div>
-              <div className="proj-metric card" style={{borderColor:`${p.c}40`}}>
-                <span style={{color:p.c,fontFamily:'var(--syne)',fontSize:'1.8rem',fontWeight:800}}>{p.metric[0]}</span>
-                <span className="dim" style={{fontSize:'.8rem'}}>{p.metric[1]}</span>
+              {s.recognition && (
+                <div style={{ marginTop: 12, padding: '6px 12px', background: 'var(--link-soft)', border: '1px solid var(--link-line)', borderRadius: 'var(--r-xs)', fontFamily: 'var(--font-mono)', fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-link)' }}>
+                  {s.recognition}
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Experience ────────────────────────────────── */
+const EXP_STEPS = [
+  { n: '01', title: 'Process Discovery', desc: 'Worked directly with founders to map fragmented, manual workflows across 5+ startup operations. Identified root causes and prioritized high-impact automation targets.' },
+  { n: '02', title: 'Product Requirements', desc: 'Translated operational pain points into structured product requirements — defining scope, success metrics, and integration constraints for each AI workflow.' },
+  { n: '03', title: 'Agentic AI Build', desc: 'Designed and implemented 20+ intelligent workflows using LangGraph, LangChain, n8n and LLMs — converting fragmented manual processes into scalable AI-enabled systems.' },
+  { n: '04', title: 'Assist Pro Platform', desc: 'Developed and enhanced Assist Pro — an AI-powered automation platform for startup operations — achieving 70%+ manual effort reduction.' },
+];
+
+function Experience() {
+  return (
+    <section id="experience" className="section" aria-labelledby="experience-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">Experience</div>
+          <h2 id="experience-heading" className="section__title">Where theory met<br />real operations.</h2>
+        </motion.div>
+        <div className="exp-layout">
+          <motion.div className="exp-left" {...inViewX(0.1)}>
+            <span className="exp-story-label">Modern Agriculture Technology Innovation Center</span>
+            <h3 className="exp-company-name">MATIC</h3>
+            <p className="exp-company-meta">Agentic AI Developer Intern · MADeIT Incubated · IIITDM Kancheepuram<br />Chennai, Tamil Nadu · Jun 2025 – Oct 2025</p>
+            <div className="exp-journey">
+              {EXP_STEPS.map((step) => (
+                <div key={step.n} className="exp-journey-step">
+                  <div className="exp-step-dot" aria-hidden="true">{step.n}</div>
+                  <div className="exp-step-body">
+                    <div className="exp-step-title">{step.title}</div>
+                    <div className="exp-step-desc">{step.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+          <motion.div className="exp-right" {...inViewX(0.2, 24)}>
+            <div className="exp-metric-block">
+              <span className="exp-big-metric">70%+</span>
+              <p className="exp-metric-context">Manual effort reduction across startup operations through AI workflow automation</p>
+            </div>
+            <div className="exp-detail-row">
+              {[
+                <><strong>Founder collaboration:</strong> Direct stakeholder engagement to map business processes and define product requirements</>,
+                <><strong>LangGraph · LangChain · n8n · LLMs</strong> — complete agentic AI stack</>,
+                <><strong>20+ intelligent workflows</strong> designed and implemented</>,
+                <><strong>Internship type:</strong> Full-time · Hybrid · 4 months</>,
+              ].map((text, i) => (
+                <div key={i} className="exp-detail-item">
+                  <div className="exp-detail-dot" aria-hidden="true" />
+                  <div className="exp-detail-text">{text}</div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Ventures ────────────────────────────────── */
+function Ventures() {
+  return (
+    <section id="ventures" className="section" aria-labelledby="ventures-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">Ventures & Leadership</div>
+          <h2 id="ventures-heading" className="section__title">Building the ecosystem<br />before the product.</h2>
+          <p className="section__subtitle">Leading interdisciplinary communities to bridge the gap between engineering, management, and real-world execution.</p>
+        </motion.div>
+        
+        <div className="ventures-split">
+          <motion.div className="venture-card-large" {...inViewX(0.1)}>
+            <div className="vc-header">
+              <span className="vc-date">Feb 2025 – Present · Founder, Chairman & President</span>
+              <a href="https://yantrikshaxhub.veltech.edu.in" target="_blank" rel="noopener noreferrer" className="vc-title-link">
+                <h3 className="vc-title">Yantriksha X Hub</h3>
+                <ArrowUpRight size={24} className="vc-arrow"/>
+              </a>
+              <span className="vc-subtitle">Student Innovation & Entrepreneurship Ecosystem</span>
+            </div>
+            
+            <p className="vc-desc">
+              I identified a critical gap: engineering, management and law students had complementary capabilities but lacked structured interdisciplinary pathways for <strong>problem discovery and product-building</strong>. Yantriksha X Hub bridges this — transforming real problems into validated products and ventures.
+            </p>
+            
+            <p className="vc-desc">I developed the <strong>&#8722;1 &rarr; 0 &rarr; 1 Framework</strong> as the operating model:</p>
+            
+            <div className="yantriksha-framework">
+              {[
+                { num: '−1', label: 'Confusion', desc: 'Raw problem, ambiguity, unclear direction' },
+                { num: '0', label: 'Idea', desc: 'Tech + Business + Legal disciplines converging' },
+                { num: '1', label: 'Product', desc: 'Development, execution, validated venture' },
+              ].map((s) => (
+                <div key={s.num} className="yf-step">
+                  <span className="yf-num">{s.num}</span>
+                  <span className="yf-label">{s.label}</span>
+                  <span className="yf-desc">{s.desc}</span>
+                </div>
+              ))}
+            </div>
+            
+            <div className="yantriksha-stats" style={{marginTop: '32px'}}>
+              {[
+                { val: '700+', lbl: 'Active students' },
+                { val: '300+', lbl: 'Alumni' },
+                { val: '100+', lbl: 'Internships' },
+                { val: '100+', lbl: 'Patents' },
+              ].map(s => (
+                <div key={s.lbl} className="ys-stat">
+                  <span className="ys-val">{s.val}</span>
+                  <span className="ys-lbl">{s.lbl}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div className="venture-card-large" {...inViewX(0.2, 24)}>
+             <div className="vc-header">
+              <span className="vc-date">Feb 2026 – Present · Show Director</span>
+              <a href="https://justbetweenus.veltech.edu.in" target="_blank" rel="noopener noreferrer" className="vc-title-link">
+                <h3 className="vc-title">Just Between Us (JBU)</h3>
+                <ArrowUpRight size={24} className="vc-arrow"/>
+              </a>
+              <span className="vc-subtitle">Student-Led Town Hall Platform</span>
+            </div>
+            
+            <p className="vc-desc" style={{marginBottom: '24px'}}>
+              Co-created a platform connecting students with accomplished leaders, entrepreneurs and innovators. Led episodes end-to-end: speaker outreach, content curation, event production, and staging.
+            </p>
+
+            <div className="jbu-stats">
+              <div className="jbu-stat-item">
+                <span className="jbu-stat-val">4</span>
+                <span className="jbu-stat-lbl">Live Episodes</span>
               </div>
-              <div className="proj-tech">{p.tech.map(t=><span key={t} className="ptag" style={{borderColor:`${p.c}40`,color:p.c}}>{t}</span>)}</div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+              <div className="jbu-stat-item">
+                <span className="jbu-stat-val">4</span>
+                <span className="jbu-stat-lbl">Industry Speakers</span>
+              </div>
+              <div className="jbu-stat-item">
+                <span className="jbu-stat-val">300+</span>
+                <span className="jbu-stat-lbl">Students Engaged</span>
+              </div>
+            </div>
 
-      {/* ═══ ARSENAL ═══ */}
-      <section id="arsenal" className="section">
-        <motion.div {...fade()}>
-          <p className="sec-label">04 / THE TOOLKIT</p>
-          <h2 className="sec-title">Tools are just tools.<br/><span className="grad">Here's what I wield.</span></h2>
-        </motion.div>
-        <motion.div className="tech-row" {...fade(.1)}>
-          {TECH.map((t,i)=>(
-            <motion.div key={t.n} className="tech-item card" whileHover={{y:-6,scale:1.08}}
-              initial={{opacity:0,scale:.8}} whileInView={{opacity:1,scale:1}} viewport={{once:true}} transition={{delay:.04*i}}>
-              <img src={t.i} alt={t.n} width={38} height={38} style={{objectFit:'contain',filter:'drop-shadow(0 0 8px rgba(0,229,255,.25))'}}/>
-              <span className="tech-lbl">{t.n}</span>
-            </motion.div>
-          ))}
-        </motion.div>
-        <div className="skill-cats">
-          {SKILLS.map((cat,i)=>(
-            <motion.div key={cat.label} className="skill-cat card" {...fade(.08+i*.06)} style={{'--cc':cat.c}}>
-              <div className="scat-hd"><div className="scat-dot" style={{background:cat.c,boxShadow:`0 0 8px ${cat.c}`}}/><h4 style={{color:cat.c}}>{cat.label}</h4></div>
-              <div className="stags">{cat.tags.map(t=><span key={t} className="stag">{t}</span>)}</div>
-            </motion.div>
-          ))}
+            <div style={{ marginTop: 24, padding: '16px', background: 'var(--bg-2)', borderRadius: 'var(--r-sm)', border: '1px solid var(--surface-border)'}}>
+               <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.6}}>
+                 JBU serves as the cultural heart of the ecosystem, creating a direct feedback loop between aspiring student builders and proven industry operators.
+               </p>
+            </div>
+          </motion.div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* ═══ CONNECT ═══ */}
-      <section id="connect" className="section contact">
-        <motion.div className="contact-inner" {...fade()}>
-          <p className="sec-label">05 / LET'S TALK</p>
-          <h2 className="sec-title">Got a messy problem?<br/><span className="grad">That's my favorite kind.</span></h2>
-          <p className="contact-sub dim">I'm actively looking for internships, collaborations, and conversations with people who think building things is the best way to learn.</p>
-          <div className="contact-links">
-            {[[<Mail size={18}/>,'Email','sannareddyabhilashreddy@gmail.com','mailto:sannareddyabhilashreddy@gmail.com'],
-              [<Phone size={18}/>,'Phone','+91 7032026509','tel:+917032026509'],
-              ['🔗','LinkedIn','Connect with me','https://www.linkedin.com/in/abhilash-reddy-sannareddy/'],
-              ['💻','GitHub','See my code','https://github.com/Abhilashreddysannareddy']].map(([icon,label,val,href],i)=>(
-              <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer" className="clink card" {...fade(.08+i*.06)} whileHover={{x:6}}>
-                <span className="clink-icon">{icon}</span>
-                <div><p className="mono dim" style={{fontSize:'.68rem',letterSpacing:'.12em',textTransform:'uppercase'}}>{label}</p><p style={{fontSize:'.95rem'}}>{val}</p></div>
-                <ArrowUpRight size={16} className="clink-arrow"/>
-              </motion.a>
-            ))}
-          </div>
-          <div className="footer">
-            <p className="mono dim" style={{fontSize:'.7rem',letterSpacing:'.12em'}}>© 2025 ABHILASH REDDY SANNAREDDY · BUILT WITH REACT + FRAMER MOTION</p>
-          </div>
+/* ── Achievements ──────────────────────────────── */
+const ACHIEVEMENTS = [
+  { badge: 'Winner', text: 'Prototyping Contest — AI Smart Agriculture & Farm-to-Market Platform' },
+  { badge: 'Winner', text: 'Cybersecurity Bootcamp — IIITDM Kancheepuram' },
+  { badge: 'Runner-Up', text: 'Project Idea Contest — Smart Agriculture Platform' },
+  { badge: 'Organizer', text: 'Smart India Hackathon — Scaled from 70 to 200+ participating teams' },
+  { badge: 'Organizer', text: 'L&T Techgium Hackathon — Preliminary Rounds' },
+  { badge: 'Evaluator', text: 'Innovation Marathon — 300+ student project submissions reviewed' },
+  { badge: 'Volunteer', text: 'SDIP 4.0 — EDII Tamil Nadu, Government of Tamil Nadu' },
+];
+
+function Achievements() {
+  return (
+    <section id="achievements" className="section section--tight" aria-labelledby="achievements-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">Achievements</div>
+          <h2 id="achievements-heading" className="section__title">Evidence of execution,<br />not a trophy wall.</h2>
         </motion.div>
-      </section>
+        <div className="achievements-layout">
+          <motion.div {...inViewX(0.1)}>
+            <div className="achievements-list">
+              {ACHIEVEMENTS.map((a, i) => (
+                <motion.div key={i} className="achieve-item" {...inView(0.04 * i)}>
+                  <span className="achieve-badge-text">{a.badge}</span>
+                  <span className="achieve-text">{a.text}</span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+          <motion.div {...inViewX(0.2, 24)}>
+            <div className="visai-highlight">
+              <h3 className="visai-title">VISAI 2026 — National AI Competition</h3>
+              <div className="visai-stats">
+                {[
+                  { val: '720+', lbl: 'Students' },
+                  { val: '240+', lbl: 'Teams' },
+                  { val: '44', lbl: 'Institutions' },
+                  { val: '14', lbl: 'Industry Partners' },
+                ].map(s => (
+                  <div key={s.lbl}>
+                    <span className="visai-stat-val">{s.val}</span>
+                    <span className="visai-stat-lbl">{s.lbl}</span>
+                  </div>
+                ))}
+              </div>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginTop: 12 }}>Role: Organizer</p>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── My Story ──────────────────────────────────── */
+const STORY_STEPS = [
+  { n: '01', stage: 'Curiosity', title: 'How does it work?', text: 'Started by being curious — not about a specific field, but about how things work. That curiosity pointed toward Computer Science and AI.' },
+  { n: '02', stage: 'Engineering', title: 'Learning to build', text: 'Engineering taught me how to build technology: systems, algorithms, architecture, code that actually runs. This foundation never goes away.' },
+  { n: '03', stage: 'Building', title: 'Projects, hackathons, execution', text: "Through projects and hackathons, I learned what engineering alone does not teach: the distance between a working system and a product someone actually uses." },
+  { n: '04', stage: 'Problem Discovery', title: 'What should we build?', text: 'Increasingly, I found myself asking different questions. Not "how do we solve this?" but "what problem are we actually solving? Is this the biggest problem worth solving?"' },
+  { n: '05', stage: 'Product Thinking', title: 'Engineering + Product + Business', text: 'Product Management is not a departure from engineering. It expands capability: understanding customers, discovering problems, prioritizing ruthlessly, connecting technology to business value.' },
+  { n: '06', stage: 'Entrepreneurship', title: 'The long-term direction', text: 'Engineering teaches how to build technology. Product teaches how to build products. Business teaches how to build companies. Entrepreneurship brings them together.' },
+];
+
+function MyStory() {
+  return (
+    <section id="story" className="section" aria-labelledby="story-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">My Story</div>
+          <h2 id="story-heading" className="section__title">How I got here.<br />Where I am going.</h2>
+          <p className="section__subtitle">This is not a resume. It is the logic behind all the choices.</p>
+        </motion.div>
+        <div className="story-layout">
+          <motion.div {...inViewX(0.1)}>
+            <div className="story-progression">
+              {STORY_STEPS.map((step) => (
+                <div key={step.n} className="story-step">
+                  <div className="story-dot" aria-hidden="true">{step.n}</div>
+                  <div className="story-body">
+                    <span className="story-stage">{step.stage}</span>
+                    <div className="story-title">{step.title}</div>
+                    <p className="story-text">{step.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <motion.div {...inView(0.2)} style={{ marginTop: 32 }}>
+              <div className="story-direction">
+                I did not change the destination.<br /><em>I changed the timeline.</em>
+              </div>
+            </motion.div>
+          </motion.div>
+          <motion.div className="story-aside" {...inViewX(0.2, 24)}>
+            <div className="story-portrait">
+              <img src={`${import.meta.env.BASE_URL}photo.png`} alt="Abhilash Reddy Sannareddy" loading="lazy" />
+            </div>
+            <div className="story-edu">
+              <div className="edu-row">
+                <div>
+                  <div className="story-edu-title">Vel Tech R&D Institute</div>
+                  <div className="story-edu-meta">B.Tech CSE (AI &amp; ML) · Expected 2027</div>
+                </div>
+                <div className="story-edu-cgpa">9.19</div>
+              </div>
+            </div>
+            <div style={{ marginTop: 12 }}>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 8 }}>Languages</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {[['English', 'Professional'], ['Telugu', 'Native'], ['Hindi', 'Professional'], ['Tamil', 'Working'], ['German', 'Basic'], ['Kannada', 'Basic']].map(([l, lv]) => (
+                  <span key={l} className="cs-tag">{l} · <span style={{ color: 'var(--text-tertiary)' }}>{lv}</span></span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Contact ───────────────────────────────────── */
+function Contact() {
+  return (
+    <section id="contact" className="contact-section" aria-labelledby="contact-heading">
+      <div className="container">
+        <div className="contact-inner">
+          <motion.div className="contact-left" {...inViewX(0)}>
+            <h2 id="contact-heading" className="contact-question">Got a meaningful<br />problem to solve?</h2>
+            <p className="contact-sub">I am actively looking for PM roles, AI systems collaborations and opportunities at the intersection of product, technology and entrepreneurship.</p>
+          </motion.div>
+          <motion.div {...inViewX(0.1, 20)}>
+            <div className="contact-links">
+              {[
+                { icon: <Mail size={16} />, label: 'Email', val: 'sannareddyabhilashreddy@gmail.com', href: 'mailto:sannareddyabhilashreddy@gmail.com' },
+                { icon: <Phone size={16} />, label: 'Phone', val: '+91 7032026509', href: 'tel:+917032026509' },
+                { icon: '🔗', label: 'LinkedIn', val: 'abhilash-reddy-sannareddy', href: 'https://www.linkedin.com/in/abhilash-reddy-sannareddy/' },
+                { icon: '⌥', label: 'GitHub', val: 'Abhilashreddysannareddy', href: 'https://github.com/Abhilashreddysannareddy' },
+              ].map(({ icon, label, val, href }, i) => (
+                <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer" className="clink"
+                  {...inView(0.06 * i)} whileHover={{ x: 4 }} aria-label={`${label}: ${val}`}>
+                  <span className="clink-icon" aria-hidden="true">{icon}</span>
+                  <div>
+                    <span className="clink-label">{label}</span>
+                    <span className="clink-val">{val}</span>
+                  </div>
+                  <ArrowUpRight size={14} className="clink-arrow" aria-hidden="true" />
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+        <div className="footer">
+          <span>© 2025–2026 Abhilash Reddy Sannareddy</span>
+          <span>Built with React + Framer Motion</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ══════════════════════════════════════════════════
+   APP
+══════════════════════════════════════════════════ */
+export default function App() {
+  return (
+    <>
+      <Nav />
+      <main id="main-content">
+        <Hero />
+        <div className="divider" />
+        <HowIThink />
+        <div className="divider" />
+        <Skills />
+        <div className="divider" />
+        <CaseStudies />
+        <div className="divider" />
+        <BuiltSystems />
+        <div className="divider" />
+        <Experience />
+        <div className="divider" />
+        <Ventures />
+        <div className="divider" />
+        <Achievements />
+        <div className="divider" />
+        <MyStory />
+        <Contact />
+      </main>
     </>
   );
 }

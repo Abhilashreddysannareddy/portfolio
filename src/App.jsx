@@ -237,11 +237,6 @@ const SKILL_CATEGORIES = [
     title: "Development & Cloud",
     icon: <Code size={22} strokeWidth={1.5} />,
     skills: ["Python", "Java", "JavaScript (React, Node.js)", "AWS", "GCP", "Firebase", "Git"]
-  },
-  {
-    title: "Languages",
-    icon: <Languages size={22} strokeWidth={1.5} />,
-    skills: ["English (Professional)", "Telugu (Native)", "Hindi (Professional)", "Tamil (Working)", "German (Basic)"]
   }
 ];
 
@@ -285,9 +280,7 @@ const CASE_STUDIES = [
     type: 'CONCEPTUAL FRAMEWORK',
     title: 'OpportunityOS',
     subtitle: 'Agentic AI for Problem Discovery',
-    hook: 'Most teams ask: "How do we build this?" The better question is: "Should we build this at all — and what should we build instead?"',
-    problemBrief: 'Product teams drown in qualitative noise (reviews, tickets) and struggle to find validated, underserved problems before competitors do.',
-    origin: 'I noticed product teams spending weeks manually reading Discord and Reddit threads, only to realize the same problems were already being addressed by obscure competitors. I realized we needed a way to automate this discovery process to find hidden signals in the noise.',
+    summary: 'Companies collect massive user signals across reviews, forums & tickets but struggle to discover which problems are worth solving; designed a multi-agent AI system that converts signals into emerging problems and scores them across severity, prevalence, growth momentum, underservedness, feasibility & novelty, bringing AI from problem solving to problem discovery intelligence.',
     sections: [
       {
         label: 'The Problem',
@@ -323,9 +316,7 @@ const CASE_STUDIES = [
     type: 'PRODUCT CASE STUDY',
     title: 'AI Salesperson for E-Commerce',
     subtitle: 'Customer Decision Engine for Commerce',
-    hook: 'E-commerce solved logistics and payments. It never solved decision-making. The customer still does all the cognitive work.',
-    problemBrief: 'Customers are overwhelmed by 240+ search results and specs. They abandon purchases because they cannot confidently decide what fits their needs.',
-    origin: 'While trying to buy a laptop for college, I spent hours overwhelmed by specs and reviews, eventually abandoning the purchase out of pure confusion. I realized e-commerce is optimized for search, but completely fails at decision-making.',
+    summary: 'E-commerce platforms make customers search, filter, compare, and decide what fits their needs; designed a conversational Customer Decision Engine that understands customer intent through voice/chat, asks decision-relevant questions, learns preferences and rejections, and shifts e-commerce from product search → customer understanding → curated recommendations, narrowing large catalogs to 2–3 confident options.',
     sections: [
       {
         label: 'The Problem',
@@ -361,9 +352,7 @@ const CASE_STUDIES = [
     type: 'PM CASE STUDY',
     title: 'Delivery ETA Intelligence Platform',
     subtitle: 'Translating Internal Logistics Data into Customer Intelligence',
-    hook: '"Your order will be delivered today." That sentence is almost useless. Logistics companies have the data to do far better.',
-    problemBrief: 'Customers lack precise delivery visibility, generating expensive WISMO (Where Is My Order) tickets, despite logistics companies possessing the underlying data.',
-    origin: 'After tracking a delayed package that was vaguely marked "arriving today," I realized logistics companies have highly precise GPS and route data but fail to translate it into actionable customer intelligence.',
+    summary: 'Customers are forced to keep their day open for broad 9 AM–11 PM delivery windows; proposed a dynamic ETA layer using route, GPS, traffic, OpenBox & customer availability to convert these broad windows into focused, customer aware delivery windows that continuously adapt to changing conditions, reducing waiting uncertainty, WISMO tickets & failed deliveries.',
     sections: [
       {
         label: 'The Problem',
@@ -399,9 +388,7 @@ const CASE_STUDIES = [
     type: 'STRATEGIC ANALYSIS',
     title: 'Intics — Enterprise AI Product Strategy',
     subtitle: 'From Document Intelligence to Outcome Intelligence',
-    hook: 'Most enterprise AI tools produce recommendations. Very few measure whether those recommendations led to better outcomes.',
-    problemBrief: 'Enterprise AI extracts knowledge but lacks an outcome loop. Without measuring if an AI recommendation led to a good business result, intelligence cannot compound.',
-    origin: 'I observed multiple enterprise teams enthusiastically adopting AI tools to summarize documents, but completely failing to track if those summaries actually led to better business outcomes or execution.',
+    summary: 'Recognized that Intics’ AI generates strong recommendations with no way to verify whether they worked or to act on them end-to-end; proposed Outcome, Action & Trust layers that let the platform learn from real business results while all customer data stays on-premise, preserving Intics’ sovereign-AI promise.',
     sections: [
       {
         label: 'The Problem',
@@ -437,9 +424,7 @@ const CASE_STUDIES = [
     type: 'STARTUP STRATEGY · RESEARCH',
     title: 'India Battery Lifecycle & Recovery Platform',
     subtitle: 'The Missing Middle in EV Battery Circular Economy',
-    hook: 'India is generating thousands of end-of-life EV batteries. The opportunity is not recycling — it is the platform layer nobody has built yet.',
-    problemBrief: 'End-of-life EV batteries are fragmented across dealers and scrapyards, while downstream recyclers cannot access them reliably due to a lack of supply chain infrastructure.',
-    origin: 'While researching the EV supply chain, I found that everyone was focused on the deep-tech of battery recycling, but no one was solving the massive logistical nightmare of actually collecting and aggregating the batteries.',
+    summary: 'Found that India’s announced Li-ion recycling capacity (80,000+ tonnes/yr) is already 2.2× its entire 2025 end-of-life battery supply (∼36,000 tonnes/yr), yet only ∼5,000 tonnes (∼14%) get collected formally each year– so the real bottleneck isn’t recycling capacity, it’s collection; designed an asset-light Find → Collect → Grade → Route platform partnering with existing recyclers to close that feedstock gap ahead of India’s projected 233,000 tonnes/yr EOL volume by 2035',
     sections: [
       {
         label: 'The Problem',
@@ -484,18 +469,10 @@ function CaseStudyCard({ cs, i }) {
       <h3 id={`cs-title-${cs.index}`} className="cs-title">{cs.title}</h3>
       <p className="cs-subtitle">{cs.subtitle}</p>
       
-      <p className="cs-problem-brief">
-        <span className="cs-problem-brief-icon"><Crosshair size={14}/> Core Problem Identified:</span> {cs.problemBrief}
-      </p>
-
-      {cs.origin && (
-        <div className="cs-origin">
-          <strong>How I Came Across It</strong>
-          {cs.origin}
-        </div>
-      )}
-
-      <p className="cs-hook">{cs.hook}</p>
+      <div className="cs-origin" style={{ margin: '24px 0' }}>
+        <strong>Problem & Approach</strong>
+        {cs.summary}
+      </div>
 
       <div className="cs-flow-section">
         <span className="cs-problem-label">How It Works</span>
@@ -962,6 +939,17 @@ function MyStory() {
                   <div className="story-edu-meta">B.Tech CSE (AI &amp; ML) · Expected 2027</div>
                 </div>
                 <div className="story-edu-cgpa">9.19</div>
+              </div>
+            </div>
+            {/* Added Languages back here */}
+            <div style={{ marginTop: 24, padding: '20px', background: 'var(--bg-2)', borderRadius: 'var(--r-md)', border: '1px solid var(--surface-border)' }}>
+              <p style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 12 }}>
+                <Languages size={14} /> Languages
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {[['English', 'Professional'], ['Telugu', 'Native'], ['Hindi', 'Professional'], ['Tamil', 'Working'], ['German', 'Basic']].map(([l, lv]) => (
+                  <span key={l} className="cs-tag" style={{ background: 'var(--bg-0)' }}>{l} · <span style={{ color: 'var(--text-tertiary)' }}>{lv}</span></span>
+                ))}
               </div>
             </div>
           </motion.div>

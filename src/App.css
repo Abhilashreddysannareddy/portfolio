@@ -1825,3 +1825,64 @@
   border-radius: var(--r-xs);
   mix-blend-mode: multiply; /* Removes white background effectively against the off-white site background */
 }
+
+/* CS Origin */
+.cs-origin {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: 16px;
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  background: var(--bg-1);
+  border-left: 2px solid var(--text-tertiary);
+  border-radius: 0 var(--r-xs) var(--r-xs) 0;
+}
+.cs-origin strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+/* Built Sections (Stack instead of Grid) */
+.built-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+.built-section-block {
+  background: var(--bg-1);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-sm);
+  padding: 16px;
+}
+.built-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.built-section-icon {
+  font-size: 0.9rem;
+  color: var(--text-link);
+  line-height: 1;
+}
+.built-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+.built-section-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}

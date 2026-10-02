@@ -221,50 +221,22 @@ const SKILL_CATEGORIES = [
   {
     title: "Product Management",
     icon: <Crosshair size={22} strokeWidth={1.5} />,
-    skills: [
-      { name: "Product Discovery", lucide: <Lightbulb size={16} /> },
-      { name: "User Research", lucide: <Users size={16} /> },
-      { name: "Problem Framing", lucide: <Crosshair size={16} /> },
-      { name: "Roadmapping", lucide: <Workflow size={16} /> },
-      { name: "Prioritization", lucide: <BarChart size={16} /> },
-      { name: "Stakeholder Management", lucide: <Users size={16} /> },
-      { name: "A/B Testing", lucide: <Rocket size={16} /> }
-    ]
+    skills: ["Product Discovery", "User Research", "Problem Framing", "Roadmapping", "Prioritization", "Stakeholder Management", "A/B Testing"]
   },
   {
     title: "AI & Agentic Systems",
     icon: <Brain size={22} strokeWidth={1.5} />,
-    skills: [
-      { name: "LLMs", lucide: <Brain size={16} /> },
-      { name: "Agentic AI (LangGraph, LangChain, LangSmith)", devicon: "devicon-python-plain" },
-      { name: "AI Workflow Automation (n8n)", lucide: <Workflow size={16} /> },
-      { name: "Prompt Engineering", lucide: <PenTool size={16} /> }
-    ]
+    skills: ["LLMs", "Agentic AI (LangGraph, LangChain, LangSmith)", "AI Workflow Automation (n8n)", "Prompt Engineering"]
   },
   {
     title: "Business & Analytics",
     icon: <BarChart size={22} strokeWidth={1.5} />,
-    skills: [
-      { name: "SQL", devicon: "devicon-azuresqldatabase-plain colored" },
-      { name: "Power BI", lucide: <BarChart size={16} /> },
-      { name: "MS Excel", lucide: <Database size={16} /> },
-      { name: "Go-to-Market Strategy", lucide: <Rocket size={16} /> },
-      { name: "KPI Tracking", lucide: <BarChart size={16} /> },
-      { name: "Competitive Analysis", lucide: <Crosshair size={16} /> }
-    ]
+    skills: ["SQL", "Power BI", "MS Excel", "Go-to-Market Strategy", "KPI Tracking", "Competitive Analysis"]
   },
   {
     title: "Development & Cloud",
     icon: <Code size={22} strokeWidth={1.5} />,
-    skills: [
-      { name: "Python", devicon: "devicon-python-plain colored" },
-      { name: "Java", devicon: "devicon-java-plain colored" },
-      { name: "JavaScript (React, Node.js)", devicon: "devicon-javascript-plain colored" },
-      { name: "AWS", devicon: "devicon-amazonwebservices-plain-wordmark colored" },
-      { name: "GCP", devicon: "devicon-googlecloud-plain colored" },
-      { name: "Firebase", devicon: "devicon-firebase-plain colored" },
-      { name: "Git", devicon: "devicon-git-plain colored" }
-    ]
+    skills: ["Python", "Java", "JavaScript (React, Node.js)", "AWS", "GCP", "Firebase", "Git"]
   }
 ];
 
@@ -289,14 +261,7 @@ function Skills() {
               <ul className="skill-list" role="list">
                 {cat.skills.map((skill, j) => (
                   <li key={j} className="skill-item">
-                    <span className="skill-dot" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent' }} aria-hidden="true">
-                      {skill.devicon ? (
-                        <i className={skill.devicon} style={{ fontSize: '18px' }}></i>
-                      ) : (
-                        skill.lucide
-                      )}
-                    </span>
-                    {skill.name}
+                    <span className="skill-dot" aria-hidden="true"/>{skill}
                   </li>
                 ))}
               </ul>
@@ -317,6 +282,7 @@ const CASE_STUDIES = [
     subtitle: 'Agentic AI for Problem Discovery',
     hook: 'Most teams ask: "How do we build this?" The better question is: "Should we build this at all — and what should we build instead?"',
     problemBrief: 'Product teams drown in qualitative noise (reviews, tickets) and struggle to find validated, underserved problems before competitors do.',
+    origin: 'I noticed product teams spending weeks manually reading Discord and Reddit threads, only to realize the same problems were already being addressed by obscure competitors. I realized we needed a way to automate this discovery process to find hidden signals in the noise.',
     sections: [
       {
         label: 'The Problem',
@@ -354,6 +320,7 @@ const CASE_STUDIES = [
     subtitle: 'Customer Decision Engine for Commerce',
     hook: 'E-commerce solved logistics and payments. It never solved decision-making. The customer still does all the cognitive work.',
     problemBrief: 'Customers are overwhelmed by 240+ search results and specs. They abandon purchases because they cannot confidently decide what fits their needs.',
+    origin: 'While trying to buy a laptop for college, I spent hours overwhelmed by specs and reviews, eventually abandoning the purchase out of pure confusion. I realized e-commerce is optimized for search, but completely fails at decision-making.',
     sections: [
       {
         label: 'The Problem',
@@ -391,6 +358,7 @@ const CASE_STUDIES = [
     subtitle: 'Translating Internal Logistics Data into Customer Intelligence',
     hook: '"Your order will be delivered today." That sentence is almost useless. Logistics companies have the data to do far better.',
     problemBrief: 'Customers lack precise delivery visibility, generating expensive WISMO (Where Is My Order) tickets, despite logistics companies possessing the underlying data.',
+    origin: 'After tracking a delayed package that was vaguely marked "arriving today," I realized logistics companies have highly precise GPS and route data but fail to translate it into actionable customer intelligence.',
     sections: [
       {
         label: 'The Problem',
@@ -428,6 +396,7 @@ const CASE_STUDIES = [
     subtitle: 'From Document Intelligence to Outcome Intelligence',
     hook: 'Most enterprise AI tools produce recommendations. Very few measure whether those recommendations led to better outcomes.',
     problemBrief: 'Enterprise AI extracts knowledge but lacks an outcome loop. Without measuring if an AI recommendation led to a good business result, intelligence cannot compound.',
+    origin: 'I observed multiple enterprise teams enthusiastically adopting AI tools to summarize documents, but completely failing to track if those summaries actually led to better business outcomes or execution.',
     sections: [
       {
         label: 'The Problem',
@@ -465,6 +434,7 @@ const CASE_STUDIES = [
     subtitle: 'The Missing Middle in EV Battery Circular Economy',
     hook: 'India is generating thousands of end-of-life EV batteries. The opportunity is not recycling — it is the platform layer nobody has built yet.',
     problemBrief: 'End-of-life EV batteries are fragmented across dealers and scrapyards, while downstream recyclers cannot access them reliably due to a lack of supply chain infrastructure.',
+    origin: 'While researching the EV supply chain, I found that everyone was focused on the deep-tech of battery recycling, but no one was solving the massive logistical nightmare of actually collecting and aggregating the batteries.',
     sections: [
       {
         label: 'The Problem',
@@ -512,6 +482,13 @@ function CaseStudyCard({ cs, i }) {
       <p className="cs-problem-brief">
         <span className="cs-problem-brief-icon"><Crosshair size={14}/> Core Problem Identified:</span> {cs.problemBrief}
       </p>
+
+      {cs.origin && (
+        <div className="cs-origin">
+          <strong>How I Came Across It</strong>
+          {cs.origin}
+        </div>
+      )}
 
       <p className="cs-hook">{cs.hook}</p>
 
@@ -651,7 +628,7 @@ function BuiltSystemCard({ s, i }) {
         </div>
       </div>
       
-      <button className="btn-secondary" style={{ marginTop: '20px', marginBottom: expanded ? '24px' : '0' }} onClick={() => setExpanded(!expanded)}>
+      <button className="btn-secondary" style={{ marginTop: '20px', marginBottom: expanded ? '16px' : '0' }} onClick={() => setExpanded(!expanded)}>
         {expanded ? 'Close Details' : 'Read More'} {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
       </button>
 
@@ -664,14 +641,14 @@ function BuiltSystemCard({ s, i }) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             style={{ overflow: 'hidden' }}
           >
-            <div className="cs-sections" style={{ marginTop: '16px', marginBottom: '24px' }}>
+            <div className="built-sections">
               {s.sections.map((sec, j) => (
-                <div key={j} className="cs-section-block">
-                  <div className="cs-section-header">
-                    <span className="cs-section-icon">{sec.icon}</span>
-                    <span className="cs-section-label">{sec.label}</span>
+                <div key={j} className="built-section-block">
+                  <div className="built-section-header">
+                    <span className="built-section-icon">{sec.icon}</span>
+                    <span className="built-section-label">{sec.label}</span>
                   </div>
-                  <p className="cs-section-text">{sec.content}</p>
+                  <p className="built-section-text">{sec.content}</p>
                 </div>
               ))}
             </div>

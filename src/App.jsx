@@ -86,7 +86,7 @@ function Hero() {
           </motion.div>
           <motion.h1 className="hero__name"
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.8, ease: [0.16,1,0.3,1] }}>
-            Abhilash Reddy
+            Abhilash Reddy Sannareddy
           </motion.h1>
           <motion.p className="hero__positioning"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.6 }}>
@@ -94,7 +94,7 @@ function Hero() {
           </motion.p>
           <motion.p className="hero__thesis"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.7 }}>
-            Problem-driven engineer specializing in AI, Agentic Systems, and Full-Stack Development. I focus on discovering root causes and building scalable solutions at the intersection of technology, product, and entrepreneurship. Experienced in AI automation, intelligent workflows, and founder of a 700+ member innovation ecosystem transforming problems into validated ventures.
+            I’m a problem-driven engineer who believes meaningful products begin with understanding the problem deeply not jumping straight to a solution. Working at the intersection of AI, Product, and Entrepreneurship, I uncover root causes, challenge assumptions, understand user and business needs, and identify opportunities worth solving. I build Agentic AI systems, intelligent automation workflows, and full-stack products that turn ambiguous problems into practical, scalable solutions. Beyond technology, I founded a 700+ member innovation ecosystem, creating opportunities for students to move from problems to ideas, products, patentable innovations, and ventures.
           </motion.p>
           <motion.div className="hero__flow"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75, duration: 0.6 }}>

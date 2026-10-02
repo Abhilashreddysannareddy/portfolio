@@ -221,22 +221,50 @@ const SKILL_CATEGORIES = [
   {
     title: "Product Management",
     icon: <Crosshair size={22} strokeWidth={1.5} />,
-    skills: ["Product Discovery", "User Research", "Problem Framing", "Roadmapping", "Prioritization", "Stakeholder Management", "A/B Testing"]
+    skills: [
+      { name: "Product Discovery", lucide: <Lightbulb size={16} /> },
+      { name: "User Research", lucide: <Users size={16} /> },
+      { name: "Problem Framing", lucide: <Crosshair size={16} /> },
+      { name: "Roadmapping", lucide: <Workflow size={16} /> },
+      { name: "Prioritization", lucide: <BarChart size={16} /> },
+      { name: "Stakeholder Management", lucide: <Users size={16} /> },
+      { name: "A/B Testing", lucide: <Rocket size={16} /> }
+    ]
   },
   {
     title: "AI & Agentic Systems",
     icon: <Brain size={22} strokeWidth={1.5} />,
-    skills: ["LLMs", "Agentic AI (LangGraph, LangChain, LangSmith)", "AI Workflow Automation (n8n)", "Prompt Engineering"]
+    skills: [
+      { name: "LLMs", lucide: <Brain size={16} /> },
+      { name: "Agentic AI (LangGraph, LangChain, LangSmith)", devicon: "devicon-python-plain" },
+      { name: "AI Workflow Automation (n8n)", lucide: <Workflow size={16} /> },
+      { name: "Prompt Engineering", lucide: <PenTool size={16} /> }
+    ]
   },
   {
     title: "Business & Analytics",
     icon: <BarChart size={22} strokeWidth={1.5} />,
-    skills: ["SQL", "Power BI", "MS Excel", "Go-to-Market Strategy", "KPI Tracking", "Competitive Analysis"]
+    skills: [
+      { name: "SQL", devicon: "devicon-azuresqldatabase-plain colored" },
+      { name: "Power BI", lucide: <BarChart size={16} /> },
+      { name: "MS Excel", lucide: <Database size={16} /> },
+      { name: "Go-to-Market Strategy", lucide: <Rocket size={16} /> },
+      { name: "KPI Tracking", lucide: <BarChart size={16} /> },
+      { name: "Competitive Analysis", lucide: <Crosshair size={16} /> }
+    ]
   },
   {
     title: "Development & Cloud",
     icon: <Code size={22} strokeWidth={1.5} />,
-    skills: ["Python", "Java", "JavaScript (React, Node.js)", "AWS", "GCP", "Firebase", "Git"]
+    skills: [
+      { name: "Python", devicon: "devicon-python-plain colored" },
+      { name: "Java", devicon: "devicon-java-plain colored" },
+      { name: "JavaScript (React, Node.js)", devicon: "devicon-javascript-plain colored" },
+      { name: "AWS", devicon: "devicon-amazonwebservices-plain-wordmark colored" },
+      { name: "GCP", devicon: "devicon-googlecloud-plain colored" },
+      { name: "Firebase", devicon: "devicon-firebase-plain colored" },
+      { name: "Git", devicon: "devicon-git-plain colored" }
+    ]
   }
 ];
 
@@ -259,9 +287,16 @@ function Skills() {
                 <h3 className="skill-title">{cat.title}</h3>
               </div>
               <ul className="skill-list" role="list">
-                {cat.skills.map(skill => (
-                  <li key={skill} className="skill-item">
-                    <span className="skill-dot" aria-hidden="true"/>{skill}
+                {cat.skills.map((skill, j) => (
+                  <li key={j} className="skill-item">
+                    <span className="skill-dot" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent' }} aria-hidden="true">
+                      {skill.devicon ? (
+                        <i className={skill.devicon} style={{ fontSize: '18px' }}></i>
+                      ) : (
+                        skill.lucide
+                      )}
+                    </span>
+                    {skill.name}
                   </li>
                 ))}
               </ul>

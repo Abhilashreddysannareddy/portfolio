@@ -24,12 +24,12 @@ const inViewX = (delay = 0, x = -24) => ({
 
 /* ── Nav ───────────────────────────────────────── */
 const NAV_ITEMS = [
+  { label: 'About', href: '#about' },
   { label: 'Work', href: '#work' },
   { label: 'How I Think', href: '#how-i-think' },
   { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
   { label: 'Ventures', href: '#ventures' },
-  { label: 'Story', href: '#story' },
 ];
 
 function Nav() {
@@ -143,12 +143,39 @@ function Hero() {
           </div>
         ))}
       </motion.div>
-      <a href="#how-i-think" className="scroll-cue" aria-label="Scroll down">
+      <a href="#about" className="scroll-cue" aria-label="Scroll down">
         <div className="scroll-line" aria-hidden="true" />
       </a>
     </section>
   );
 }
+
+/* ── About Manifesto ───────────────────────────── */
+function About() {
+  return (
+    <section id="about" className="section section--tight" style={{ paddingBottom: 0 }}>
+      <div className="container">
+        <motion.div className="about-manifesto" {...inView()}>
+          <h2 className="about-greeting">
+            I am Abhilash Reddy Sannareddy — an engineer who doesn't just build solutions, but deeply investigates whether we are solving the right problem.
+          </h2>
+          <div className="about-text-cols">
+            <p>
+              <strong>Problem-driven Computer Science Engineering student</strong> specializing in Artificial Intelligence, Machine Learning, Agentic AI Systems, and Full-Stack Development. Passionate about problem discovery, uncovering root causes, understanding user and business needs, and building scalable solutions at the intersection of technology, product innovation, and entrepreneurship.
+            </p>
+            <p>
+              <strong>Experienced in AI-powered automation systems</strong>, intelligent workflows, and product-driven solutions. With hands-on experience in Agentic AI, workflow orchestration, startup operations, and business process automation. Skilled at translating ambiguous challenges into practical, user-centric solutions through technical expertise and product thinking.
+            </p>
+            <p>
+              <strong>Founder of a 700+ member innovation ecosystem.</strong> Facilitating 100+ internships, supporting 10+ patentable projects, and helping students transform identified problems into validated ideas, products, and ventures through interdisciplinary collaboration, industry engagement, and startup-driven innovation.
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 
 /* ── How I Think ───────────────────────────────── */
 const THINK_STEPS = [
@@ -559,7 +586,12 @@ const BUILT_SYSTEMS = [
     label: 'BUILT · Full-Stack + IoT',
     title: 'Cloud Billing & Order Management',
     brief: 'Local restaurants struggled with expensive, hardware-heavy POS systems tied to dedicated computers.',
-    desc: 'I built a cloud-based billing platform using MQTT over ESP microcontrollers. This enabled standard thermal printers to receive orders directly from the cloud without requiring a dedicated PC, fundamentally changing the cost structure for small restaurants.',
+    sections: [
+      { label: 'The Problem', icon: '⚑', content: 'Restaurants faced high upfront costs because standard billing required dedicated PCs to route orders to thermal printers.' },
+      { label: 'The Idea', icon: '◈', content: 'If thermal printers could connect directly to the cloud, the expensive PC layer could be entirely eliminated.' },
+      { label: 'The Approach', icon: '◎', content: 'I built a cloud billing platform using MQTT over ESP microcontrollers, enabling printers to fetch orders directly from the cloud.' },
+      { label: 'The Impact', icon: '◇', content: 'Cost structure fundamentally changed for small restaurants. Scaled order volume from ~25 to 150+ per day during pilot.' }
+    ],
     metric: { val: '6x', lbl: 'Order volume scaled', context: '~25 to 100–150+ orders/day in documented pilot' },
     tech: ['React', 'Node.js', 'MQTT', 'ESP8266/ESP32', 'Thermal Printers'],
     recognition: null,
@@ -568,7 +600,12 @@ const BUILT_SYSTEMS = [
     label: 'BUILT · AI + IoT · Winner',
     title: 'AI Smart Agriculture Platform',
     brief: 'The agricultural value chain was heavily fragmented: seed procurement, crop planning, and monitoring were disconnected.',
-    desc: 'I developed an ML and IoT platform that analyzes 6+ soil and environmental parameters (NPK, moisture, temperature, humidity, pH). It provides data-driven crop recommendations and automates irrigation, bridging the gap from farm to market.',
+    sections: [
+      { label: 'The Problem', icon: '⚑', content: 'Farmers make critical decisions (seeds, irrigation) in silos without real-time data, leading to low yield and resource waste.' },
+      { label: 'The Idea', icon: '◈', content: 'A unified platform that connects soil health data directly to crop selection and automated irrigation.' },
+      { label: 'The Approach', icon: '◎', content: 'Developed an ML + IoT platform analyzing 6+ soil parameters (NPK, moisture, pH) to provide data-driven crop recommendations and trigger smart irrigation.' },
+      { label: 'The Impact', icon: '◇', content: 'Achieved 98.4% prediction accuracy and won the Prototyping Contest by bridging the gap from farm to market.' }
+    ],
     metric: { val: '98.4%', lbl: 'ML prediction accuracy', context: 'Based on cross-validation of 5 key soil parameters' },
     tech: ['Python', 'Machine Learning', 'IoT Sensors', 'React', 'Cloud Firestore'],
     recognition: 'Winner — Prototyping Contest',
@@ -577,7 +614,12 @@ const BUILT_SYSTEMS = [
     label: 'BUILT · AI/ML Decision Support',
     title: 'Precision Bid Management System',
     brief: 'Contractors were losing bids or taking unprofitable projects due to manual, suboptimal bid evaluation strategies.',
-    desc: 'I built an AI/ML decision-support platform that analyzes historical bids, competitor pricing, material costs, and technical criteria. It surfaces highly competitive, profitable bidding strategies by replacing gut-feeling with predictive intelligence.',
+    sections: [
+      { label: 'The Problem', icon: '⚑', content: 'Bidding on infrastructure projects relies heavily on gut feeling and manual evaluation, leading to lost contracts or unprofitable wins.' },
+      { label: 'The Idea', icon: '◈', content: 'Historical bidding data contains hidden patterns that can predict the optimal bid price based on competitor behavior and material costs.' },
+      { label: 'The Approach', icon: '◎', content: 'Built an AI/ML decision-support system analyzing historical bids, competitor pricing, and technical criteria using predictive modeling.' },
+      { label: 'The Impact', icon: '◇', content: 'Replaced manual guesswork with a data-driven engine to surface highly competitive, profitable bidding strategies.' }
+    ],
     metric: { val: 'Data-Driven', lbl: 'Bidding Strategy', context: 'Replaced manual guesswork with predictive ML modeling' },
     tech: ['Python', 'Scikit-Learn', 'Pandas', 'Data Visualization', 'Decision Trees'],
     recognition: 'Pragyan Hackathon · Aurigo Software Technologies',
@@ -616,7 +658,18 @@ function BuiltSystemCard({ s, i }) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             style={{ overflow: 'hidden' }}
           >
-            <p className="built-card__desc">{s.desc}</p>
+            <div className="cs-sections" style={{ marginTop: '16px', marginBottom: '24px' }}>
+              {s.sections.map((sec, j) => (
+                <div key={j} className="cs-section-block">
+                  <div className="cs-section-header">
+                    <span className="cs-section-icon">{sec.icon}</span>
+                    <span className="cs-section-label">{sec.label}</span>
+                  </div>
+                  <p className="cs-section-text">{sec.content}</p>
+                </div>
+              ))}
+            </div>
+
             <div className="built-card__tech" style={{ marginTop: '16px', marginBottom: '16px' }}>
               {s.tech.map(t => <span key={t} className="built-tech-tag">{t}</span>)}
             </div>
@@ -726,6 +779,9 @@ function Ventures() {
         <div className="ventures-split">
           <motion.div className="venture-card-large" {...inViewX(0.1)}>
             <div className="vc-header">
+              <div className="vc-logo-wrapper">
+                <img src={`${import.meta.env.BASE_URL}yxh.jpeg`} alt="Yantriksha X Hub Logo" className="vc-logo" />
+              </div>
               <span className="vc-date">Feb 2025 – Present · <span className="highlight-role">Founder, Chairman & President</span></span>
               <a href="https://yantrikshaxhub.veltech.edu.in" target="_blank" rel="noopener noreferrer" className="vc-title-link">
                 <h3 className="vc-title">Yantriksha X Hub</h3>
@@ -771,6 +827,9 @@ function Ventures() {
 
           <motion.div className="venture-card-large" {...inViewX(0.2, 24)}>
              <div className="vc-header">
+              <div className="vc-logo-wrapper">
+                <img src={`${import.meta.env.BASE_URL}jbu.jpeg`} alt="JBU Logo" className="vc-logo" />
+              </div>
               <span className="vc-date">Feb 2026 – Present · <span className="highlight-role">Show Director</span></span>
               <a href="https://justbetweenus.veltech.edu.in" target="_blank" rel="noopener noreferrer" className="vc-title-link">
                 <h3 className="vc-title">Just Between Us (JBU)</h3>
@@ -982,6 +1041,7 @@ export default function App() {
       <Nav />
       <main id="main-content">
         <Hero />
+        <About />
         <div className="divider" />
         <HowIThink />
         <div className="divider" />

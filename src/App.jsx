@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, Download, Menu, X, Mail, Phone, ChevronDown, ChevronUp } from 'lucide-react';
+import { 
+  ArrowRight, ArrowUpRight, Download, Menu, X, Mail, Phone, 
+  ChevronDown, ChevronUp, Brain, Rocket, Crosshair, Users, 
+  Code, Globe, Database, PenTool, Lightbulb, Workflow, Languages
+} from 'lucide-react';
 import './App.css';
 
 /* ── Animation helpers ─────────────────────────── */
@@ -39,11 +43,11 @@ function Nav() {
   return (
     <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} role="navigation" aria-label="Main navigation">
       <div className="nav__inner">
-        <a href="#" className="nav__logo" aria-label="Abhilash Reddy — Home">Abhilash</a>
+        <a href="#" className="nav__logo" aria-label="Abhilash Reddy — Home">Abhilash Reddy</a>
         <ul className="nav__links" role="list">
           {NAV_ITEMS.map(n => <li key={n.label}><a href={n.href}>{n.label}</a></li>)}
         </ul>
-        <a href={`${import.meta.env.BASE_URL}resume.pdf`} download className="btn-resume" aria-label="Download resume">
+        <a href={`${import.meta.env.BASE_URL}Abhilash_reddy_CV.pdf`} download className="btn-resume" aria-label="Download resume">
           <Download size={11} /> Resume
         </a>
         <button className="nav__burger" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle menu">
@@ -83,7 +87,7 @@ function Hero() {
           </motion.div>
           <motion.h1 className="hero__name"
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.8, ease: [0.16,1,0.3,1] }}>
-            Abhilash Reddy<br />Sannareddy
+            Abhilash Reddy
           </motion.h1>
           <motion.p className="hero__positioning"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.6 }}>
@@ -110,7 +114,7 @@ function Hero() {
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }}>
             <a href="#work" className="btn-primary" id="explore-work-btn">Explore Work <ArrowRight size={14} /></a>
             <a href="#contact" className="btn-secondary" id="contact-btn">Get in Touch</a>
-            <a href={`${import.meta.env.BASE_URL}resume.pdf`} download className="btn-secondary" id="download-resume-btn">
+            <a href={`${import.meta.env.BASE_URL}Abhilash_reddy_CV.pdf`} download className="btn-secondary" id="download-resume-btn">
               <Download size={13} /> Resume
             </a>
           </motion.div>
@@ -119,7 +123,7 @@ function Hero() {
           initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.4, duration: 0.9, ease: [0.16,1,0.3,1] }}>
           <div className="hero__portrait-frame">
-            <img src={`${import.meta.env.BASE_URL}photo.png`} alt="Abhilash Reddy Sannareddy" loading="eager" />
+            <img src={`${import.meta.env.BASE_URL}photo.png`} alt="Abhilash Reddy" loading="eager" />
             <div className="hero__portrait-overlay" aria-hidden="true" />
           </div>
           <div className="hero__portrait-tag" aria-hidden="true">Product &middot; AI &middot; Entrepreneurship</div>
@@ -147,35 +151,47 @@ function Hero() {
 }
 
 /* ── How I Think ───────────────────────────────── */
-const THINK_STEPS = [
-  { num: '01', title: 'Find the Problem', desc: "Not the symptom. The root cause others overlook." },
-  { num: '02', title: 'Understand the System', desc: "Who is affected? What creates this? What does the current system get wrong?" },
-  { num: '03', title: 'Identify the Opportunity', desc: "Where is the value gap? What is underserved, misunderstood, or unseen?" },
-  { num: '04', title: 'Design the Product', desc: "What specifically should be built? For whom? With what trade-offs?" },
-  { num: '05', title: 'Build the System', desc: "Turn the design into functioning technology. Execute with precision." },
-  { num: '06', title: 'Measure the Outcome', desc: "Did it solve the right problem? What does the evidence say? What changes next?" },
-];
-
 function HowIThink() {
   return (
     <section id="how-i-think" className="section section--tight" aria-labelledby="how-i-think-heading">
       <div className="container">
         <motion.div className="section__header" {...inView()}>
           <div className="sec-label">How I Think</div>
-          <h2 id="how-i-think-heading" className="section__title">A consistent method,<br />across every problem.</h2>
+          <h2 id="how-i-think-heading" className="section__title">The Problem-First<br />Advantage.</h2>
           <p className="section__subtitle">
-            This sequence connects every case study, every system, every venture. Not a framework I adopted — it is how I naturally approach problems.
+            Most builders start with a solution and search for a problem. I start with the root cause.
           </p>
         </motion.div>
-        <motion.div className="thinking-grid" {...inView(0.1)}>
-          {THINK_STEPS.map((step, i) => (
-            <motion.div key={step.num} className="thinking-step" {...inView(0.06 * i)}>
-              <span className="thinking-step__num">{step.num}</span>
-              <div className="thinking-step__title">{step.title}</div>
-              <div className="thinking-step__desc">{step.desc}</div>
-            </motion.div>
-          ))}
-        </motion.div>
+        
+        <div className="think-comparison">
+          <motion.div className="think-others" {...inViewX(0.1)}>
+            <div className="think-header">
+              <span className="think-icon think-icon--bad">✕</span>
+              <h4>The Solution-First Trap</h4>
+            </div>
+            <ul className="think-list">
+              <li>Start with a trendy technology or feature idea.</li>
+              <li>Build the product as quickly as possible.</li>
+              <li>Launch and try to find users for it.</li>
+              <li>Discover if the problem actually existed.</li>
+            </ul>
+            <div className="think-result think-result--bad">Result: Building things nobody wants.</div>
+          </motion.div>
+
+          <motion.div className="think-me" {...inViewX(0.2, 24)}>
+            <div className="think-header">
+              <span className="think-icon think-icon--good">✓</span>
+              <h4>The Problem-First Approach</h4>
+            </div>
+            <ul className="think-list">
+              <li>Start with an underserved, painful problem.</li>
+              <li>Understand the root cause and system incentives.</li>
+              <li>Identify the precise opportunity gap.</li>
+              <li>Design and build the exact solution needed.</li>
+            </ul>
+            <div className="think-result think-result--good">Result: Building things that create actual value.</div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -185,22 +201,22 @@ function HowIThink() {
 const SKILL_CATEGORIES = [
   {
     title: "Product & Strategy",
-    icon: "🎯",
+    icon: <Crosshair size={22} strokeWidth={1.5} />,
     skills: ["Problem Discovery", "Opportunity Sizing", "Roadmap Planning", "GTM Strategy", "User Research", "Agile & Scrum"]
   },
   {
     title: "AI & Systems Engineering",
-    icon: "🧠",
+    icon: <Brain size={22} strokeWidth={1.5} />,
     skills: ["Agentic AI (LangGraph/LangChain)", "LLM Integration", "RAG Systems", "Prompt Engineering", "Python", "Multi-Agent Architecture"]
   },
   {
     title: "Prototyping & Design",
-    icon: "🛠️",
+    icon: <PenTool size={22} strokeWidth={1.5} />,
     skills: ["React & Frontend UI", "Node.js", "IoT (ESP/MQTT)", "Figma / UI/UX Design", "API Design", "Rapid Prototyping"]
   },
   {
     title: "Leadership & Execution",
-    icon: "⚡",
+    icon: <Rocket size={22} strokeWidth={1.5} />,
     skills: ["Cross-functional Leadership", "0 to 1 Execution", "Event Production", "Ecosystem Building", "Public Speaking", "Stakeholder Management"]
   }
 ];
@@ -220,7 +236,7 @@ function Skills() {
           {SKILL_CATEGORIES.map((cat, i) => (
             <motion.div key={cat.title} className="skill-card" {...inView(0.06 * i)}>
               <div className="skill-card-header">
-                <span className="skill-icon" aria-hidden="true">{cat.icon}</span>
+                <span className="skill-icon-svg" aria-hidden="true">{cat.icon}</span>
                 <h3 className="skill-title">{cat.title}</h3>
               </div>
               <ul className="skill-list" role="list">
@@ -238,7 +254,6 @@ function Skills() {
   );
 }
 
-
 /* ── Case Studies ──────────────────────────────── */
 const CASE_STUDIES = [
   {
@@ -247,6 +262,7 @@ const CASE_STUDIES = [
     title: 'OpportunityOS',
     subtitle: 'Agentic AI for Problem Discovery',
     hook: 'Most teams ask: "How do we build this?" The better question is: "Should we build this at all — and what should we build instead?"',
+    problemBrief: 'Product teams drown in qualitative noise (reviews, tickets) and struggle to find validated, underserved problems before competitors do.',
     sections: [
       {
         label: 'The Problem',
@@ -270,10 +286,10 @@ const CASE_STUDIES = [
       },
     ],
     flow: [
-      { stage: 'Signal Ingestion', desc: 'App reviews · Forums · Social · Support tickets · Search trends' },
-      { stage: 'Agentic Extraction', desc: 'Extraction → Validation → Deduplication → Clustering agents' },
-      { stage: 'Opportunity Scoring', desc: 'Severity · Prevalence · Growth · Underservedness · Feasibility · Novelty' },
-      { stage: 'Opportunity Intelligence', desc: 'Ranked, validated problem-opportunity map for product strategy' },
+      { stage: 'Signal Ingestion', desc: 'App reviews · Forums · Social · Support tickets' },
+      { stage: 'Agentic Extraction', desc: 'Extraction → Validation → Deduplication' },
+      { stage: 'Opportunity Scoring', desc: 'Severity · Prevalence · Growth · Feasibility' },
+      { stage: 'Opportunity Intelligence', desc: 'Ranked, validated problem map for strategy' },
     ],
     tags: ['Agentic AI', 'LangGraph', 'Signal Mining', 'Product Strategy', 'LLMs', 'Multi-Agent Systems'],
   },
@@ -283,6 +299,7 @@ const CASE_STUDIES = [
     title: 'AI Salesperson for E-Commerce',
     subtitle: 'Customer Decision Engine for Commerce',
     hook: 'E-commerce solved logistics and payments. It never solved decision-making. The customer still does all the cognitive work.',
+    problemBrief: 'Customers are overwhelmed by 240+ search results and specs. They abandon purchases because they cannot confidently decide what fits their needs.',
     sections: [
       {
         label: 'The Problem',
@@ -306,10 +323,10 @@ const CASE_STUDIES = [
       },
     ],
     flow: [
-      { stage: 'From', desc: 'Search → 240 results → 8 tabs → spec comparison → confusion → abandonment' },
-      { stage: 'Conversation', desc: 'Intent questions → structured requirements → preference learning' },
-      { stage: 'Shortlist', desc: '2–3 confident, contextually matched options with trade-off explanations' },
-      { stage: 'Refinement', desc: 'Rejection feedback → preference update → better recommendations' },
+      { stage: 'From', desc: 'Search → 240 results → spec comparison → abandonment' },
+      { stage: 'Conversation', desc: 'Intent questions → structured requirements' },
+      { stage: 'Shortlist', desc: '2–3 contextually matched options with trade-offs' },
+      { stage: 'Refinement', desc: 'Rejection feedback → better recommendations' },
     ],
     tags: ['Product Thinking', 'Conversational AI', 'Recommendation Systems', 'E-Commerce', 'Intent Understanding'],
   },
@@ -319,11 +336,12 @@ const CASE_STUDIES = [
     title: 'Delivery ETA Intelligence Platform',
     subtitle: 'Translating Internal Logistics Data into Customer Intelligence',
     hook: '"Your order will be delivered today." That sentence is almost useless. Logistics companies have the data to do far better.',
+    problemBrief: 'Customers lack precise delivery visibility, generating expensive WISMO (Where Is My Order) tickets, despite logistics companies possessing the underlying data.',
     sections: [
       {
         label: 'The Problem',
         icon: '⚑',
-        content: 'Logistics companies know rider locations, package sequences, and traffic. Yet customers see "Delivery by 11 PM." This opacity generates WISMO (Where Is My Order) tickets that cost money and damage trust.',
+        content: 'Logistics companies know rider locations, package sequences, and traffic. Yet customers see "Delivery by 11 PM." This opacity generates WISMO tickets that cost money and damage trust.',
       },
       {
         label: 'The Insight',
@@ -342,10 +360,10 @@ const CASE_STUDIES = [
       },
     ],
     flow: [
-      { stage: 'Data Inputs', desc: 'Route · GPS · Package sequence · Traffic · Historical patterns · Rider velocity' },
-      { stage: 'Prediction Engine', desc: 'Dynamic confidence-scored windows that narrow in real time' },
-      { stage: 'Customer Layer', desc: '"Expected 2:30–3:15 PM (92% confidence)" not "Delivery by 11 PM"' },
-      { stage: 'Proactive Actions', desc: 'Push notifications at thresholds · Pre-failure re-scheduling triggers' },
+      { stage: 'Data Inputs', desc: 'Route · GPS · Traffic · Historical patterns' },
+      { stage: 'Prediction Engine', desc: 'Dynamic confidence-scored windows' },
+      { stage: 'Customer Layer', desc: '"Expected 2:30–3:15 PM (92% confidence)"' },
+      { stage: 'Proactive Actions', desc: 'Push notifications · Pre-failure re-scheduling' },
     ],
     tags: ['Product Strategy', 'Last-Mile Logistics', 'ML', 'ETA Prediction', 'Customer Experience'],
   },
@@ -355,6 +373,7 @@ const CASE_STUDIES = [
     title: 'Intics — Enterprise AI Product Strategy',
     subtitle: 'From Document Intelligence to Outcome Intelligence',
     hook: 'Most enterprise AI tools produce recommendations. Very few measure whether those recommendations led to better outcomes.',
+    problemBrief: 'Enterprise AI extracts knowledge but lacks an outcome loop. Without measuring if an AI recommendation led to a good business result, intelligence cannot compound.',
     sections: [
       {
         label: 'The Problem',
@@ -378,10 +397,10 @@ const CASE_STUDIES = [
       },
     ],
     flow: [
-      { stage: 'Document', desc: 'Knowledge extracted from enterprise documents and data sources' },
-      { stage: 'Decision', desc: 'AI-surfaced insights translated into decision-relevant recommendations' },
-      { stage: 'Outcome', desc: 'Decisions measured against actual business results — the missing link' },
-      { stage: 'Learning', desc: 'Outcomes feed back to improve future recommendations — compounding intelligence [STRATEGIC]' },
+      { stage: 'Document', desc: 'Knowledge extracted from enterprise data' },
+      { stage: 'Decision', desc: 'AI-surfaced insights translated to recommendations' },
+      { stage: 'Outcome', desc: 'Decisions measured against actual business results' },
+      { stage: 'Learning', desc: 'Outcomes feed back to improve future intelligence' },
     ],
     tags: ['Enterprise AI', 'Product Strategy', 'Outcome Intelligence', 'AI Governance', 'Trust & Explainability'],
   },
@@ -391,6 +410,7 @@ const CASE_STUDIES = [
     title: 'India Battery Lifecycle & Recovery Platform',
     subtitle: 'The Missing Middle in EV Battery Circular Economy',
     hook: 'India is generating thousands of end-of-life EV batteries. The opportunity is not recycling — it is the platform layer nobody has built yet.',
+    problemBrief: 'End-of-life EV batteries are fragmented across dealers and scrapyards, while downstream recyclers cannot access them reliably due to a lack of supply chain infrastructure.',
     sections: [
       {
         label: 'The Problem',
@@ -414,10 +434,10 @@ const CASE_STUDIES = [
       },
     ],
     flow: [
-      { stage: 'Source', desc: 'OEMs · Dealers · Fleet operators · Service centers — all fragmented, uncoordinated' },
-      { stage: 'Grade', desc: 'Standardized assessment: capacity · chemistry · condition · safety profile' },
-      { stage: 'Aggregate', desc: 'Asset-light batching with full chain-of-custody tracking' },
-      { stage: 'Route', desc: 'Refurbishable → Refurbisher · Second-life → Partner · EOL → Recycler [RESEARCH]' },
+      { stage: 'Source', desc: 'OEMs · Dealers · Fleet operators — all fragmented' },
+      { stage: 'Grade', desc: 'Assessment: capacity · chemistry · safety profile' },
+      { stage: 'Aggregate', desc: 'Asset-light batching with chain-of-custody tracking' },
+      { stage: 'Route', desc: 'Refurbishable → Refurbisher · EOL → Recycler' },
     ],
     tags: ['Startup Strategy', 'Circular Economy', 'EV Batteries', 'Platform Thinking', 'Asset-Light Model'],
   },
@@ -434,6 +454,11 @@ function CaseStudyCard({ cs, i }) {
       </div>
       <h3 id={`cs-title-${cs.index}`} className="cs-title">{cs.title}</h3>
       <p className="cs-subtitle">{cs.subtitle}</p>
+      
+      <p className="cs-problem-brief">
+        <span className="cs-problem-brief-icon"><Crosshair size={14}/> Core Problem Identified:</span> {cs.problemBrief}
+      </p>
+
       <p className="cs-hook">{cs.hook}</p>
 
       <div className="cs-flow-section">
@@ -512,28 +537,32 @@ const BUILT_SYSTEMS = [
   {
     label: 'BUILT · Full-Stack + IoT',
     title: 'Cloud Billing & Order Management',
-    desc: 'Local restaurants faced expensive, hardware-heavy POS systems. Root constraint: printers required dedicated computers. Built a cloud-based billing platform using MQTT over ESP — enabling thermal printers to receive orders directly from the cloud without dedicated hardware.',
+    brief: 'Local restaurants struggled with expensive, hardware-heavy POS systems tied to dedicated computers.',
+    desc: 'I built a cloud-based billing platform using MQTT over ESP microcontrollers. This enabled standard thermal printers to receive orders directly from the cloud without requiring a dedicated PC, fundamentally changing the cost structure for small restaurants.',
     metric: { val: '6x', lbl: 'Order volume scaled', context: '~25 to 100–150+ orders/day in documented pilot' },
-    flow: ['Restaurant', 'Cloud Platform', 'MQTT', 'ESP', 'Thermal Printer'],
+    tech: ['React', 'Node.js', 'MQTT', 'ESP8266/ESP32', 'Thermal Printers'],
     recognition: null,
   },
   {
     label: 'BUILT · AI + IoT · Winner',
     title: 'AI Smart Agriculture Platform',
-    desc: 'Fragmented agricultural value chain: seed procurement, crop planning, monitoring and selling were disconnected. Built an ML + IoT platform analyzing 6+ soil and environmental parameters to enable data-driven crop recommendations and irrigation optimization.',
-    metric: { val: '98.4%', lbl: 'ML prediction accuracy', context: 'NPK · Soil moisture · Temperature · Humidity · pH' },
-    flow: ['Seed Procurement', 'Crop Planning', 'Farm Monitoring', 'AI Irrigation', 'Produce Selling'],
+    brief: 'The agricultural value chain was heavily fragmented: seed procurement, crop planning, and monitoring were disconnected.',
+    desc: 'I developed an ML and IoT platform that analyzes 6+ soil and environmental parameters (NPK, moisture, temperature, humidity, pH). It provides data-driven crop recommendations and automates irrigation, bridging the gap from farm to market.',
+    metric: { val: '98.4%', lbl: 'ML prediction accuracy', context: 'Based on cross-validation of 5 key soil parameters' },
+    tech: ['Python', 'Machine Learning', 'IoT Sensors', 'React', 'Cloud Firestore'],
     recognition: 'Winner — Prototyping Contest',
   },
   {
     label: 'BUILT · AI/ML Decision Support',
     title: 'Precision Bid Management System',
-    desc: 'Manual bid evaluation created suboptimal contractor strategies. Built an AI/ML decision-support platform analyzing historical bids, competitor pricing, material costs and 10+ parameters to surface competitive, profitable bidding strategies.',
-    metric: { val: '10+', lbl: 'Parameters analyzed', context: 'Historical · Competitor · Pricing · Technical criteria' },
-    flow: ['Historical Bids', 'Competitor Data', 'Pricing Trends', 'ML Engine', 'Decision Support'],
+    brief: 'Contractors were losing bids or taking unprofitable projects due to manual, suboptimal bid evaluation strategies.',
+    desc: 'I built an AI/ML decision-support platform that analyzes historical bids, competitor pricing, material costs, and technical criteria. It surfaces highly competitive, profitable bidding strategies by replacing gut-feeling with predictive intelligence.',
+    metric: { val: 'Data-Driven', lbl: 'Bidding Strategy', context: 'Replaced manual guesswork with predictive ML modeling' },
+    tech: ['Python', 'Scikit-Learn', 'Pandas', 'Data Visualization', 'Decision Trees'],
     recognition: 'Pragyan Hackathon · Aurigo Software Technologies',
   },
 ];
+
 
 function BuiltSystems() {
   return (
@@ -543,7 +572,7 @@ function BuiltSystems() {
           <div className="sec-label">Built Systems</div>
           <h2 id="built-systems-heading" className="section__title">Not just strategy.<br />Actual execution.</h2>
           <p className="section__subtitle">
-            These are systems I actually built and tested — distinct from the case studies above, which are research and strategy frameworks.
+            These are systems I actually built and tested — translating strategy into functional, deployed technology.
           </p>
         </motion.div>
         <div className="built-grid">
@@ -551,15 +580,16 @@ function BuiltSystems() {
             <motion.div key={s.title} className="built-card" {...inView(0.08 * i)}>
               <span className="built-card__label">{s.label}</span>
               <h3 className="built-card__title">{s.title}</h3>
-              <p className="built-card__desc">{s.desc}</p>
-              <div className="built-flow">
-                {s.flow.map((step, j) => (
-                  <div key={j} className="built-flow-step">
-                    <span>{step}</span>
-                    {j < s.flow.length - 1 && <div className="built-flow-arrow" aria-hidden="true" />}
-                  </div>
-                ))}
+              
+              <div className="built-card__brief">
+                <strong>Problem:</strong> {s.brief}
               </div>
+              <p className="built-card__desc">{s.desc}</p>
+              
+              <div className="built-card__tech">
+                {s.tech.map(t => <span key={t} className="built-tech-tag">{t}</span>)}
+              </div>
+
               <div className="built-card__metric">
                 <span className="built-metric-val">{s.metric.val}</span>
                 <div>
@@ -793,12 +823,12 @@ function Achievements() {
 
 /* ── My Story ──────────────────────────────────── */
 const STORY_STEPS = [
-  { n: '01', stage: 'Curiosity', title: 'How does it work?', text: 'Started by being curious — not about a specific field, but about how things work. That curiosity pointed toward Computer Science and AI.' },
-  { n: '02', stage: 'Engineering', title: 'Learning to build', text: 'Engineering taught me how to build technology: systems, algorithms, architecture, code that actually runs. This foundation never goes away.' },
-  { n: '03', stage: 'Building', title: 'Projects, hackathons, execution', text: "Through projects and hackathons, I learned what engineering alone does not teach: the distance between a working system and a product someone actually uses." },
-  { n: '04', stage: 'Problem Discovery', title: 'What should we build?', text: 'Increasingly, I found myself asking different questions. Not "how do we solve this?" but "what problem are we actually solving? Is this the biggest problem worth solving?"' },
-  { n: '05', stage: 'Product Thinking', title: 'Engineering + Product + Business', text: 'Product Management is not a departure from engineering. It expands capability: understanding customers, discovering problems, prioritizing ruthlessly, connecting technology to business value.' },
-  { n: '06', stage: 'Entrepreneurship', title: 'The long-term direction', text: 'Engineering teaches how to build technology. Product teaches how to build products. Business teaches how to build companies. Entrepreneurship brings them together.' },
+  { n: '01', stage: 'Curiosity', title: 'How does it work?', text: 'It started with being curious about how things work under the hood. That pointed me toward Computer Science and AI.' },
+  { n: '02', stage: 'Engineering', title: 'Learning to build', text: 'Engineering taught me systems, algorithms, and architecture. It taught me exactly how to build technology that works.' },
+  { n: '03', stage: 'The Realization', title: 'The most expensive mistake', text: "Through hackathons and early projects, I realized something critical: The most expensive mistake isn't writing bad code. It's writing perfect code for the wrong problem." },
+  { n: '04', stage: 'Problem Discovery', title: 'Asking a different question', text: 'While everyone else was asking "how do we solve this?", I started asking "are we solving the right problem? Is this even worth solving?"' },
+  { n: '05', stage: 'Product Thinking', title: 'Connecting tech to value', text: 'Product Management expands engineering capability. It is the connective tissue between a technical solution, a user\'s pain point, and a business outcome.' },
+  { n: '06', stage: 'Entrepreneurship', title: 'Building the ecosystem', text: 'Engineering is the how. Product is the what. Business is the why. Entrepreneurship is bringing them all together to create actual impact.' },
 ];
 
 function MyStory() {
@@ -832,7 +862,7 @@ function MyStory() {
           </motion.div>
           <motion.div className="story-aside" {...inViewX(0.2, 24)}>
             <div className="story-portrait">
-              <img src={`${import.meta.env.BASE_URL}photo.png`} alt="Abhilash Reddy Sannareddy" loading="lazy" />
+              <img src={`${import.meta.env.BASE_URL}photo.png`} alt="Abhilash Reddy" loading="lazy" />
             </div>
             <div className="story-edu">
               <div className="edu-row">
@@ -843,11 +873,13 @@ function MyStory() {
                 <div className="story-edu-cgpa">9.19</div>
               </div>
             </div>
-            <div style={{ marginTop: 12 }}>
-              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 8 }}>Languages</p>
+            <div style={{ marginTop: 24, padding: '20px', background: 'var(--bg-2)', borderRadius: 'var(--r-md)', border: '1px solid var(--surface-border)' }}>
+              <p style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 12 }}>
+                <Languages size={14} /> Languages
+              </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {[['English', 'Professional'], ['Telugu', 'Native'], ['Hindi', 'Professional'], ['Tamil', 'Working'], ['German', 'Basic'], ['Kannada', 'Basic']].map(([l, lv]) => (
-                  <span key={l} className="cs-tag">{l} · <span style={{ color: 'var(--text-tertiary)' }}>{lv}</span></span>
+                  <span key={l} className="cs-tag" style={{ background: 'var(--bg-0)' }}>{l} · <span style={{ color: 'var(--text-tertiary)' }}>{lv}</span></span>
                 ))}
               </div>
             </div>
@@ -891,7 +923,6 @@ function Contact() {
         </div>
         <div className="footer">
           <span>© 2025–2026 Abhilash Reddy Sannareddy</span>
-          <span>Built with React + Framer Motion</span>
         </div>
       </div>
     </section>

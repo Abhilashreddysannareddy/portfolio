@@ -1614,3 +1614,173 @@
 @media (max-width: 900px) {
   .ventures-split { grid-template-columns: 1fr; }
 }
+
+/* ══════════════════════════════════════════════════
+   UPDATES FOR HOW I THINK, BUILT SYSTEMS, SKILLS
+══════════════════════════════════════════════════ */
+
+/* How I Think Comparison Layout */
+.think-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.think-others, .think-me {
+  background: var(--bg-0);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-md);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+}
+.think-others {
+  opacity: 0.6; /* Grayed out to emphasize the right side */
+  border-style: dashed;
+}
+.think-me {
+  background: var(--bg-1);
+  box-shadow: var(--surface-shadow-card);
+  border-color: var(--surface-border-strong);
+}
+.think-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.think-header h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+.think-icon {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+.think-icon--bad {
+  background: #fdf2f2;
+  color: #d94646;
+  border: 1px solid #fadcdc;
+}
+.think-icon--good {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #dcfce7;
+}
+.think-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-grow: 1;
+}
+.think-list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.think-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--text-tertiary);
+}
+.think-me .think-list li {
+  color: var(--text-primary);
+}
+.think-me .think-list li::before {
+  color: var(--text-link);
+}
+.think-result {
+  padding: 16px;
+  border-radius: var(--r-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.think-result--bad {
+  background: var(--surface-border);
+  color: var(--text-secondary);
+}
+.think-result--good {
+  background: rgba(124, 92, 58, 0.08); /* Using the warm link-soft color */
+  border: 1px solid var(--link-line);
+  color: var(--text-link);
+}
+
+/* Built Systems Enhancement */
+.built-card__brief {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  padding: 12px;
+  background: var(--bg-2);
+  border-left: 2px solid var(--link-line);
+  border-radius: 0 var(--r-xs) var(--r-xs) 0;
+}
+.built-card__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.built-tech-tag {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  padding: 3px 8px;
+  border: 1px solid var(--surface-border);
+  border-radius: 4px;
+}
+
+/* Case Study Problem Brief */
+.cs-problem-brief {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: var(--bg-2);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--surface-border);
+}
+.cs-problem-brief-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-link);
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+/* Skills SVG styling */
+.skill-icon-svg {
+  color: var(--text-link);
+  display: inline-flex;
+  padding: 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-sm);
+  margin-bottom: 16px;
+}
+
+@media (max-width: 800px) {
+  .think-comparison { grid-template-columns: 1fr; }
+}

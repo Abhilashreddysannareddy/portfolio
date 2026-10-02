@@ -237,6 +237,11 @@ const SKILL_CATEGORIES = [
     title: "Development & Cloud",
     icon: <Code size={22} strokeWidth={1.5} />,
     skills: ["Python", "Java", "JavaScript (React, Node.js)", "AWS", "GCP", "Firebase", "Git"]
+  },
+  {
+    title: "Languages",
+    icon: <Languages size={22} strokeWidth={1.5} />,
+    skills: ["English (Professional)", "Telugu (Native)", "Hindi (Professional)", "Tamil (Working)", "German (Basic)"]
   }
 ];
 

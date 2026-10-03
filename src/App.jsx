@@ -80,7 +80,7 @@ function Hero() {
       <motion.div className="hero__inner" style={{ opacity }}>
         <div className="hero__content">
           <motion.div 
-            style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: '16px' }}
+            style={{ fontFamily: 'var(--font-body)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '8px', letterSpacing: '-0.02em' }}
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
             Hi, I am
           </motion.div>

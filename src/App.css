@@ -1,5 +1,5 @@
 /* Global Text Justification */
-p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, .cs-summary, .thinking-step__desc {
+p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, .cs-summary, .thinking-step__desc, .cs-origin, .built-card__brief, .exp-step-desc {
   text-align: justify;
 }
 /* ══════════════════════════════════════════════════

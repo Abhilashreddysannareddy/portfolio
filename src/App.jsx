@@ -840,7 +840,7 @@ function Ventures() {
                 { val: '100+', lbl: 'Patents' },
               ].map(s => (
                 <div key={s.lbl} className="ys-stat">
-                  <span className="ys-val"><JackpotCounter text={s.val} /></span>
+                  <span className="ys-val">{s.val}</span>
                   <span className="ys-lbl">{s.lbl}</span>
                 </div>
               ))}
@@ -867,25 +867,25 @@ function Ventures() {
               <li style={{ marginTop: 16 }}>
                 <strong style={{ color: 'var(--text-primary)' }}>Key Episodes Hosted:</strong>
                 <ul style={{ paddingLeft: '1.2rem', marginTop: 8, listStyleType: 'disc', color: 'var(--text-secondary)' }}>
-                  <li>The Founder's Paradox (Idea to Execution)</li>
-                  <li>Building Defensible Moats in Technology</li>
-                  <li>Navigating Early Stage Growth</li>
-                  <li>Scaling Teams from 0 to 1</li>
+                  <li><strong>Episode 1:</strong> Karthik Voleti – Entrepreneur & Founder</li>
+                  <li><strong>Episode 2:</strong> Vel Tech CMT – Collegiate Management Team</li>
+                  <li><strong>Episode 3:</strong> Karen Vincent – Comedian, Actor & Influencer</li>
+                  <li><strong>Episode 4:</strong> Justice Markandey Katju – Former Supreme Court Judge</li>
                 </ul>
               </li>
             </ul>
 
             <div className="yantriksha-stats" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
               <div className="ys-stat">
-                <span className="ys-val"><JackpotCounter text="4" /></span>
+                <span className="ys-val">4</span>
                 <span className="ys-lbl">Live Episodes</span>
               </div>
               <div className="ys-stat">
-                <span className="ys-val"><JackpotCounter text="4" /></span>
+                <span className="ys-val">4</span>
                 <span className="ys-lbl">Industry Speakers</span>
               </div>
               <div className="ys-stat">
-                <span className="ys-val"><JackpotCounter text="300+" /></span>
+                <span className="ys-val">300+</span>
                 <span className="ys-lbl">Students Engaged</span>
               </div>
             </div>
@@ -944,7 +944,7 @@ function Achievements() {
                   { val: '14', lbl: 'Industry Partners' },
                 ].map(s => (
                   <div key={s.lbl}>
-                    <span className="visai-stat-val"><JackpotCounter text={s.val} /></span>
+                    <span className="visai-stat-val">{s.val}</span>
                     <span className="visai-stat-lbl">{s.lbl}</span>
                   </div>
                 ))}

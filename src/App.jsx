@@ -70,25 +70,42 @@ function Nav() {
 
 
 function JackpotCounter({ text }) {
-  const [display, setDisplay] = useState(text);
+  const [display, setDisplay] = useState("0");
   useEffect(() => {
-    let iteration = 0;
-    const interval = setInterval(() => {
-      let result = "";
-      for (let i = 0; i < text.length; i++) {
-        if (i < Math.floor(iteration / 3)) {
-          result += text[i];
-        } else if (/[0-9]/.test(text[i])) {
-          result += Math.floor(Math.random() * 10).toString();
-        } else {
-          result += text[i];
-        }
+    const match = text.match(/([^\d]*)([\d.,]+)([^\d]*)/);
+    if (!match) {
+      setDisplay(text);
+      return;
+    }
+    const prefix = match[1];
+    const numStr = match[2].replace(/,/g, '');
+    const suffix = match[3];
+    const targetNum = parseFloat(numStr);
+    const isFloat = numStr.includes('.');
+    
+    if (isNaN(targetNum)) {
+      setDisplay(text);
+      return;
+    }
+    
+    let startTimestamp = null;
+    const duration = 2000;
+    
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const current = easeProgress * targetNum;
+      
+      setDisplay(prefix + (isFloat ? current.toFixed(2) : Math.floor(current)) + suffix);
+      
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setDisplay(text);
       }
-      setDisplay(result);
-      if (Math.floor(iteration / 3) >= text.length) clearInterval(interval);
-      iteration++;
-    }, 40);
-    return () => clearInterval(interval);
+    };
+    window.requestAnimationFrame(step);
   }, [text]);
   return <span>{display}</span>;
 }
@@ -812,7 +829,7 @@ function Ventures() {
                 { val: '100+', lbl: 'Patents' },
               ].map(s => (
                 <div key={s.lbl} className="ys-stat">
-                  <span className="ys-val">{s.val}</span>
+                  <span className="ys-val"><JackpotCounter text={s.val} /></span>
                   <span className="ys-lbl">{s.lbl}</span>
                 </div>
               ))}
@@ -838,18 +855,18 @@ function Ventures() {
               </li>
             </ul>
 
-            <div className="jbu-stats">
-              <div className="jbu-stat-item">
-                <span className="jbu-stat-val">4</span>
-                <span className="jbu-stat-lbl">Live Episodes</span>
+            <div className="yantriksha-stats" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+              <div className="ys-stat">
+                <span className="ys-val"><JackpotCounter text="4" /></span>
+                <span className="ys-lbl">Live Episodes</span>
               </div>
-              <div className="jbu-stat-item">
-                <span className="jbu-stat-val">4</span>
-                <span className="jbu-stat-lbl">Industry Speakers</span>
+              <div className="ys-stat">
+                <span className="ys-val"><JackpotCounter text="4" /></span>
+                <span className="ys-lbl">Industry Speakers</span>
               </div>
-              <div className="jbu-stat-item">
-                <span className="jbu-stat-val">300+</span>
-                <span className="jbu-stat-lbl">Students Engaged</span>
+              <div className="ys-stat">
+                <span className="ys-val"><JackpotCounter text="300+" /></span>
+                <span className="ys-lbl">Students Engaged</span>
               </div>
             </div>
 
@@ -898,7 +915,7 @@ function Achievements() {
           </motion.div>
           <motion.div {...inViewX(0.2, 24)}>
             <div className="visai-highlight">
-              <h3 className="visai-title">VISAI 2026 — National AI Competition</h3>
+              <h3 className="visai-title">VISAI 2026 — 16th International Project Expo and Hackathon</h3>
               <div className="visai-stats">
                 {[
                   { val: '720+', lbl: 'Students' },
@@ -907,7 +924,7 @@ function Achievements() {
                   { val: '14', lbl: 'Industry Partners' },
                 ].map(s => (
                   <div key={s.lbl}>
-                    <span className="visai-stat-val">{s.val}</span>
+                    <span className="visai-stat-val"><JackpotCounter text={s.val} /></span>
                     <span className="visai-stat-lbl">{s.lbl}</span>
                   </div>
                 ))}

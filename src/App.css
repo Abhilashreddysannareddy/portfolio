@@ -1901,3 +1901,145 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
   color: var(--text-secondary);
   line-height: 1.6;
 }
+
+/* ══════════════════════════════════════════════════
+   COMPREHENSIVE MOBILE OPTIMIZATION
+══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Global Layout */
+  .section {
+    padding: 60px 0;
+  }
+  .section--tight {
+    padding: 40px 0;
+  }
+  .container {
+    padding: 0 20px;
+  }
+
+  /* Typography Scaling */
+  .hero__title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+  .section__title {
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+  .hero__thesis, .section__subtitle {
+    font-size: 0.95rem;
+  }
+
+  /* Hero Adjustments */
+  .hero__flow {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .flow-node {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+  }
+  .hero__metrics {
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+  .hero__metric {
+    min-width: 45%;
+    text-align: center;
+  }
+
+  /* Case Studies & Built Systems */
+  .cs-card {
+    padding: 24px;
+  }
+  .cs-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .cs-title-wrap {
+    text-align: left;
+  }
+  .cs-title {
+    font-size: 1.4rem;
+  }
+  .cs-summary {
+    font-size: 0.95rem;
+  }
+  .cs-flow {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .cs-sections {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Built Systems Layout */
+  .built-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Experience / Story / Ventures Layouts */
+  .exp-layout, .story-layout, .ventures-split, .achievements-layout, .contact-inner {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .exp-left, .exp-right, .story-aside {
+    position: static;
+    top: auto;
+  }
+  
+  .think-comparison {
+    flex-direction: column;
+  }
+  .thinking-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Ventures split */
+  .ventures-split {
+    grid-template-columns: 1fr;
+  }
+  .venture-card-large {
+    padding: 24px;
+  }
+  .yantriksha-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px;
+  }
+
+  /* Contact */
+  .contact-question {
+    font-size: 2rem;
+  }
+  .clink {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+  .section__title {
+    font-size: 1.75rem;
+  }
+  .cs-card {
+    padding: 16px;
+  }
+  .yantriksha-stats {
+    grid-template-columns: 1fr !important;
+  }
+  .hero__cta {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero__cta a {
+    width: 100%;
+    justify-content: center;
+  }
+}

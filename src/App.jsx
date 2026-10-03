@@ -434,29 +434,7 @@ const CASE_STUDIES = [
       { stage: 'Route', desc: 'Refurbishers · Second-life · Recyclers' }
     ],
     tags: ['Startup Strategy', 'Circular Economy', 'EV Batteries', 'Asset-Light']
-  },
-  {
-    index: '06',
-    type: 'RESEARCH & INNOVATION',
-    title: 'Agentic AI & Enterprise Strategy',
-    subtitle: 'Exploring the Frontier of Problem Discovery & AI Governance',
-    summary: 'Research and conceptual work focused on the emerging problem of identifying what should be built rather than only optimizing how known solutions are built.',
-    sections: [
-      { label: 'Problem Discovery Intelligence', icon: '⚑', content: 'Focusing on user-signal mining, requirements mining, and weak-signal detection to identify high-value opportunities before they become obvious trends.' },
-      { label: 'Agentic Orchestration', icon: '◈', content: 'Exploring multi-agent systems, retrieval-grounded reasoning, opportunity evaluation, and human-in-the-loop product decision making.' },
-      { label: 'Enterprise AI Strategy', icon: '◎', content: 'Strategic analysis on how enterprise AI platforms can evolve across Document Intelligence, Decision Intelligence, and Outcome Intelligence.' },
-      { label: 'Future Operating Intelligence', icon: '◇', content: 'Focus areas included business outcomes, decision quality, explainability, trust, workflow execution, data sovereignty, and predictive operational intelligence.' },
-      { label: 'The Impact', icon: '✦', content: 'Bridges the gap between AI as a novelty and AI as a core strategic driver, establishing frameworks for sovereign data governance and outcome-driven execution.' }
-    ],
-    flow: [
-      { stage: 'Discovery', desc: 'Weak-signal detection & requirements mining' },
-      { stage: 'Orchestration', desc: 'Multi-agent retrieval & reasoning' },
-      { stage: 'Evaluation', desc: 'Human-in-the-loop product decisions' },
-      { stage: 'Evolution', desc: 'Transitioning to Enterprise Operating Intelligence' }
-    ],
-    tags: ['Agentic AI', 'Innovation', 'Research', 'Enterprise Strategy']
-  }
-];
+  }];
 
 function CaseStudyCard({ cs, i }) {
   const [expanded, setExpanded] = useState(false);

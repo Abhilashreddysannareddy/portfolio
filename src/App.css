@@ -1,5 +1,5 @@
 /* Global Text Justification */
-p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, .cs-summary, .thinking-step__desc, .cs-origin, .exp-step-desc {
+p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, .cs-summary, .thinking-step__desc, .cs-origin, .exp-step-desc, .built-card__brief, .think-list li {
   text-align: justify;
 }
 /* ══════════════════════════════════════════════════
@@ -343,35 +343,25 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
 }
 
 /* Key metrics strip */
-.hero__metrics-wrapper {
+.hero__metrics {
   margin-top: 64px;
+  padding-top: 40px;
   border-top: 1px solid var(--surface-border);
-  border-bottom: 1px solid var(--surface-border);
-  overflow: hidden;
+  max-width: var(--max-w);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--surface-border);
   position: relative;
   z-index: 2;
-  background: var(--bg-0);
-  width: 100%;
-  display: flex;
-}
-.hero__metrics-ticker {
-  display: flex;
-  width: max-content;
-  animation: ticker-scroll 30s linear infinite;
-}
-.hero__metrics-track {
-  display: flex;
-}
-@keyframes ticker-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-25%); } /* Translates by exactly one track out of 4 */
 }
 .hero__metric {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 32px 64px;
-  border-right: 1px solid var(--surface-border);
+  background: var(--bg-0);
+  padding: 24px 32px;
 }
 .hero__metric-val {
   font-size: 2rem;

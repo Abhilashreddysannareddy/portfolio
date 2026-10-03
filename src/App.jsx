@@ -24,9 +24,10 @@ const inViewX = (delay = 0, x = -24) => ({
 
 /* ── Nav ───────────────────────────────────────── */
 const NAV_ITEMS = [
-  { label: 'Work', href: '#work' },
   { label: 'How I Think', href: '#how-i-think' },
   { label: 'Skills', href: '#skills' },
+  { label: 'Work', href: '#work' },
+  { label: 'Built', href: '#built-systems' },
   { label: 'Experience', href: '#experience' },
   { label: 'Ventures', href: '#ventures' },
 ];
@@ -65,6 +66,31 @@ function Nav() {
       </AnimatePresence>
     </nav>
   );
+}
+
+
+function JackpotCounter({ text }) {
+  const [display, setDisplay] = useState(text);
+  useEffect(() => {
+    let iteration = 0;
+    const interval = setInterval(() => {
+      let result = "";
+      for (let i = 0; i < text.length; i++) {
+        if (i < Math.floor(iteration / 3)) {
+          result += text[i];
+        } else if (/[0-9]/.test(text[i])) {
+          result += Math.floor(Math.random() * 10).toString();
+        } else {
+          result += text[i];
+        }
+      }
+      setDisplay(result);
+      if (Math.floor(iteration / 3) >= text.length) clearInterval(interval);
+      iteration++;
+    }, 40);
+    return () => clearInterval(interval);
+  }, [text]);
+  return <span>{display}</span>;
 }
 
 /* ── Hero ──────────────────────────────────────── */
@@ -127,25 +153,19 @@ function Hero() {
           <div className="hero__portrait-tag" aria-hidden="true">Product &middot; AI &middot; Entrepreneurship</div>
         </motion.div>
       </motion.div>
-      <motion.div className="hero__metrics-wrapper"
+      <motion.div className="hero__metrics"
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7 }}>
-        <div className="hero__metrics-ticker">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="hero__metrics-track">
-              {[
-                { val: '700+', lbl: 'Students in Ecosystem' },
-                { val: 'Over 75%', lbl: 'Manual Work Eliminated' },
-                { val: '98.4%', lbl: 'AI Prediction Accuracy' },
-                { val: '9.19', lbl: 'CGPA' },
-              ].map(({ val, lbl }) => (
-                <div key={lbl} className="hero__metric">
-                  <span className="hero__metric-val">{val}</span>
-                  <span className="hero__metric-lbl">{lbl}</span>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+        {[
+          { val: '700+', lbl: 'Students in Ecosystem' },
+          { val: 'Over 75%', lbl: 'Manual Work Eliminated' },
+          { val: '98.4%', lbl: 'AI Prediction Accuracy' },
+          { val: '9.19', lbl: 'CGPA' },
+        ].map(({ val, lbl }) => (
+          <div key={lbl} className="hero__metric">
+            <span className="hero__metric-val"><JackpotCounter text={val} /></span>
+            <span className="hero__metric-lbl">{lbl}</span>
+          </div>
+        ))}
       </motion.div>
       <a href="#how-i-think" className="scroll-cue" aria-label="Scroll down">
         <div className="scroll-line" aria-hidden="true" />

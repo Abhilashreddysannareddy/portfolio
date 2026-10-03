@@ -335,7 +335,7 @@ const CASE_STUDIES = [
     type: 'PRODUCT STRATEGY',
     title: 'AI Salesperson for E-Commerce',
     subtitle: 'Customer Decision Engine for Commerce',
-    summary: 'E-commerce has made product discovery highly efficient, but customers still perform much of the product decision-making themselves. The underlying gap identified was not simply product discovery, but the lack of deep customer-intent understanding.',
+    summary: 'E-commerce platforms make customers search, filter, compare, and decide what fits their needs; designed a conversational Customer Decision Engine that understands customer intent through voice/chat, asks decision-relevant questions, learns preferences and rejections, and shifts e-commerce from product search → customer understanding → curated recommendations, narrowing large catalogs to 2–3 confident options.',
     sections: [
       { label: 'The Problem', icon: '⚑', content: 'E-commerce has made product discovery highly efficient, but customers still perform much of the product decision-making themselves. Customers must translate their needs into search queries, determine which specifications matter, apply filters, compare alternatives, interpret technical information, and evaluate trade-offs.' },
       { label: 'Product Thesis', icon: '◈', content: 'The product opportunity is to recreate the intelligence of a good salesperson in a digital environment.' },
@@ -355,7 +355,7 @@ const CASE_STUDIES = [
     type: 'PRODUCT STRATEGY',
     title: 'Delivery ETA Intelligence Platform',
     subtitle: 'Translating Internal Logistics Data into Customer Intelligence',
-    summary: 'Customers often receive broad delivery windows such as "Out for Delivery" or "Delivery by End of Day" even when logistics providers already possess route, rider, GPS, traffic, package-sequence, and delivery-completion information.',
+    summary: 'Customers are forced to keep their day open for broad 9 AM–11 PM delivery windows; proposed a dynamic ETA layer using route, GPS, traffic, OpenBox & customer availability to convert these broad windows into focused, customer aware delivery windows that continuously adapt to changing conditions, reducing waiting uncertainty, WISMO tickets & failed deliveries.',
     sections: [
       { label: 'The Problem', icon: '⚑', content: 'This creates customer uncertainty and can contribute to WISMO support requests, failed delivery attempts, re-delivery costs, and lower customer satisfaction.' },
       { label: 'Root Cause', icon: '◈', content: 'The identified gap was not the absence of logistics intelligence. The problem was that operational visibility remained primarily internal instead of being translated into useful customer-facing delivery predictions.' },
@@ -375,7 +375,7 @@ const CASE_STUDIES = [
     type: 'RESEARCH / CONCEPTUAL FRAMEWORK',
     title: 'OpportunityOS',
     subtitle: 'Agentic AI Product Opportunity Discovery Framework',
-    summary: 'Organizations receive massive volumes of signals through app reviews, social media, developer forums, support tickets, search trends, and community discussions. These signals contain information about frustrations, unmet needs, failures, and emerging opportunities but remain fragmented, noisy, and difficult to synthesize into product opportunities.',
+    summary: 'Companies collect massive user signals across reviews, forums & tickets but struggle to discover which problems are worth solving; designed a multi-agent AI system that converts signals into emerging problems and scores them across severity, prevalence, growth momentum, underservedness, feasibility & novelty, bringing AI from problem solving to problem discovery intelligence.',
     sections: [
       { label: 'Research Question', icon: '⚑', content: 'How can heterogeneous user signals be continuously transformed into validated product opportunities?' },
       { label: 'Core Concept', icon: '◈', content: 'Designed OpportunityOS, a conceptual agentic AI framework that moves from Raw Signals → Problems → Opportunities rather than beginning with an already-defined problem.' },
@@ -383,8 +383,8 @@ const CASE_STUDIES = [
       { label: 'Opportunity Scoring', icon: '◇', content: 'Proposed an auditable opportunity-scoring framework across: Severity, Prevalence, Growth Momentum, Underservedness, Feasibility, and Novelty. Explores the transition from problem-solving intelligence to problem-discovery intelligence.' }
     ],
     flow: [
+      { stage: 'The Shift', desc: 'From Problem Solving → Problem Discovery' },
       { stage: 'Signal Ingestion', desc: 'App reviews · Social · Tickets · Forums' },
-      { stage: 'Agentic Extraction', desc: 'Validation & evidence grounding' },
       { stage: 'Opportunity Synthesis', desc: 'Clustering heterogeneous signals' },
       { stage: 'Scoring', desc: 'Severity · Prevalence · Growth · Feasibility' }
     ],
@@ -395,7 +395,7 @@ const CASE_STUDIES = [
     type: 'STRATEGIC PRODUCT ANALYSIS',
     title: 'Intics — Enterprise AI Strategy',
     subtitle: 'From Document Intelligence to Outcome Intelligence',
-    summary: 'Identified a strategic gap where enterprise AI recommendations can become the endpoint of a workflow, leaving organizations without a systematic mechanism to determine whether those decisions actually produced successful business outcomes.',
+    summary: 'Recognized that Intics’ AI generates strong recommendations with no way to verify whether they worked or to act on them end-to-end; proposed Outcome, Action & Trust layers that let the platform learn from real business results while all customer data stays on-premise, preserving Intics’ sovereign-AI promise.',
     sections: [
       { label: 'Strategic Question', icon: '⚑', content: 'How can enterprise AI move beyond generating recommendations toward measurable business outcomes, workflow execution, trusted decisions, and broader operating intelligence?' },
       { label: 'Strategic Gap', icon: '◈', content: 'Enterprise AI often acts as a recommendation endpoint. Without connecting these recommendations to real-world outcomes, the system cannot learn what actually works.' },
@@ -415,7 +415,7 @@ const CASE_STUDIES = [
     type: 'STARTUP STRATEGY · CIRCULAR ECONOMY',
     title: 'India Battery Lifecycle & Recovery Platform',
     subtitle: 'The Missing Middle in EV Battery Circular Economy',
-    summary: 'Identified fragmentation in the end-of-life EV battery lifecycle. The central product question is: Who collects the battery, assesses its remaining value, determines its appropriate destination, and tracks the lifecycle?',
+    summary: 'Found that India’s announced Li-ion recycling capacity (80,000+ tonnes/yr) is already 2.2× its entire 2025 end-of-life battery supply (∼36,000 tonnes/yr), yet only ∼5,000 tonnes (∼14%) get collected formally each year– so the real bottleneck isn’t recycling capacity, it’s collection; designed an asset-light Find → Collect → Grade → Route platform partnering with existing recyclers to close that feedstock gap ahead of India’s projected 233,000 tonnes/yr EOL volume by 2035.',
     sections: [
       { label: 'Market Gap', icon: '⚑', content: 'The opportunity is not positioned as simply building another recycling company. Existing players already operate across parts of collection, recycling, EPR, and reverse logistics. The identified opportunity is the missing middle between fragmented battery sources and downstream processing.' },
       { label: 'Proposed Product Model', icon: '◈', content: 'Find → Collect → Identify → Test/Assess → Grade → Aggregate → Track → Route.' },
@@ -545,7 +545,7 @@ const BUILT_SYSTEMS = [
   {
     label: 'BUILT · Full-Stack + IoT',
     title: 'Cloud-Based Restaurant Billing & Order Management Platform',
-    brief: 'Designed a low-cost cloud-based billing and order management platform integrating billing, order processing, delivery workflows, and thermal printing into a unified ecosystem.',
+    brief: 'Local restaurants paid for dedicated computers, hardware & upkeep at every billing/printing counter; built a low-cost ESP+MQTT thermal-printing system letting printers receive orders directly, cutting hardware dependency and scaling pilot volume 6× (25 → 150+ orders/day; 9K → 55K orders/year).',
     sections: [
       { label: 'The Problem', icon: '⚑', content: 'Local restaurants often rely on conventional billing and POS infrastructure requiring dedicated computers, hardware, maintenance, and recurring technology costs.' },
       { label: 'Technical Solution', icon: '◎', content: 'Built an ESP-based thermal printing system using MQTT, enabling thermal printers to receive and process orders without requiring a dedicated computer at each printer. Designed a cloud-connected architecture allowing order information to move from the software platform to the printer through a lightweight communication layer.' },
@@ -558,7 +558,7 @@ const BUILT_SYSTEMS = [
   {
     label: 'BUILT · AI/ML Decision Support',
     title: 'Precision Bid Management & Tender Analysis System',
-    brief: 'Designed an AI/ML-powered decision-support platform for tender and bid analysis to help contractors balance competitiveness, probability of winning, and target profitability.',
+    brief: '(Pragyan Hackathon × Aurigo Software) – Contractors manually evaluated technical, financial & competitor data for bids; built an ML-powered decision-support platform analyzing historical bids, pricing & competitor trends to balance competitiveness with target profitability.',
     sections: [
       { label: 'The Problem', icon: '⚑', content: 'Contractors often rely on manual evaluation of technical requirements, financial information, competitor pricing, historical bids, material costs, and bidding trends when preparing tender submissions.' },
       { label: 'Product Approach', icon: '◎', content: 'Analyzed historical bids, contracts, bidding trends, competitor pricing, material costs, and technical and commercial parameters. Used historical bidding information to identify patterns in winning bid prices, competitor pricing trends, material costs, and bidding behavior.' },
@@ -571,7 +571,7 @@ const BUILT_SYSTEMS = [
   {
     label: 'BUILT · AI + IoT · Winner',
     title: 'AI-Powered Smart Agriculture & Farm-to-Market Platform',
-    brief: 'Designed an integrated farm-to-market platform connecting: Seed Procurement → Crop Planning → Farm Monitoring → AI Irrigation → Produce Selling.',
+    brief: '(Winner – Prototyping Contest) – Farmers managed seed procurement, irrigation, monitoring & selling as disconnected processes; integrated IoT sensors (NPK, soil moisture, temperature, pH) with ML across the farm-to-market chain, achieving 98.4% prediction accuracy for crop & irrigation decisions.',
     sections: [
       { label: 'The Problem', icon: '⚑', content: 'Farmers often manage seed procurement, crop planning, irrigation, farm monitoring, and produce selling through fragmented processes.' },
       { label: 'Technical Approach', icon: '◎', content: 'Integrated IoT sensors to monitor agricultural parameters including NPK levels, soil moisture, temperature, humidity, and pH. Applied machine learning to agricultural data for crop recommendations and irrigation decisions. Designed an integrated product ecosystem rather than treating these as separate workflows.' },

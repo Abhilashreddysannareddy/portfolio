@@ -30,6 +30,7 @@ const NAV_ITEMS = [
   { label: 'Built', href: '#built-systems' },
   { label: 'Experience', href: '#experience' },
   { label: 'Ventures', href: '#ventures' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 function Nav() {
@@ -1034,7 +1035,7 @@ function Contact() {
       <div className="container">
         <div className="contact-inner">
           <motion.div className="contact-left" {...inViewX(0)}>
-            <h2 id="contact-heading" className="contact-question">Ready to build<br />something real?</h2>
+            <h2 id="contact-heading" className="contact-question">Ready to identify<br />something real?</h2>
             <p className="contact-sub">I am actively looking for PM roles, AI systems collaborations and opportunities at the intersection of product, technology and entrepreneurship.</p>
           </motion.div>
           <motion.div {...inViewX(0.1, 20)}>

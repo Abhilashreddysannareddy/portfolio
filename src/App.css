@@ -1,5 +1,5 @@
 /* Global Text Justification */
-p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, .cs-summary, .cs-origin, .exp-step-desc, .built-card__brief, .think-list li, .thinking-step__desc {
+p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, .cs-summary, .cs-origin, .exp-step-desc {
   text-align: justify;
 }
 /* ══════════════════════════════════════════════════
@@ -726,19 +726,22 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
 ══════════════════════════════════════════════════ */
 .built-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--surface-border);
-  border: 1px solid var(--surface-border);
-  border-radius: var(--r-lg);
-  overflow: hidden;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
 }
 .built-card {
   background: rgba(255,255,255,0.4);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 40px 32px;
-  transition: background 0.25s;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--r-lg);
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.built-card:hover {
+  background: var(--bg-1);
+  transform: translateY(-4px);
+  box-shadow: var(--surface-shadow-card);
 }
 .built-card:hover { background: var(--bg-2); }
 .built-card__label {

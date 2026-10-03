@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion';
 import { 
   ArrowRight, ArrowUpRight, Download, Menu, X, Mail, Phone, 
   ChevronDown, ChevronUp, Brain, Rocket, Crosshair, Users, 
@@ -71,7 +71,12 @@ function Nav() {
 
 function JackpotCounter({ text }) {
   const [display, setDisplay] = useState("0");
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
   useEffect(() => {
+    if (!isInView) return;
+    
     if (typeof text !== 'string') {
       setDisplay(text);
       return;
@@ -112,8 +117,8 @@ function JackpotCounter({ text }) {
     };
     animationFrameId = window.requestAnimationFrame(step);
     return () => window.cancelAnimationFrame(animationFrameId);
-  }, [text]);
-  return <span>{display}</span>;
+  }, [text, isInView]);
+  return <span ref={ref}>{display}</span>;
 }
 
 /* ── Hero ──────────────────────────────────────── */
@@ -859,6 +864,15 @@ function Ventures() {
               <li>
                 Co-created a platform bridging students and accomplished leaders; led speaker outreach, content curation & event ops across 4 episodes, engaging hundreds of students.
               </li>
+              <li style={{ marginTop: 16 }}>
+                <strong style={{ color: 'var(--text-primary)' }}>Key Episodes Hosted:</strong>
+                <ul style={{ paddingLeft: '1.2rem', marginTop: 8, listStyleType: 'disc', color: 'var(--text-secondary)' }}>
+                  <li>The Founder's Paradox (Idea to Execution)</li>
+                  <li>Building Defensible Moats in Technology</li>
+                  <li>Navigating Early Stage Growth</li>
+                  <li>Scaling Teams from 0 to 1</li>
+                </ul>
+              </li>
             </ul>
 
             <div className="yantriksha-stats" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
@@ -1020,7 +1034,7 @@ function Contact() {
       <div className="container">
         <div className="contact-inner">
           <motion.div className="contact-left" {...inViewX(0)}>
-            <h2 id="contact-heading" className="contact-question">Got a meaningful<br />problem to solve?</h2>
+            <h2 id="contact-heading" className="contact-question">Ready to build<br />something real?</h2>
             <p className="contact-sub">I am actively looking for PM roles, AI systems collaborations and opportunities at the intersection of product, technology and entrepreneurship.</p>
           </motion.div>
           <motion.div {...inViewX(0.1, 20)}>

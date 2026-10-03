@@ -127,19 +127,25 @@ function Hero() {
           <div className="hero__portrait-tag" aria-hidden="true">Product &middot; AI &middot; Entrepreneurship</div>
         </motion.div>
       </motion.div>
-      <motion.div className="hero__metrics"
+      <motion.div className="hero__metrics-wrapper"
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.7 }}>
-        {[
-          { val: '700+', lbl: 'Students in Ecosystem' },
-          { val: 'Over 75%', lbl: 'Manual Work Eliminated' },
-          { val: '98.4%', lbl: 'AI Prediction Accuracy' },
-          { val: '9.19', lbl: 'CGPA' },
-        ].map(({ val, lbl }) => (
-          <div key={lbl} className="hero__metric">
-            <span className="hero__metric-val">{val}</span>
-            <span className="hero__metric-lbl">{lbl}</span>
-          </div>
-        ))}
+        <div className="hero__metrics-ticker">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="hero__metrics-track">
+              {[
+                { val: '700+', lbl: 'Students in Ecosystem' },
+                { val: 'Over 75%', lbl: 'Manual Work Eliminated' },
+                { val: '98.4%', lbl: 'AI Prediction Accuracy' },
+                { val: '9.19', lbl: 'CGPA' },
+              ].map(({ val, lbl }) => (
+                <div key={lbl} className="hero__metric">
+                  <span className="hero__metric-val">{val}</span>
+                  <span className="hero__metric-lbl">{lbl}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </motion.div>
       <a href="#how-i-think" className="scroll-cue" aria-label="Scroll down">
         <div className="scroll-line" aria-hidden="true" />

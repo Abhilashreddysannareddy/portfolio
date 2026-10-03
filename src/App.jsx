@@ -72,6 +72,10 @@ function Nav() {
 function JackpotCounter({ text }) {
   const [display, setDisplay] = useState("0");
   useEffect(() => {
+    if (typeof text !== 'string') {
+      setDisplay(text);
+      return;
+    }
     const match = text.match(/([^\d]*)([\d.,]+)([^\d]*)/);
     if (!match) {
       setDisplay(text);
@@ -90,6 +94,7 @@ function JackpotCounter({ text }) {
     
     let startTimestamp = null;
     const duration = 2000;
+    let animationFrameId;
     
     const step = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
@@ -100,12 +105,13 @@ function JackpotCounter({ text }) {
       setDisplay(prefix + (isFloat ? current.toFixed(2) : Math.floor(current)) + suffix);
       
       if (progress < 1) {
-        window.requestAnimationFrame(step);
+        animationFrameId = window.requestAnimationFrame(step);
       } else {
         setDisplay(text);
       }
     };
-    window.requestAnimationFrame(step);
+    animationFrameId = window.requestAnimationFrame(step);
+    return () => window.cancelAnimationFrame(animationFrameId);
   }, [text]);
   return <span>{display}</span>;
 }

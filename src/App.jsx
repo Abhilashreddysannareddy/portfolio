@@ -80,7 +80,7 @@ function Hero() {
       <motion.div className="hero__inner" style={{ opacity }}>
         <div className="hero__content">
           <motion.div 
-            style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '12px', fontWeight: 500 }}
+            style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: '16px' }}
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
             Hi, I am
           </motion.div>
@@ -94,7 +94,7 @@ function Hero() {
           </motion.p>
           <motion.p className="hero__thesis"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.7 }}>
-            I’m a problem-driven engineer who believes meaningful products begin with understanding the problem deeply not jumping straight to a solution. Working at the intersection of AI, Product, and Entrepreneurship, I uncover root causes, challenge assumptions, understand user and business needs, and identify opportunities worth solving. I build Agentic AI systems, intelligent automation workflows, and full-stack products that turn ambiguous problems into practical, scalable solutions. Beyond technology, I founded a 700+ member innovation ecosystem, creating opportunities for students to move from problems to ideas, products, patentable innovations, and ventures.
+            A problem-driven engineer who believes meaningful products begin with understanding the problem deeply not jumping straight to a solution. Working at the intersection of AI, Product, and Entrepreneurship, I uncover root causes, challenge assumptions, understand user and business needs, and identify opportunities worth solving. I build Agentic AI systems, intelligent automation workflows, and full-stack products that turn ambiguous problems into practical, scalable solutions. Beyond technology, I founded a 700+ member innovation ecosystem, creating opportunities for students to move from problems to ideas, products, patentable innovations, and ventures.
           </motion.p>
           <motion.div className="hero__flow"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75, duration: 0.6 }}>

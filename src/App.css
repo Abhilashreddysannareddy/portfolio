@@ -1,3 +1,7 @@
+/* Global Text Justification */
+p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, .cs-summary, .thinking-step__desc {
+  text-align: justify;
+}
 /* ══════════════════════════════════════════════════
    NAV
 ══════════════════════════════════════════════════ */

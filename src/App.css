@@ -1,5 +1,5 @@
 /* Global Text Justification */
-p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, .cs-summary, .thinking-step__desc, .cs-origin, .built-card__brief, .exp-step-desc {
+p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, .cs-summary, .thinking-step__desc, .cs-origin, .exp-step-desc {
   text-align: justify;
 }
 /* ══════════════════════════════════════════════════
@@ -504,7 +504,9 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
   gap: 2px;
 }
 .case-study-card {
-  background: var(--bg-0);
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--surface-border);
   border-radius: var(--r-md);
   padding: 48px;
@@ -732,7 +734,9 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
   overflow: hidden;
 }
 .built-card {
-  background: var(--bg-0);
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 40px 32px;
   transition: background 0.25s;
 }
@@ -769,8 +773,9 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
   width: 100%;
 }
 .built-metric-val {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 800;
+  white-space: nowrap;
   letter-spacing: -0.04em;
   color: var(--text-primary);
 }
@@ -825,8 +830,9 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
   margin-bottom: 8px;
 }
 .exp-company-name {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 800;
+  white-space: nowrap;
   letter-spacing: -0.03em;
   color: var(--text-primary);
   margin-bottom: 4px;
@@ -1522,7 +1528,9 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
   gap: 24px;
 }
 .venture-card-large {
-  background: var(--bg-0);
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--surface-border);
   border-radius: var(--r-md);
   padding: 48px;

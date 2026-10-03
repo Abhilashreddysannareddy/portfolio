@@ -650,7 +650,7 @@ function BuiltSystems() {
 
 /* ── Experience ────────────────────────────────── */
 const EXP_STEPS = [
-  { n: '01', title: 'Process Discovery', desc: 'Worked directly with founders to map fragmented, manual workflows across 5+ startup operations. Identified root causes and prioritized high-impact automation targets.' },
+  { n: '01', title: 'Process Discovery', desc: 'Worked directly with founders to map fragmented, manual workflows across multiple startup operations. Identified root causes and prioritized high-impact automation targets.' },
   { n: '02', title: 'Product Requirements', desc: 'Translated operational pain points into structured product requirements — defining scope, success metrics, and integration constraints for each AI workflow.' },
   { n: '03', title: 'Agentic AI Build', desc: 'Designed and implemented 20+ intelligent workflows using LangGraph, LangChain, n8n and LLMs — converting fragmented manual processes into scalable AI-enabled systems.' },
   { n: '04', title: 'Assist Pro Platform', desc: 'Developed and enhanced Assist Pro — an AI-powered automation platform for startup operations — achieving over 75% manual effort reduction.' },

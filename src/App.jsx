@@ -332,317 +332,123 @@ function Skills() {
 const CASE_STUDIES = [
   {
     index: '01',
-    type: 'CONCEPTUAL FRAMEWORK',
-    title: 'OpportunityOS',
-    subtitle: 'Agentic AI for Problem Discovery',
-    summary: 'Companies collect massive user signals across reviews, forums & tickets but struggle to discover which problems are worth solving; designed a multi-agent AI system that converts signals into emerging problems and scores them across severity, prevalence, growth momentum, underservedness, feasibility & novelty, bringing AI from problem solving to problem discovery intelligence.',
+    type: 'PRODUCT STRATEGY',
+    title: 'AI Salesperson for E-Commerce',
+    subtitle: 'Customer Decision Engine for Commerce',
+    summary: 'E-commerce has made product discovery highly efficient, but customers still perform much of the product decision-making themselves. The underlying gap identified was not simply product discovery, but the lack of deep customer-intent understanding.',
     sections: [
-      {
-        label: 'The Problem Deep Dive',
-        icon: '⚑',
-        content: 'Product teams are inundated with qualitative noise from disparate channels—support tickets, social media, app store reviews, and sales transcripts. Hidden within this noise are high-value, unmet user needs, but parsing millions of unstructured data points manually is impossible. The result is that teams often solve the wrong problems, building features that nobody actually wants or recognizing a market need only after a competitor has validated it.',
-      },
-      {
-        label: 'The Strategic Insight',
-        icon: '◈',
-        content: 'The most lucrative product opportunities manifest as weak, scattered signals long before they become obvious trends. A single complaint about a missing feature isn’t a problem; 50 similar complaints across three different competitor products is an opportunity. The key is to shift AI from being merely a tool for downstream problem-solving (like code generation) to upstream problem-discovery (signal extraction and clustering).',
-      },
-      {
-        label: 'The Multi-Agent Approach',
-        icon: '◎',
-        content: 'OpportunityOS utilizes an orchestrated multi-agent framework to solve this. Specialized agents ingest unstructured data streams, identify pain points, and validate them against false positives. The extraction layer passes data to a clustering algorithm that groups similar pain points into discrete "Problems." Finally, an Opportunity Scoring engine evaluates each problem against critical business dimensions: severity of pain, prevalence in the market, growth momentum, feasibility, and novelty.',
-      },
-      {
-        label: 'The Business Impact',
-        icon: '◇',
-        content: 'By systematizing problem discovery, OpportunityOS removes the guesswork from product strategy. It provides leadership with a dynamic, prioritized map of validated market gaps, ensuring that engineering resources are only deployed against problems that are mathematically proven to be worth solving. It transforms product management from a reactive guessing game into a proactive science.',
-      },
+      { label: 'The Problem', icon: '⚑', content: 'E-commerce has made product discovery highly efficient, but customers still perform much of the product decision-making themselves. Customers must translate their needs into search queries, determine which specifications matter, apply filters, compare alternatives, interpret technical information, and evaluate trade-offs.' },
+      { label: 'Product Thesis', icon: '◈', content: 'The product opportunity is to recreate the intelligence of a good salesperson in a digital environment.' },
+      { label: 'Proposed Product', icon: '◎', content: 'Designed an AI salesperson that proactively asks decision-relevant questions rather than waiting for customers to specify every requirement. Converts natural-language needs into structured product requirements. Uses customer preferences and rejection feedback to dynamically refine recommendations. Narrows large product catalogs into personalized shortlists rather than presenting customers with excessive options. Explores product intelligence and cross-marketplace comparison across authorized commerce sources.' },
+      { label: 'Strategic Positioning', icon: '◇', content: 'Envisioned the product as a Customer Decision Engine for Commerce rather than another chatbot, search engine, marketplace, or price-comparison tool.' }
     ],
     flow: [
-      { stage: 'Signal Ingestion', desc: 'App reviews · Forums · Social · Support tickets' },
-      { stage: 'Agentic Extraction', desc: 'Extraction → Validation → Deduplication' },
-      { stage: 'Opportunity Scoring', desc: 'Severity · Prevalence · Growth · Feasibility' },
-      { stage: 'Opportunity Intelligence', desc: 'Ranked, validated problem map for strategy' },
+      { stage: 'From', desc: 'Search → Filters → Lists → Research → Decision' },
+      { stage: 'Conversation', desc: 'Understanding → Recommendation' },
+      { stage: 'Confidence', desc: 'Guided product selection' },
+      { stage: 'Purchase', desc: 'High-conviction transaction' }
     ],
-    tags: ['Agentic AI', 'LangGraph', 'Signal Mining', 'Product Strategy', 'LLMs', 'Multi-Agent Systems'],
+    tags: ['Product Strategy', 'Conversational AI', 'E-Commerce', 'Decision Engine']
   },
   {
     index: '02',
-    type: 'PRODUCT CASE STUDY',
-    title: 'AI Salesperson for E-Commerce',
-    subtitle: 'Customer Decision Engine for Commerce',
-    summary: 'E-commerce platforms make customers search, filter, compare, and decide what fits their needs; designed a conversational Customer Decision Engine that understands customer intent through voice/chat, asks decision-relevant questions, learns preferences and rejections, and shifts e-commerce from product search → customer understanding → curated recommendations, narrowing large catalogs to 2–3 confident options.',
+    type: 'PRODUCT STRATEGY',
+    title: 'Delivery ETA Intelligence Platform',
+    subtitle: 'Translating Internal Logistics Data into Customer Intelligence',
+    summary: 'Customers often receive broad delivery windows such as "Out for Delivery" or "Delivery by End of Day" even when logistics providers already possess route, rider, GPS, traffic, package-sequence, and delivery-completion information.',
     sections: [
-      {
-        label: 'The Decision Problem',
-        icon: '⚑',
-        content: 'Modern e-commerce has perfected logistics and payments, but it has completely failed at decision-making. When a user searches for a laptop, they are met with 240+ results and a wall of technical specifications. The cognitive burden is entirely on the user to filter, compare, and understand the trade-offs, leading to high abandonment rates and choice paralysis.',
-      },
-      {
-        label: 'The Human Insight',
-        icon: '◈',
-        content: 'A great physical salesperson doesn’t hand you a catalog and walk away. They ask intent-driven questions ("Are you editing video or just browsing?", "Do you travel often?"). They do the heavy cognitive lifting, translating a customer’s vague needs into technical requirements, and then they confidently present just 2 or 3 perfect options. E-commerce needs to move from a "search engine" model to a "decision engine" model.',
-      },
-      {
-        label: 'The Conversational Approach',
-        icon: '◎',
-        content: 'I designed a conversational AI layer that intercepts the customer journey before the search bar. Using LLMs, it engages the user via voice or chat to understand their core intent. It actively asks clarifying questions to map out their needs, translates those soft needs into hard technical filters (e.g., "travels often" → "under 3 lbs, 10+ hr battery"), and curates a hyper-personalized shortlist of 2-3 items, clearly explaining why each fits.',
-      },
-      {
-        label: 'The Impact on Conversion',
-        icon: '◇',
-        content: 'By removing the cognitive overload and guiding the customer to a confident decision, this engine fundamentally alters e-commerce metrics. It shifts the paradigm from "product discovery" to "customer understanding," drastically reducing cart abandonment, minimizing return rates caused by buyer confusion, and building long-term platform trust.',
-      },
+      { label: 'The Problem', icon: '⚑', content: 'This creates customer uncertainty and can contribute to WISMO support requests, failed delivery attempts, re-delivery costs, and lower customer satisfaction.' },
+      { label: 'Root Cause', icon: '◈', content: 'The identified gap was not the absence of logistics intelligence. The problem was that operational visibility remained primarily internal instead of being translated into useful customer-facing delivery predictions.' },
+      { label: 'Proposed Product', icon: '◎', content: 'Designed an ETA intelligence layer predicting delivery windows based on route assignment, rider allocation, package sequence, GPS location, traffic conditions, historical route data, and failed delivery patterns.' },
+      { label: 'Product Strategy', icon: '◇', content: 'Proposed a phased strategy: 1. Smart delivery slots, 2. Dynamic ETA updates, 3. Proactive customer notifications, 4. Delivery intelligence dashboard for logistics partners. Success metrics include ETA accuracy, WISMO reduction, and re-delivery savings.' }
     ],
     flow: [
-      { stage: 'From', desc: 'Search → 240 results → spec comparison → abandonment' },
-      { stage: 'Conversation', desc: 'Intent questions → structured requirements' },
-      { stage: 'Shortlist', desc: '2–3 contextually matched options with trade-offs' },
-      { stage: 'Refinement', desc: 'Rejection feedback → better recommendations' },
+      { stage: 'Internal Data', desc: 'Route · GPS · Traffic · Package Sequence' },
+      { stage: 'Prediction Engine', desc: 'Smart delivery slots & dynamic updates' },
+      { stage: 'Customer Window', desc: 'Proactive customer notifications' },
+      { stage: 'Outcomes', desc: 'WISMO & failed delivery reduction' }
     ],
-    tags: ['Product Thinking', 'Conversational AI', 'Recommendation Systems', 'E-Commerce', 'Intent Understanding'],
+    tags: ['Product Strategy', 'Logistics', 'ETA Intelligence', 'Customer Experience']
   },
   {
     index: '03',
-    type: 'PM CASE STUDY',
-    title: 'Delivery ETA Intelligence Platform',
-    subtitle: 'Translating Internal Logistics Data into Customer Intelligence',
-    summary: 'Customers are forced to keep their day open for broad 9 AM–11 PM delivery windows; proposed a dynamic ETA layer using route, GPS, traffic, OpenBox & customer availability to convert these broad windows into focused, customer aware delivery windows that continuously adapt to changing conditions, reducing waiting uncertainty, WISMO tickets & failed deliveries.',
+    type: 'RESEARCH / CONCEPTUAL FRAMEWORK',
+    title: 'OpportunityOS',
+    subtitle: 'Agentic AI Product Opportunity Discovery Framework',
+    summary: 'Organizations receive massive volumes of signals through app reviews, social media, developer forums, support tickets, search trends, and community discussions. These signals contain information about frustrations, unmet needs, failures, and emerging opportunities but remain fragmented, noisy, and difficult to synthesize into product opportunities.',
     sections: [
-      {
-        label: 'The Opacity Problem',
-        icon: '⚑',
-        content: 'Logistics companies provide customers with notoriously vague delivery windows like "Arriving by 11 PM." This forces the customer to keep their entire day open, creating massive uncertainty. This opacity leads to skyrocketing WISMO (Where Is My Order) support tickets, which are incredibly expensive for the company to handle, and results in a poor end-user experience.',
-      },
-      {
-        label: 'The Data Insight',
-        icon: '◈',
-        content: 'The irony is that logistics providers already possess all the necessary data to be precise. They have rider GPS locations, sequence routing, historical traffic patterns, and real-time delay metrics. The problem is not a lack of data; it is a failure to translate internal operational data into a dynamic, customer-facing intelligence layer.',
-      },
-      {
-        label: 'The Dynamic Approach',
-        icon: '◎',
-        content: 'The solution is a predictive ETA platform that continuously digests live operational variables—route assignment, GPS, traffic conditions, and historical completion rates. It processes this data to generate a dynamic, narrowing delivery window for the customer (e.g., shifting from "9 AM - 5 PM" in the morning to a confident "2:15 PM - 2:45 PM" by midday). Furthermore, it factors in customer availability data and OpenBox verification requirements to preemptively flag high-risk deliveries.',
-      },
-      {
-        label: 'The Operational Impact',
-        icon: '◇',
-        content: 'This transparency layer provides a dual benefit: it vastly improves customer satisfaction by respecting their time, while driving direct operational savings. By proactively updating the customer and enabling pre-failure rescheduling, companies can see a 30-40% reduction in WISMO tickets and a 15-25% drop in costly failed delivery attempts.',
-      },
+      { label: 'Research Question', icon: '⚑', content: 'How can heterogeneous user signals be continuously transformed into validated product opportunities?' },
+      { label: 'Core Concept', icon: '◈', content: 'Designed OpportunityOS, a conceptual agentic AI framework that moves from Raw Signals → Problems → Opportunities rather than beginning with an already-defined problem.' },
+      { label: 'Conceptual Architecture', icon: '◎', content: 'The proposed architecture contains five layers: Signal Ingestion, Signal Processing & Normalisation, Agentic Problem Extraction, Opportunity Synthesis & Scoring, and Opportunity Intelligence Layer.' },
+      { label: 'Opportunity Scoring', icon: '◇', content: 'Proposed an auditable opportunity-scoring framework across: Severity, Prevalence, Growth Momentum, Underservedness, Feasibility, and Novelty. Explores the transition from problem-solving intelligence to problem-discovery intelligence.' }
     ],
     flow: [
-      { stage: 'Data Inputs', desc: 'Route · GPS · Traffic · Historical patterns' },
-      { stage: 'Prediction Engine', desc: 'Dynamic confidence-scored windows' },
-      { stage: 'Customer Layer', desc: '"Expected 2:30–3:15 PM (92% confidence)"' },
-      { stage: 'Proactive Actions', desc: 'Push notifications · Pre-failure re-scheduling' },
+      { stage: 'Signal Ingestion', desc: 'App reviews · Social · Tickets · Forums' },
+      { stage: 'Agentic Extraction', desc: 'Validation & evidence grounding' },
+      { stage: 'Opportunity Synthesis', desc: 'Clustering heterogeneous signals' },
+      { stage: 'Scoring', desc: 'Severity · Prevalence · Growth · Feasibility' }
     ],
-    tags: ['Product Strategy', 'Last-Mile Logistics', 'ML', 'ETA Prediction', 'Customer Experience'],
+    tags: ['Agentic AI', 'Product Discovery', 'Conceptual Framework', 'Signal Mining']
   },
   {
     index: '04',
-    type: 'STRATEGIC ANALYSIS',
-    title: 'Intics — Enterprise AI Product Strategy',
+    type: 'STRATEGIC PRODUCT ANALYSIS',
+    title: 'Intics — Enterprise AI Strategy',
     subtitle: 'From Document Intelligence to Outcome Intelligence',
-    summary: 'Recognized that Intics’ AI generates strong recommendations with no way to verify whether they worked or to act on them end-to-end; proposed Outcome, Action & Trust layers that let the platform learn from real business results while all customer data stays on-premise, preserving Intics’ sovereign-AI promise.',
+    summary: 'Identified a strategic gap where enterprise AI recommendations can become the endpoint of a workflow, leaving organizations without a systematic mechanism to determine whether those decisions actually produced successful business outcomes.',
     sections: [
-      {
-        label: 'The Execution Gap',
-        icon: '⚑',
-        content: 'Enterprise AI currently excels at extracting insights and summarizing vast amounts of unstructured document data. However, the workflow abruptly ends there. A system might recommend a strategic action based on data, but it has absolutely no mechanism to verify if the user took that action, or more importantly, if that action actually yielded a positive business outcome.',
-      },
-      {
-        label: 'The Intelligence Loop',
-        icon: '◈',
-        content: 'An AI that only reads documents is a commodity. An AI that reads documents, recommends actions, and then learns from the real-world outcomes of those actions becomes an indispensable, compounding organizational asset. To build a true strategic moat, enterprise platforms must evolve from simple "Document Intelligence" to holistic "Outcome Intelligence."',
-      },
-      {
-        label: 'The Strategic Architecture',
-        icon: '◎',
-        content: 'I proposed a three-layered strategic expansion for Intics. First, an Action Layer allowing users to execute decisions directly from the AI interface. Second, an Outcome Layer that tracks the downstream metrics of those decisions over time to feed a continuous learning loop. Third, a Trust Layer ensuring full explainability and data provenance—crucial for enterprise adoption—all while strictly adhering to on-premise, sovereign-AI privacy requirements.',
-      },
-      {
-        label: 'The Enterprise Moat',
-        icon: '◇',
-        content: 'By closing the loop between insight, action, and outcome, Intics ceases to be a generic summarization tool and transforms into a dynamic Enterprise Operating System. As the system continuously ingests historical outcome data, it builds a highly defensible competitive moat perfectly tailored to the specific operational nuances of each client organization.',
-      },
+      { label: 'Strategic Question', icon: '⚑', content: 'How can enterprise AI move beyond generating recommendations toward measurable business outcomes, workflow execution, trusted decisions, and broader operating intelligence?' },
+      { label: 'Strategic Gap', icon: '◈', content: 'Enterprise AI often acts as a recommendation endpoint. Without connecting these recommendations to real-world outcomes, the system cannot learn what actually works.' },
+      { label: 'Outcome Intelligence', icon: '◎', content: 'Proposed connecting: Document → Decision → Outcome → Learning → Improved Future Decisions. Potential outcome signals include loan performance, appeal outcomes, bid win rates, compliance outcomes, and operational outcomes.' },
+      { label: 'Broader Exploration', icon: '◇', content: 'Explored the evolution of enterprise intelligence across: Document Intelligence → Decision Intelligence → System of Action → Enterprise Operating Intelligence. Considered outcome measurement, explainability, trust, data sovereignty, and predictive operational intelligence.' }
     ],
     flow: [
-      { stage: 'Document', desc: 'Knowledge extracted from enterprise data' },
-      { stage: 'Decision', desc: 'AI-surfaced insights translated to recommendations' },
-      { stage: 'Outcome', desc: 'Decisions measured against actual business results' },
-      { stage: 'Learning', desc: 'Outcomes feed back to improve future intelligence' },
+      { stage: 'Document', desc: 'Extracting insights from enterprise data' },
+      { stage: 'Decision', desc: 'Generating AI recommendations' },
+      { stage: 'Outcome', desc: 'Measuring business execution results' },
+      { stage: 'Learning', desc: 'Feedback loop for predictive intelligence' }
     ],
-    tags: ['Enterprise AI', 'Product Strategy', 'Outcome Intelligence', 'AI Governance', 'Trust & Explainability'],
+    tags: ['Enterprise AI', 'Product Strategy', 'Outcome Intelligence', 'System of Action']
   },
   {
     index: '05',
-    type: 'STARTUP STRATEGY · RESEARCH',
+    type: 'STARTUP STRATEGY · CIRCULAR ECONOMY',
     title: 'India Battery Lifecycle & Recovery Platform',
     subtitle: 'The Missing Middle in EV Battery Circular Economy',
-    summary: 'Found that India’s announced Li-ion recycling capacity (80,000+ tonnes/yr) is already 2.2× its entire 2025 end-of-life battery supply (∼36,000 tonnes/yr), yet only ∼5,000 tonnes (∼14%) get collected formally each year– so the real bottleneck isn’t recycling capacity, it’s collection; designed an asset-light Find → Collect → Grade → Route platform partnering with existing recyclers to close that feedstock gap ahead of India’s projected 233,000 tonnes/yr EOL volume by 2035',
+    summary: 'Identified fragmentation in the end-of-life EV battery lifecycle. The central product question is: Who collects the battery, assesses its remaining value, determines its appropriate destination, and tracks the lifecycle?',
     sections: [
-      {
-        label: 'The Supply Chain Disconnect',
-        icon: '⚑',
-        content: 'The narrative in the Indian EV circular economy is heavily skewed toward building massive recycling infrastructure. However, the data reveals a stark disconnect: India’s announced recycling capacity is over 80,000 tonnes/year, while the available end-of-life supply is only ~36,000 tonnes/year. Even worse, only about 14% of that supply is formally collected. The industry is building sinks without building the pipes.',
-      },
-      {
-        label: 'The Ecosystem Insight',
-        icon: '◈',
-        content: 'Capital-intensive recycling plants are starving for feedstock because end-of-life batteries are highly fragmented across thousands of local dealers, scrapyards, and independent mechanics. The true bottleneck, and therefore the highest-leverage opportunity, is not in chemical processing—it is in aggregation, logistics, and data transparency. The market desperately needs a "Missing Middle."',
-      },
-      {
-        label: 'The Platform Approach',
-        icon: '◎',
-        content: 'Instead of building another recycling plant, I designed an asset-light, B2B orchestrator platform. The model follows four steps: Find (sourcing from fragmented nodes), Collect (secure reverse logistics with chain-of-custody tracking), Grade (initial health assessment for second-life vs. recycling), and Route (directing the graded asset to the highest-bidding processor).',
-      },
-      {
-        label: 'The Strategic Outlook',
-        icon: '◇',
-        content: 'By positioning the platform as an indispensable aggregator, it capitalizes on the tightening Extended Producer Responsibility (EPR) regulations without taking on heavy CapEx risks. As India scales toward a projected 233,000 tonnes/year of EOL volume by 2035, this platform becomes the definitive toll booth and data ledger for the entire EV battery circular economy.',
-      },
+      { label: 'Market Gap', icon: '⚑', content: 'The opportunity is not positioned as simply building another recycling company. Existing players already operate across parts of collection, recycling, EPR, and reverse logistics. The identified opportunity is the missing middle between fragmented battery sources and downstream processing.' },
+      { label: 'Proposed Product Model', icon: '◈', content: 'Find → Collect → Identify → Test/Assess → Grade → Aggregate → Track → Route.' },
+      { label: 'Routing Logic', icon: '◎', content: 'Potentially reusable → Authorised refurbisher. Suitable for second-life → Appropriate second-life partner. Genuinely end-of-life → Authorised recycler. Damaged/unsafe → Specialised handling.' },
+      { label: 'Business Strategy', icon: '◇', content: 'Proposed an initially neutral and asset-light model that partners with existing recyclers and refurbishers rather than building recycling infrastructure immediately. Creates a collection, assessment, traceability, and routing layer.' }
     ],
     flow: [
-      { stage: 'Source', desc: 'OEMs · Dealers · Fleet operators — all fragmented' },
-      { stage: 'Grade', desc: 'Assessment: capacity · chemistry · safety profile' },
-      { stage: 'Aggregate', desc: 'Asset-light batching with chain-of-custody tracking' },
-      { stage: 'Route', desc: 'Refurbishable → Refurbisher · EOL → Recycler' },
+      { stage: 'Source', desc: 'OEMs · Fleets · Dealers · Workshops' },
+      { stage: 'Grade', desc: 'Identify · Test/Assess · Categorize' },
+      { stage: 'Aggregate', desc: 'Neutral, asset-light collection network' },
+      { stage: 'Route', desc: 'Refurbishers · Second-life · Recyclers' }
     ],
-    tags: ['Startup Strategy', 'Circular Economy', 'EV Batteries', 'Platform Thinking', 'Asset-Light Model'],
-  },
-];
-
-function CaseStudyCard({ cs, i }) {
-  const [expanded, setExpanded] = useState(false);
-  
-  return (
-    <motion.article className="case-study-card" {...inView(0.04 * i)} aria-labelledby={`cs-title-${cs.index}`}>
-      <div className="cs-meta">
-        <span className="cs-index">{cs.index} / {CASE_STUDIES.length}</span>
-        <span className="cs-type-badge">{cs.type}</span>
-      </div>
-      <h3 id={`cs-title-${cs.index}`} className="cs-title">{cs.title}</h3>
-      <p className="cs-subtitle">{cs.subtitle}</p>
-      
-      <div className="cs-origin" style={{ margin: '24px 0' }}>
-        <strong>Problem & Approach</strong>
-        {cs.summary}
-      </div>
-
-      <div className="cs-flow-section">
-        <span className="cs-problem-label">How It Works</span>
-        <div className="cs-flow">
-          {cs.flow.map((f, j) => (
-            <div key={j} className="cs-flow-item">
-              <div className="cs-flow-dot" aria-hidden="true">{String(j + 1).padStart(2, '0')}</div>
-              <div className="cs-flow-text">
-                <span className="cs-flow-stage">{f.stage}</span>
-                <span className="cs-flow-desc">{f.desc}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <button className="btn-secondary" style={{ marginBottom: expanded ? '24px' : '0' }} onClick={() => setExpanded(!expanded)}>
-        {expanded ? 'Close Deep Dive' : 'Read Deep Dive'} {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-      </button>
-
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div className="cs-sections">
-              {cs.sections.map((sec, j) => (
-                <div key={j} className="cs-section-block">
-                  <div className="cs-section-header">
-                    <span className="cs-section-icon">{sec.icon}</span>
-                    <span className="cs-section-label">{sec.label}</span>
-                  </div>
-                  <p className="cs-section-text">{sec.content}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="cs-tags">
-        {cs.tags.map(t => <span key={t} className="cs-tag">{t}</span>)}
-      </div>
-    </motion.article>
-  );
-}
-
-function CaseStudies() {
-  return (
-    <section id="work" className="section" aria-labelledby="case-studies-heading">
-      <div className="container">
-        <motion.div className="section__header" {...inView()}>
-          <div className="sec-label">Case Studies</div>
-          <h2 id="case-studies-heading" className="section__title">Problem first.<br />Always.</h2>
-          <p className="section__subtitle">
-            Each case study begins with a real problem. Not a feature request. Not a technology looking for an application. A problem worth understanding.
-          </p>
-        </motion.div>
-        <div className="case-studies-list">
-          {CASE_STUDIES.map((cs, i) => (
-            <CaseStudyCard key={cs.index} cs={cs} i={i} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── Built Systems ─────────────────────────────── */
-const BUILT_SYSTEMS = [
-  {
-    label: 'BUILT · Full-Stack + IoT',
-    title: 'Cloud Billing & Order Management',
-    brief: 'Local restaurants paid for dedicated computers, hardware & upkeep at every billing/printing counter; built a low-cost ESP+MQTT thermal-printing system letting printers receive orders directly, cutting hardware dependency and scaling pilot volume 6× (25 → 150+ orders/day; 9K → 55K orders/year).',
-    sections: [
-      { label: 'The Problem', icon: '⚑', content: 'Restaurants faced high upfront costs because standard billing required dedicated PCs to route orders to thermal printers. This hardware dependency restricted scale and increased maintenance overhead.' },
-      { label: 'The Idea', icon: '◈', content: 'If thermal printers could connect directly to the cloud, the expensive PC layer could be entirely eliminated, decentralizing the printing process at zero marginal hardware cost.' },
-      { label: 'The Approach', icon: '◎', content: 'I built a cloud billing platform using MQTT over ESP microcontrollers, enabling standard thermal printers to fetch real-time orders directly from the cloud without a host PC.' },
-      { label: 'The Impact', icon: '◇', content: 'Cost structure fundamentally changed for small restaurants. Hardware dependency was cut entirely, scaling the pilot order volume from ~25 to 150+ per day.' }
-    ],
-    metric: { val: '6x', lbl: 'Order volume scaled', context: '~25 to 100–150+ orders/day in documented pilot' },
-    tech: ['React', 'Node.js', 'MQTT', 'ESP8266/ESP32', 'Thermal Printers'],
-    recognition: null,
+    tags: ['Startup Strategy', 'Circular Economy', 'EV Batteries', 'Asset-Light']
   },
   {
-    label: 'BUILT · AI/ML Decision Support',
-    title: 'Precision Bid Management System',
-    brief: '(Pragyan Hackathon × Aurigo Software) – Contractors manually evaluated technical, financial & competitor data for bids; built an ML-powered decision-support platform analyzing historical bids, pricing & competitor trends to balance competitiveness with target profitability.',
+    index: '06',
+    type: 'RESEARCH & INNOVATION',
+    title: 'Agentic AI & Enterprise Strategy',
+    subtitle: 'Exploring the Frontier of Problem Discovery & AI Governance',
+    summary: 'Research and conceptual work focused on the emerging problem of identifying what should be built rather than only optimizing how known solutions are built.',
     sections: [
-      { label: 'The Problem', icon: '⚑', content: 'Bidding on infrastructure projects relies heavily on gut feeling and manual evaluation of massive datasets, leading to lost contracts or unprofitable wins.' },
-      { label: 'The Idea', icon: '◈', content: 'Historical bidding data contains hidden patterns that can predict the optimal bid price based on competitor behavior, material costs, and success probability.' },
-      { label: 'The Approach', icon: '◎', content: 'Built an AI/ML decision-support system analyzing historical bids, competitor pricing, and technical criteria using predictive modeling to generate optimal bid thresholds.' },
-      { label: 'The Impact', icon: '◇', content: 'Replaced manual guesswork with a data-driven engine to surface highly competitive, profitable bidding strategies for contractors.' }
+      { label: 'Problem Discovery Intelligence', icon: '⚑', content: 'Focusing on user-signal mining, requirements mining, and weak-signal detection to identify high-value opportunities before they become obvious trends.' },
+      { label: 'Agentic Orchestration', icon: '◈', content: 'Exploring multi-agent systems, retrieval-grounded reasoning, opportunity evaluation, and human-in-the-loop product decision making.' },
+      { label: 'Enterprise AI Strategy', icon: '◎', content: 'Strategic analysis on how enterprise AI platforms can evolve across Document Intelligence, Decision Intelligence, and Outcome Intelligence.' },
+      { label: 'Future Operating Intelligence', icon: '◇', content: 'Focus areas included business outcomes, decision quality, explainability, trust, workflow execution, data sovereignty, and predictive operational intelligence.' }
     ],
-    metric: { val: 'Data-Driven', lbl: 'Bidding Strategy', context: 'Replaced manual guesswork with predictive ML modeling' },
-    tech: ['Python', 'Scikit-Learn', 'Pandas', 'Data Visualization', 'Decision Trees'],
-    recognition: 'Pragyan Hackathon · Aurigo Software Technologies',
-  },
-  {
-    label: 'BUILT · AI + IoT · Winner',
-    title: 'AI Smart Agriculture Platform',
-    brief: '(Winner – Prototyping Contest) – Farmers managed seed procurement, irrigation, monitoring & selling as disconnected processes; integrated IoT sensors (NPK, soil moisture, temperature, pH) with ML across the farm-to-market chain, achieving 98.4% prediction accuracy for crop & irrigation decisions.',
-    sections: [
-      { label: 'The Problem', icon: '⚑', content: 'Farmers make critical decisions (seeds, irrigation) in silos without real-time data, leading to low yield, resource waste, and disconnected farm-to-market processes.' },
-      { label: 'The Idea', icon: '◈', content: 'A unified platform that continuously monitors soil health and connects that data directly to crop selection, automated irrigation, and eventually market supply chains.' },
-      { label: 'The Approach', icon: '◎', content: 'Developed an ML + IoT platform analyzing 6+ soil parameters (NPK, moisture, pH, temp) to provide data-driven crop recommendations and autonomously trigger smart irrigation systems.' },
-      { label: 'The Impact', icon: '◇', content: 'Bridged the gap from farm to market with integrated analytics, achieving 98.4% prediction accuracy for precision agriculture.' }
+    flow: [
+      { stage: 'Discovery', desc: 'Weak-signal detection & requirements mining' },
+      { stage: 'Orchestration', desc: 'Multi-agent retrieval & reasoning' },
+      { stage: 'Evaluation', desc: 'Human-in-the-loop product decisions' },
+      { stage: 'Evolution', desc: 'Transitioning to Enterprise Operating Intelligence' }
     ],
-    metric: { val: '98.4%', lbl: 'ML prediction accuracy', context: 'Based on cross-validation of 5 key soil parameters' },
-    tech: ['Python', 'Machine Learning', 'IoT Sensors', 'React', 'Cloud Firestore'],
-    recognition: 'Winner — Prototyping Contest',
+    tags: ['Agentic AI', 'Innovation', 'Research', 'Enterprise Strategy']
   }
 ];
 

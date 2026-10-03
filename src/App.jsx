@@ -79,11 +79,6 @@ function Hero() {
       <div className="hero__bg-line" aria-hidden="true" />
       <motion.div className="hero__inner" style={{ opacity }}>
         <div className="hero__content">
-          <motion.div className="hero__availability"
-            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
-            <span className="avail-dot" aria-hidden="true" />
-            Open to opportunities
-          </motion.div>
           <motion.h1 className="hero__name"
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.8, ease: [0.16,1,0.3,1] }}>
             Abhilash Reddy Sannareddy

@@ -452,6 +452,137 @@ const CASE_STUDIES = [
   }
 ];
 
+function CaseStudyCard({ cs, i }) {
+  const [expanded, setExpanded] = useState(false);
+  
+  return (
+    <motion.article className="case-study-card" {...inView(0.04 * i)} aria-labelledby={`cs-title-${cs.index}`}>
+      <div className="cs-meta">
+        <span className="cs-index">{cs.index} / {CASE_STUDIES.length}</span>
+        <span className="cs-type-badge">{cs.type}</span>
+      </div>
+      <h3 id={`cs-title-${cs.index}`} className="cs-title">{cs.title}</h3>
+      <p className="cs-subtitle">{cs.subtitle}</p>
+      
+      <div className="cs-origin" style={{ margin: '24px 0' }}>
+        <strong>Problem & Approach</strong>
+        {cs.summary}
+      </div>
+
+      <div className="cs-flow-section">
+        <span className="cs-problem-label">How It Works</span>
+        <div className="cs-flow">
+          {cs.flow.map((f, j) => (
+            <div key={j} className="cs-flow-item">
+              <div className="cs-flow-dot" aria-hidden="true">{String(j + 1).padStart(2, '0')}</div>
+              <div className="cs-flow-text">
+                <span className="cs-flow-stage">{f.stage}</span>
+                <span className="cs-flow-desc">{f.desc}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button className="btn-secondary" style={{ marginBottom: expanded ? '24px' : '0' }} onClick={() => setExpanded(!expanded)}>
+        {expanded ? 'Close Deep Dive' : 'Read Deep Dive'} {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+      </button>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            style={{ overflow: 'hidden' }}
+          >
+            <div className="cs-sections">
+              {cs.sections.map((sec, j) => (
+                <div key={j} className="cs-section-block">
+                  <div className="cs-section-header">
+                    <span className="cs-section-icon">{sec.icon}</span>
+                    <span className="cs-section-label">{sec.label}</span>
+                  </div>
+                  <p className="cs-section-text">{sec.content}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="cs-tags">
+        {cs.tags.map(t => <span key={t} className="cs-tag">{t}</span>)}
+      </div>
+    </motion.article>
+  );
+}
+
+function CaseStudies() {
+  return (
+    <section id="work" className="section" aria-labelledby="case-studies-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">Case Studies</div>
+          <h2 id="case-studies-heading" className="section__title">Problem first.<br />Always.</h2>
+          <p className="section__subtitle">
+            Each case study begins with a real problem. Not a feature request. Not a technology looking for an application. A problem worth understanding.
+          </p>
+        </motion.div>
+        <div className="case-studies-list">
+          {CASE_STUDIES.map((cs, i) => (
+            <CaseStudyCard key={cs.index} cs={cs} i={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Built Systems ─────────────────────────────── */
+const BUILT_SYSTEMS = [
+  {
+    label: 'BUILT · Full-Stack + IoT',
+    title: 'Cloud-Based Restaurant Billing & Order Management Platform',
+    brief: 'Designed a low-cost cloud-based billing and order management platform integrating billing, order processing, delivery workflows, and thermal printing into a unified ecosystem.',
+    sections: [
+      { label: 'The Problem', icon: '⚑', content: 'Local restaurants often rely on conventional billing and POS infrastructure requiring dedicated computers, hardware, maintenance, and recurring technology costs.' },
+      { label: 'Technical Solution', icon: '◎', content: 'Built an ESP-based thermal printing system using MQTT, enabling thermal printers to receive and process orders without requiring a dedicated computer at each printer. Designed a cloud-connected architecture allowing order information to move from the software platform to the printer through a lightweight communication layer.' },
+      { label: 'Business Outcome', icon: '◇', content: 'Reduced hardware and maintenance requirements for restaurants. Simplified restaurant order processing and reduced missed-order situations. Enabled pilot operations to scale from approximately 25 orders/day to 100–150+ orders/day.' }
+    ],
+    metric: { val: '6x', lbl: 'Order volume scaled', context: '~25 to 100–150+ orders/day in documented pilot' },
+    tech: ['Cloud Architecture', 'MQTT', 'ESP', 'Thermal Printing', 'Full-Stack Development'],
+    recognition: null,
+  },
+  {
+    label: 'BUILT · AI/ML Decision Support',
+    title: 'Precision Bid Management & Tender Analysis System',
+    brief: 'Designed an AI/ML-powered decision-support platform for tender and bid analysis to help contractors balance competitiveness, probability of winning, and target profitability.',
+    sections: [
+      { label: 'The Problem', icon: '⚑', content: 'Contractors often rely on manual evaluation of technical requirements, financial information, competitor pricing, historical bids, material costs, and bidding trends when preparing tender submissions.' },
+      { label: 'Product Approach', icon: '◎', content: 'Analyzed historical bids, contracts, bidding trends, competitor pricing, material costs, and technical and commercial parameters. Used historical bidding information to identify patterns in winning bid prices, competitor pricing trends, material costs, and bidding behavior.' },
+      { label: 'Context', icon: '◇', content: 'Developed as a solution concept during the Pragyan Hackathon in collaboration with Aurigo Software Technologies.' }
+    ],
+    metric: { val: 'Data-Driven', lbl: 'Bidding Strategy', context: 'Replaced manual evaluation with predictive ML modeling' },
+    tech: ['Machine Learning', 'Historical Data Analysis', 'Decision Support', 'Competitive Analysis'],
+    recognition: 'Pragyan Hackathon · Aurigo Software Technologies',
+  },
+  {
+    label: 'BUILT · AI + IoT · Winner',
+    title: 'AI-Powered Smart Agriculture & Farm-to-Market Platform',
+    brief: 'Designed an integrated farm-to-market platform connecting: Seed Procurement → Crop Planning → Farm Monitoring → AI Irrigation → Produce Selling.',
+    sections: [
+      { label: 'The Problem', icon: '⚑', content: 'Farmers often manage seed procurement, crop planning, irrigation, farm monitoring, and produce selling through fragmented processes.' },
+      { label: 'Technical Approach', icon: '◎', content: 'Integrated IoT sensors to monitor agricultural parameters including NPK levels, soil moisture, temperature, humidity, and pH. Applied machine learning to agricultural data for crop recommendations and irrigation decisions. Designed an integrated product ecosystem rather than treating these as separate workflows.' },
+      { label: 'The Impact', icon: '◇', content: 'Achieved 98.4% prediction accuracy in the developed prediction system.' }
+    ],
+    metric: { val: '98.4%', lbl: 'ML prediction accuracy', context: 'Based on cross-validation of key soil parameters' },
+    tech: ['Machine Learning', 'IoT Sensors', 'React', 'Cloud Architecture'],
+    recognition: 'Winner — Prototyping Contest',
+  }
+];
+
 function BuiltSystemCard({ s, i }) {
   const [expanded, setExpanded] = useState(false);
   return (

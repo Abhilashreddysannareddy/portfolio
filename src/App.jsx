@@ -867,10 +867,10 @@ function Ventures() {
               <li style={{ marginTop: 16 }}>
                 <strong style={{ color: 'var(--text-primary)' }}>Key Episodes Hosted:</strong>
                 <ul style={{ paddingLeft: '1.2rem', marginTop: 8, listStyleType: 'disc', color: 'var(--text-secondary)' }}>
-                  <li><strong>Episode 1:</strong> Karthik Voleti – Entrepreneur & Founder</li>
-                  <li><strong>Episode 2:</strong> Vel Tech CMT – Collegiate Management Team</li>
-                  <li><strong>Episode 3:</strong> Karen Vincent – Comedian, Actor & Influencer</li>
-                  <li><strong>Episode 4:</strong> Justice Markandey Katju – Former Supreme Court Judge</li>
+                  <li><strong>Episode 1:</strong> Voleti Karthik – Founder & CEO, Flashoot</li>
+                  <li><strong>Episode 2:</strong> Dr. Mrs. Rangarajan Mahalakshmi Kishore – Chairperson & Managing Trustee, Vel Tech</li>
+                  <li><strong>Episode 3:</strong> Karen Vincent – Stand-up Comedian, Actor & Digital Content Creator</li>
+                  <li><strong>Episode 4:</strong> Justice Markandey Katju – Former Judge, Supreme Court of India</li>
                 </ul>
               </li>
             </ul>

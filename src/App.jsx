@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion';
 import { 
-  ArrowRight, ArrowUpRight, Download, Menu, X, Mail, Phone, 
+  ArrowRight, ArrowUpRight, ArrowLeft, Download, Menu, X, Mail, Phone, 
   ChevronDown, ChevronUp, Brain, Rocket, Crosshair, Users, 
   Code, Globe, Database, PenTool, Lightbulb, Workflow, Languages, BarChart
 } from 'lucide-react';
+import { DEEP_DIVES } from './data/deepDivesData.js';
 import './App.css';
 
 /* ── Animation helpers ─────────────────────────── */
@@ -27,45 +28,162 @@ const NAV_ITEMS = [
   { label: 'How I Think', href: '#how-i-think' },
   { label: 'Skills', href: '#skills' },
   { label: 'Work', href: '#work' },
-  { label: 'Built', href: '#built-systems' },
+  { label: 'Built', href: '#build' },
   { label: 'Experience', href: '#experience' },
   { label: 'Ventures', href: '#ventures' },
+  { label: 'Achievements', href: '#achievements' },
+  { label: 'My Story', href: '#story' },
+  { label: 'Education', href: '#education' },
   { label: 'Contact', href: '#contact' },
 ];
 
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+function Nav({ activeDeepDive, onBackToPortfolio }) {
+  const [activeSection, setActiveSection] = useState('how-i-think');
   const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', h, { passive: true });
-    return () => window.removeEventListener('scroll', h);
-  }, []);
+    if (activeDeepDive) return;
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 140;
+      const sections = NAV_ITEMS.map(item => item.href.substring(1));
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeDeepDive]);
+
+  if (activeDeepDive) {
+    return (
+      <div className="floating-nav-wrapper">
+        <nav className="floating-nav-pill floating-nav-pill--deepdive" role="navigation" aria-label="Deep dive navigation">
+          <button 
+            className="floating-nav-back-pill" 
+            onClick={() => onBackToPortfolio(activeDeepDive.type === 'case-study' ? '#work' : '#build')}
+            aria-label="Back to Portfolio"
+          >
+            <ArrowLeft size={13} /> Back to {activeDeepDive.type === 'case-study' ? 'Case Studies' : 'Built Systems'}
+          </button>
+          <div className="floating-nav-divider" />
+          <div className="floating-nav-links" role="list">
+            <a href="#deepdive-triad" className="floating-nav-link">Problem & Idea</a>
+            <a href="#deepdive-details" className="floating-nav-link">Full Spec</a>
+          </div>
+          <div className="floating-nav-divider" />
+          <button 
+            className="floating-nav-resume" 
+            onClick={() => onBackToPortfolio('#contact')}
+            style={{ cursor: 'pointer', border: '1px solid var(--link-line)' }}
+          >
+            Contact Abhi →
+          </button>
+        </nav>
+      </div>
+    );
+  }
+
   return (
-    <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} role="navigation" aria-label="Main navigation">
-      <div className="nav__inner">
-        <a href="#" className="nav__logo" aria-label="Abhilash Reddy — Home">Abhilash Reddy</a>
-        <ul className="nav__links" role="list">
-          {NAV_ITEMS.map(n => <li key={n.label}><a href={n.href}>{n.label}</a></li>)}
-        </ul>
-        <a href={`${import.meta.env.BASE_URL}Abhilash_reddy_CV.pdf`} download className="btn-resume" aria-label="Download resume">
+    <div className="floating-nav-wrapper">
+      <nav className="floating-nav-pill" role="navigation" aria-label="Main navigation">
+        <a 
+          href="#" 
+          className="floating-nav-logo" 
+          aria-label="Abhilash Reddy — Home"
+          onClick={(e) => {
+            if (activeDeepDive) {
+              e.preventDefault();
+              onBackToPortfolio();
+            }
+          }}
+        >
+          Abhilash Reddy
+        </a>
+
+        <div className="floating-nav-links" role="list">
+          {NAV_ITEMS.map(item => {
+            const secId = item.href.substring(1);
+            const isActive = !activeDeepDive && activeSection === secId;
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                className={`floating-nav-link ${isActive ? 'active' : ''}`}
+                onClick={(e) => {
+                  if (activeDeepDive) {
+                    e.preventDefault();
+                    onBackToPortfolio(item.href);
+                  }
+                }}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </div>
+
+        <a 
+          href={`${import.meta.env.BASE_URL}Abhilash_reddy_CV.pdf`} 
+          download 
+          className="floating-nav-resume" 
+          aria-label="Download resume"
+        >
           <Download size={11} /> Resume
         </a>
-        <button className="nav__burger" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Toggle menu">
+
+        <button 
+          className="floating-nav-burger" 
+          onClick={() => setMenuOpen(!menuOpen)} 
+          aria-expanded={menuOpen} 
+          aria-label="Toggle menu"
+        >
           {menuOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
-      </div>
+      </nav>
+
       <AnimatePresence>
         {menuOpen && (
-          <motion.div className="nav__mobile" role="menu"
-            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
-            {NAV_ITEMS.map(n => (
-              <a key={n.label} href={n.href} role="menuitem" onClick={() => setMenuOpen(false)}>{n.label}</a>
+          <motion.div 
+            className="floating-nav-mobile" 
+            role="menu"
+            initial={{ opacity: 0, y: -10, scale: 0.95 }} 
+            animate={{ opacity: 1, y: 0, scale: 1 }} 
+            exit={{ opacity: 0, y: -10, scale: 0.95 }} 
+            transition={{ duration: 0.2 }}
+          >
+            {NAV_ITEMS.map(item => (
+              <a 
+                key={item.label} 
+                href={item.href} 
+                className="floating-nav-mobile-link"
+                role="menuitem" 
+                onClick={(e) => {
+                  setMenuOpen(false);
+                  if (activeDeepDive) {
+                    e.preventDefault();
+                    onBackToPortfolio(item.href);
+                  }
+                }}
+              >
+                {item.label}
+              </a>
             ))}
+            <a 
+              href={`${import.meta.env.BASE_URL}Abhilash_reddy_CV.pdf`} 
+              download 
+              className="floating-nav-resume" 
+              style={{ marginTop: '8px', justifyContent: 'center' }}
+            >
+              <Download size={11} /> Download Resume
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </div>
   );
 }
 
@@ -332,6 +450,7 @@ function Skills() {
 const CASE_STUDIES = [
   {
     index: '01',
+    slug: 'ecom-buddy-salesperson',
     type: 'PRODUCT STRATEGY',
     title: 'AI Salesperson for E-Commerce',
     subtitle: 'Customer Decision Engine for Commerce',
@@ -353,6 +472,7 @@ const CASE_STUDIES = [
   },
   {
     index: '02',
+    slug: 'delivery-eta-intelligence',
     type: 'PRODUCT STRATEGY',
     title: 'Delivery ETA Intelligence Platform',
     subtitle: 'Translating Internal Logistics Data into Customer Intelligence',
@@ -374,6 +494,7 @@ const CASE_STUDIES = [
   },
   {
     index: '03',
+    slug: 'opportunity-os',
     type: 'RESEARCH / CONCEPTUAL FRAMEWORK',
     title: 'OpportunityOS',
     subtitle: 'Agentic AI Product Opportunity Discovery Framework',
@@ -395,6 +516,7 @@ const CASE_STUDIES = [
   },
   {
     index: '04',
+    slug: 'intics-enterprise-ai',
     type: 'STRATEGIC PRODUCT ANALYSIS',
     title: 'Intics — Enterprise AI Strategy',
     subtitle: 'From Document Intelligence to Outcome Intelligence',
@@ -416,6 +538,7 @@ const CASE_STUDIES = [
   },
   {
     index: '05',
+    slug: 'battery-circular-economy',
     type: 'STARTUP STRATEGY · CIRCULAR ECONOMY',
     title: 'India Battery Lifecycle & Recovery Platform',
     subtitle: 'The Missing Middle in EV Battery Circular Economy',
@@ -436,9 +559,7 @@ const CASE_STUDIES = [
     tags: ['Startup Strategy', 'Circular Economy', 'EV Batteries', 'Asset-Light']
   }];
 
-function CaseStudyCard({ cs, i }) {
-  const [expanded, setExpanded] = useState(false);
-  
+function CaseStudyCard({ cs, i, onSelectDeepDive }) {
   return (
     <motion.article className="case-study-card" {...inView(0.04 * i)} aria-labelledby={`cs-title-${cs.index}`}>
       <div className="cs-meta">
@@ -449,7 +570,7 @@ function CaseStudyCard({ cs, i }) {
       <p className="cs-subtitle">{cs.subtitle}</p>
       
       <div className="cs-origin" style={{ margin: '24px 0' }}>
-        <strong>Problem & Approach</strong>
+        <strong>Problem & Approach: </strong>
         {cs.summary}
       </div>
 
@@ -468,33 +589,16 @@ function CaseStudyCard({ cs, i }) {
         </div>
       </div>
 
-      <button className="btn-secondary" style={{ marginBottom: expanded ? '24px' : '0' }} onClick={() => setExpanded(!expanded)}>
-        {expanded ? 'Close Deep Dive' : 'Read Deep Dive'} {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-      </button>
-
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div className="cs-sections">
-              {cs.sections.map((sec, j) => (
-                <div key={j} className="cs-section-block">
-                  <div className="cs-section-header">
-                    <span className="cs-section-icon">{sec.icon}</span>
-                    <span className="cs-section-label">{sec.label}</span>
-                  </div>
-                  <p className="cs-section-text">{sec.content}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div style={{ marginTop: '20px', marginBottom: '16px' }}>
+        <button 
+          className="btn-secondary" 
+          onClick={() => onSelectDeepDive('case-study', cs.slug)}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+          aria-label={`Read full deep dive for ${cs.title}`}
+        >
+          Read Full Deep Dive <ArrowUpRight size={14} />
+        </button>
+      </div>
 
       <div className="cs-tags">
         {cs.tags.map(t => <span key={t} className="cs-tag">{t}</span>)}
@@ -503,7 +607,7 @@ function CaseStudyCard({ cs, i }) {
   );
 }
 
-function CaseStudies() {
+function CaseStudies({ onSelectDeepDive }) {
   return (
     <section id="work" className="section" aria-labelledby="case-studies-heading">
       <div className="container">
@@ -516,7 +620,7 @@ function CaseStudies() {
         </motion.div>
         <div className="case-studies-list">
           {CASE_STUDIES.map((cs, i) => (
-            <CaseStudyCard key={cs.index} cs={cs} i={i} />
+            <CaseStudyCard key={cs.index} cs={cs} i={i} onSelectDeepDive={onSelectDeepDive} />
           ))}
         </div>
       </div>
@@ -527,6 +631,7 @@ function CaseStudies() {
 /* ── Built Systems ─────────────────────────────── */
 const BUILT_SYSTEMS = [
   {
+    slug: 'restaurant-billing-iot',
     label: 'BUILT · Full-Stack + IoT',
     title: 'Cloud-Based Restaurant Billing & Order Management Platform',
     brief: 'Local restaurants paid for dedicated computers, hardware & upkeep at every billing/printing counter; built a low-cost ESP+MQTT thermal-printing system letting printers receive orders directly, cutting hardware dependency and scaling pilot volume 6× (25 → 150+ orders/day; 9K → 55K orders/year).',
@@ -540,6 +645,7 @@ const BUILT_SYSTEMS = [
     recognition: null,
   },
   {
+    slug: 'precision-bid-management',
     label: 'BUILT · AI/ML Decision Support',
     title: 'Precision Bid Management & Tender Analysis System',
     brief: '(Pragyan Hackathon × Aurigo Software) – Contractors manually evaluated technical, financial & competitor data for bids; built an ML-powered decision-support platform analyzing historical bids, pricing & competitor trends to balance competitiveness with target profitability.',
@@ -553,6 +659,7 @@ const BUILT_SYSTEMS = [
     recognition: 'Pragyan Hackathon · Aurigo Software Technologies',
   },
   {
+    slug: 'smart-agriculture-iot',
     label: 'BUILT · AI + IoT · Winner',
     title: 'AI-Powered Smart Agriculture & Farm-to-Market Platform',
     brief: '(Winner – Prototyping Contest) – Farmers managed seed procurement, irrigation, monitoring & selling as disconnected processes; integrated IoT sensors (NPK, soil moisture, temperature, pH) with ML across the farm-to-market chain, achieving 98.4% prediction accuracy for crop & irrigation decisions.',
@@ -567,15 +674,14 @@ const BUILT_SYSTEMS = [
   }
 ];
 
-function BuiltSystemCard({ s, i }) {
-  const [expanded, setExpanded] = useState(false);
+function BuiltSystemCard({ s, i, onSelectDeepDive }) {
   return (
     <motion.div className="built-card" {...inView(0.08 * i)}>
       <span className="built-card__label">{s.label}</span>
       <h3 className="built-card__title">{s.title}</h3>
       
       <div className="built-card__brief" style={{ lineHeight: 1.6 }}>
-        <strong>Overview:</strong> {s.brief}
+        <strong>Overview: </strong> {s.brief}
       </div>
       
       <div className="built-card__metric" style={{marginTop: '16px'}}>
@@ -586,48 +692,31 @@ function BuiltSystemCard({ s, i }) {
         </div>
       </div>
       
-      <button className="btn-secondary" style={{ marginTop: '20px', marginBottom: expanded ? '16px' : '0' }} onClick={() => setExpanded(!expanded)}>
-        {expanded ? 'Close Details' : 'Read More'} {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-      </button>
+      <div style={{ marginTop: '20px', marginBottom: '16px' }}>
+        <button 
+          className="btn-secondary" 
+          onClick={() => onSelectDeepDive('project', s.slug)}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+          aria-label={`Read full deep dive for ${s.title}`}
+        >
+          Read Full Deep Dive <ArrowUpRight size={14} />
+        </button>
+      </div>
 
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div className="built-sections">
-              {s.sections.map((sec, j) => (
-                <div key={j} className="built-section-block">
-                  <div className="built-section-header">
-                    <span className="built-section-icon">{sec.icon}</span>
-                    <span className="built-section-label">{sec.label}</span>
-                  </div>
-                  <p className="built-section-text">{sec.content}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="built-card__tech" style={{ marginTop: '16px', marginBottom: '16px' }}>
-              {s.tech.map(t => <span key={t} className="built-tech-tag">{t}</span>)}
-            </div>
-            
-            {s.recognition && (
-              <div style={{ padding: '6px 12px', background: 'var(--link-soft)', border: '1px solid var(--link-line)', borderRadius: 'var(--r-xs)', fontFamily: 'var(--font-mono)', fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-link)' }}>
-                {s.recognition}
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div className="built-card__tech" style={{ marginTop: '12px', marginBottom: '12px' }}>
+        {s.tech.map(t => <span key={t} className="built-tech-tag">{t}</span>)}
+      </div>
+      
+      {s.recognition && (
+        <div style={{ padding: '6px 12px', background: 'var(--link-soft)', border: '1px solid var(--link-line)', borderRadius: 'var(--r-xs)', fontFamily: 'var(--font-mono)', fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-link)', display: 'inline-block' }}>
+          {s.recognition}
+        </div>
+      )}
     </motion.div>
   );
 }
 
-function BuiltSystems() {
+function BuiltSystems({ onSelectDeepDive }) {
   return (
     <section id="build" className="section section--tight" aria-labelledby="built-systems-heading">
       <div className="container">
@@ -640,7 +729,7 @@ function BuiltSystems() {
         </motion.div>
         <div className="case-studies-list">
           {BUILT_SYSTEMS.map((s, i) => (
-            <BuiltSystemCard key={s.title} s={s} i={i} />
+            <BuiltSystemCard key={s.title} s={s} i={i} onSelectDeepDive={onSelectDeepDive} />
           ))}
         </div>
       </div>
@@ -700,6 +789,92 @@ function Experience() {
               ))}
             </div>
           </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Education ─────────────────────────────────── */
+const EDUCATION = [
+  {
+    period: '2023 – 2027',
+    degree: 'B.Tech in Computer Science & Engineering',
+    specialization: 'Specialization: Artificial Intelligence & Machine Learning',
+    institution: 'Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology',
+    location: 'Chennai, Tamil Nadu',
+    score: 'CGPA: 9.19 / 10',
+    featured: true,
+    coursework: [
+      'Machine Learning',
+      'Deep Learning',
+      'Generative AI & LLMs',
+      'Data Structures & Algorithms',
+      'Operating Systems',
+      'Database Management Systems',
+      'Computer Networks'
+    ]
+  },
+  {
+    period: '2021 – 2023',
+    degree: 'Higher Secondary Certificate (Class XII)',
+    specialization: 'Stream: MPC (Mathematics, Physics, Chemistry)',
+    institution: 'Srinivasa Junior College',
+    location: 'Vidyanagar, Andhra Pradesh',
+    score: 'Percentage: 94.2%',
+    featured: false,
+    coursework: ['Advanced Mathematics', 'Physics', 'Chemistry']
+  },
+  {
+    period: '2019 – 2021',
+    degree: 'Secondary School Certificate (Class X)',
+    specialization: 'Board of Secondary Education, AP',
+    institution: 'Sri Chaitanya School',
+    location: 'Nellore, Andhra Pradesh',
+    score: 'Percentage: 99.5%',
+    featured: false,
+    coursework: ['State Top Distinction', 'Science & Mathematics']
+  }
+];
+
+function Education() {
+  return (
+    <section id="education" className="section section--tight" aria-labelledby="education-heading">
+      <div className="container">
+        <motion.div className="section__header" {...inView()}>
+          <div className="sec-label">Education</div>
+          <h2 id="education-heading" className="section__title">Academic Foundation.<br />Technical Rigor.</h2>
+          <p className="section__subtitle">
+            Formal foundations in Computer Science, Machine Learning, and Analytical Problem Solving.
+          </p>
+        </motion.div>
+        <div className="edu-grid">
+          {EDUCATION.map((edu, i) => (
+            <motion.div 
+              key={edu.degree} 
+              className={`edu-card ${edu.featured ? 'edu-card--featured' : ''}`}
+              {...inView(0.06 * i)}
+            >
+              <div className="edu-header">
+                <span className="edu-year">{edu.period}</span>
+                <span className="edu-score-badge">{edu.score}</span>
+              </div>
+              <h3 className="edu-degree">{edu.degree}</h3>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--accent)', marginBottom: '6px' }}>
+                {edu.specialization}
+              </div>
+              <p className="edu-institution">{edu.institution} · {edu.location}</p>
+              
+              <div className="edu-coursework">
+                <div className="edu-coursework-title">Key Coursework & Rigor</div>
+                <div className="edu-tags">
+                  {edu.coursework.map(c => (
+                    <span key={c} className="edu-tag">{c}</span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -949,17 +1124,135 @@ function MyStory() {
   );
 }
 
+/* ── Contact Form (Formspark) ──────────────────── */
+function ContactForm() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState({ state: 'idle', message: '' });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus({ state: 'submitting', message: 'Sending Message...' });
+
+    try {
+      const response = await fetch('https://submit-form.com/6oYvXjZFF', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus({ state: 'success', message: 'Message sent successfully! I will get back to you soon.' });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      console.error('Contact form error:', err);
+      setStatus({ state: 'error', message: 'Failed to send message. Please email directly to sannareddyabhilashreddy@gmail.com' });
+    }
+  };
+
+  return (
+    <div className="contact-simple-card">
+      <div className="contact-simple-card-header">
+        <span className="contact-simple-card-badge">Direct Channel</span>
+        <h3 className="contact-simple-card-title">Send a Direct Message</h3>
+      </div>
+
+      {status.state === 'success' && (
+        <div className="contact-form-status contact-form-status--success" style={{ marginBottom: 14 }}>
+          ✓ {status.message}
+        </div>
+      )}
+      {status.state === 'error' && (
+        <div className="contact-form-status contact-form-status--error" style={{ marginBottom: 14 }}>
+          ⚠ {status.message}
+        </div>
+      )}
+
+      <form 
+        action="https://submit-form.com/6oYvXjZFF" 
+        method="POST" 
+        className="contact-simple-form" 
+        onSubmit={handleSubmit}
+      >
+        <div className="contact-field-group">
+          <label className="contact-field-label" htmlFor="contact-name">Your Name</label>
+          <input 
+            id="contact-name"
+            type="text" 
+            name="name" 
+            className="contact-simple-input" 
+            placeholder="Abhi" 
+            value={formData.name} 
+            onChange={handleChange} 
+            required 
+            disabled={status.state === 'submitting'}
+          />
+        </div>
+
+        <div className="contact-field-group">
+          <label className="contact-field-label" htmlFor="contact-email">Your Email</label>
+          <input 
+            id="contact-email"
+            type="email" 
+            name="email" 
+            className="contact-simple-input" 
+            placeholder="abhi@example.com" 
+            value={formData.email} 
+            onChange={handleChange} 
+            required 
+            disabled={status.state === 'submitting'}
+          />
+        </div>
+
+        <div className="contact-field-group">
+          <label className="contact-field-label" htmlFor="contact-message">Your Message</label>
+          <textarea 
+            id="contact-message"
+            name="message" 
+            className="contact-simple-textarea" 
+            placeholder="Tell me about the role, project, or collaboration you'd like to discuss..." 
+            rows={4} 
+            value={formData.message} 
+            onChange={handleChange} 
+            required 
+            disabled={status.state === 'submitting'}
+          />
+        </div>
+
+        <button 
+          type="submit" 
+          className="contact-simple-btn" 
+          disabled={status.state === 'submitting'}
+        >
+          {status.state === 'submitting' ? 'Sending Message...' : 'Send Message'}
+          <ArrowRight size={16} />
+        </button>
+      </form>
+    </div>
+  );
+}
+
 /* ── Contact ───────────────────────────────────── */
 function Contact() {
   return (
     <section id="contact" className="contact-section" aria-labelledby="contact-heading">
       <div className="container">
-        <div className="contact-inner">
+        <div className="contact-inner" style={{ alignItems: 'center' }}>
           <motion.div className="contact-left" {...inViewX(0)}>
             <h2 id="contact-heading" className="contact-question">Ready to identify<br />something real?</h2>
-            <p className="contact-sub">I am actively looking for PM roles, AI systems collaborations and opportunities at the intersection of product, technology and entrepreneurship.</p>
-          </motion.div>
-          <motion.div {...inViewX(0.1, 20)}>
+            <p className="contact-sub" style={{ marginBottom: '28px' }}>
+              I am actively looking for PM roles, AI systems collaborations and opportunities at the intersection of product, technology and entrepreneurship.
+            </p>
             <div className="contact-links">
               {[
                 { icon: <Mail size={16} />, label: 'Email', val: 'sannareddyabhilashreddy@gmail.com', href: 'mailto:sannareddyabhilashreddy@gmail.com' },
@@ -979,6 +1272,10 @@ function Contact() {
               ))}
             </div>
           </motion.div>
+
+          <motion.div {...inViewX(0.15, 20)} style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <ContactForm />
+          </motion.div>
         </div>
         <div className="footer">
           <span>© 2025–2026 Abhilash Reddy Sannareddy</span>
@@ -988,33 +1285,342 @@ function Contact() {
   );
 }
 
+/* ── Dedicated Deep Dive Page ──────────────────── */
+function DeepDivePage({ item, onBack }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [item]);
+
+  if (!item) return null;
+
+  return (
+    <div className="deepdive-wrapper">
+      <div className="container">
+        {/* Top Header Row with Clear Back Button & Breadcrumbs */}
+        <div className="deepdive-content-top">
+          <button 
+            className="deepdive-page-back-btn" 
+            onClick={() => onBack(item.type === 'case-study' ? '#work' : '#build')} 
+            aria-label="Back to Portfolio"
+          >
+            <ArrowLeft size={15} /> Back to {item.type === 'case-study' ? 'Case Studies' : 'Built Systems'}
+          </button>
+          <div className="deepdive-breadcrumbs">
+            <span onClick={() => onBack('#main-content')} style={{ cursor: 'pointer' }}>Portfolio</span>
+            <span>/</span>
+            <span onClick={() => onBack(item.type === 'case-study' ? '#work' : '#build')} style={{ cursor: 'pointer' }}>
+              {item.type === 'case-study' ? 'Case Studies' : 'Built Systems'}
+            </span>
+            <span>/</span>
+            <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{item.title}</span>
+          </div>
+        </div>
+
+        {/* Hero Header */}
+        <div className="deepdive-hero">
+          <span className="deepdive-badge">{item.badge}</span>
+          <h1 className="deepdive-title">{item.title}</h1>
+          <p className="deepdive-subtitle">{item.subtitle}</p>
+
+          <div className="deepdive-stats-grid">
+            {item.heroStats.map(stat => (
+              <div key={stat.label} className="deepdive-stat-box">
+                <div className="deepdive-stat-label">{stat.label}</div>
+                <div className="deepdive-stat-value">{stat.value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Executive Triad: Problem -> Idea -> Impact (Horizontal Row Blocks) */}
+        {item.problemIdeaImpact && (
+          <div id="deepdive-triad" className="deepdive-triad-rows">
+            {/* 01. Problem Row */}
+            <div className="deepdive-row-card deepdive-row-card--problem">
+              <div className="deepdive-row-top">
+                <span className="deepdive-row-badge deepdive-row-badge--problem">01 · The Problem</span>
+                <span className="deepdive-row-step-label">Phase 01 / Friction & Root Cause</span>
+              </div>
+              <div className="deepdive-row-body">
+                <div className="deepdive-row-main">
+                  <h3 className="deepdive-row-title">{item.problemIdeaImpact.problemTitle}</h3>
+                  <p className="deepdive-row-desc">{item.problemIdeaImpact.problemDesc}</p>
+                </div>
+                {item.problemIdeaImpact.problemPoints && (
+                  <div className="deepdive-row-points-box">
+                    <div className="deepdive-row-points-header">Key Dynamics & Evidence</div>
+                    <ul className="deepdive-row-points">
+                      {item.problemIdeaImpact.problemPoints.map((pt, idx) => (
+                        <li key={idx}>{pt}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* 02. Idea & Solution Row */}
+            <div className="deepdive-row-card deepdive-row-card--idea">
+              <div className="deepdive-row-top">
+                <span className="deepdive-row-badge deepdive-row-badge--idea">02 · The Idea & Solution</span>
+                <span className="deepdive-row-step-label">Phase 02 / Strategic Architecture</span>
+              </div>
+              <div className="deepdive-row-body">
+                <div className="deepdive-row-main">
+                  <h3 className="deepdive-row-title">{item.problemIdeaImpact.ideaTitle}</h3>
+                  <p className="deepdive-row-desc">{item.problemIdeaImpact.ideaDesc}</p>
+                </div>
+                {item.problemIdeaImpact.ideaPoints && (
+                  <div className="deepdive-row-points-box">
+                    <div className="deepdive-row-points-header">Execution Mechanisms</div>
+                    <ul className="deepdive-row-points">
+                      {item.problemIdeaImpact.ideaPoints.map((pt, idx) => (
+                        <li key={idx}>{pt}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* 03. Impact & Value Row */}
+            <div className="deepdive-row-card deepdive-row-card--impact">
+              <div className="deepdive-row-top">
+                <span className="deepdive-row-badge deepdive-row-badge--impact">03 · The Impact & Value</span>
+                <span className="deepdive-row-step-label">Phase 03 / Measurable Outcomes</span>
+              </div>
+              <div className="deepdive-row-body">
+                <div className="deepdive-row-main">
+                  <h3 className="deepdive-row-title">{item.problemIdeaImpact.impactTitle}</h3>
+                  <p className="deepdive-row-desc">{item.problemIdeaImpact.impactDesc}</p>
+                </div>
+                {item.problemIdeaImpact.impactPoints && (
+                  <div className="deepdive-row-points-box">
+                    <div className="deepdive-row-points-header">Strategic Advantage</div>
+                    <ul className="deepdive-row-points">
+                      {item.problemIdeaImpact.impactPoints.map((pt, idx) => (
+                        <li key={idx}>{pt}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Overview Box */}
+        <div className="deepdive-overview-card">
+          <strong>Strategic Overview: </strong>{item.overview}
+        </div>
+
+        {/* Deep Dive Content Sections */}
+        <div id="deepdive-details" className="deepdive-content">
+          {item.sections.map((section) => (
+            <section key={section.id} id={section.id} className="deepdive-section-block">
+              <h2 className="deepdive-section-title">{section.title}</h2>
+              {section.summary && (
+                <p className="deepdive-section-lead">{section.summary}</p>
+              )}
+
+              {section.paragraphs && section.paragraphs.map((p, idx) => (
+                <p key={idx} className="deepdive-p">{p}</p>
+              ))}
+
+              {section.callout && (
+                <div className="deepdive-callout">
+                  <div className="deepdive-callout-title">{section.callout.title}</div>
+                  <div className="deepdive-callout-text">{section.callout.text}</div>
+                </div>
+              )}
+
+              {section.table && (
+                <div className="deepdive-table-wrapper">
+                  <table className="deepdive-table">
+                    <thead>
+                      <tr>
+                        {section.table.headers.map((h, i) => (
+                          <th key={i}>{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {section.table.rows.map((row, i) => (
+                        <tr key={i}>
+                          {row.map((cell, j) => (
+                            <td key={j} style={j === 0 ? { fontWeight: 600, color: 'var(--text-primary)' } : {}}>
+                              {cell}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {section.steps && (
+                <div style={{ marginTop: '20px' }}>
+                  {section.steps.map((st, i) => (
+                    <div key={i} className="deepdive-step-card">
+                      <div className="deepdive-step-title">{st.step}</div>
+                      <div className="deepdive-step-desc">{st.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {section.points && (
+                <ul style={{ paddingLeft: '20px', margin: '16px 0', lineHeight: 1.8 }}>
+                  {section.points.map((pt, i) => (
+                    <li key={i} className="deepdive-p" style={{ marginBottom: '8px' }}>{pt}</li>
+                  ))}
+                </ul>
+              )}
+
+              {section.financials && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginTop: '20px' }}>
+                  {section.financials.map((fin, i) => (
+                    <div key={i} className="deepdive-step-card" style={{ borderLeft: '3px solid var(--accent)' }}>
+                      <div className="deepdive-step-title">{fin.label}</div>
+                      <div className="deepdive-step-desc">{fin.detail}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {section.metricsList && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', marginTop: '16px' }}>
+                  {section.metricsList.map((m, i) => (
+                    <div key={i} className="deepdive-step-card">
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--text-tertiary)', textTransform: 'uppercase' }}>
+                        {m.name}
+                      </div>
+                      <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
+                        {m.target}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {section.risksList && (
+                <div style={{ marginTop: '16px' }}>
+                  {section.risksList.map((r, i) => (
+                    <div key={i} className="deepdive-step-card" style={{ borderLeft: '3px solid #dc2626' }}>
+                      <div className="deepdive-step-title" style={{ color: '#dc2626' }}>Risk: {r.risk}</div>
+                      <div className="deepdive-step-desc"><strong>Mitigation: </strong>{r.mitigation}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          ))}
+        </div>
+
+        {/* Bottom CTA Card */}
+        <div className="deepdive-footer-cta">
+          <h3 style={{ fontSize: '1.4rem', fontWeight: 700 }}>Want to discuss this case study or explore collaboration?</h3>
+          <p style={{ maxWidth: '600px', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+            I am actively looking for PM roles and AI systems engineering opportunities. Let's discuss product strategy, architecture, and execution.
+          </p>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <button className="btn-primary" onClick={() => onBack(item.type === 'case-study' ? '#work' : '#build')}>
+              <ArrowLeft size={16} /> Return to Portfolio
+            </button>
+            <button className="btn-secondary" onClick={() => onBack('#contact')}>
+              Get In Touch <ArrowRight size={14} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ══════════════════════════════════════════════════
    APP
 ══════════════════════════════════════════════════ */
 export default function App() {
+  const [activeDeepDive, setActiveDeepDive] = useState(null);
+
+  // Sync with URL hash
+  useEffect(() => {
+    const checkHash = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith('#/case-study/')) {
+        const slug = hash.replace('#/case-study/', '');
+        if (DEEP_DIVES[slug]) {
+          setActiveDeepDive(DEEP_DIVES[slug]);
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          return;
+        }
+      } else if (hash.startsWith('#/project/')) {
+        const slug = hash.replace('#/project/', '');
+        if (DEEP_DIVES[slug]) {
+          setActiveDeepDive(DEEP_DIVES[slug]);
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          return;
+        }
+      }
+      setActiveDeepDive(null);
+    };
+
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    return () => window.removeEventListener('hashchange', checkHash);
+  }, []);
+
+  const handleSelectDeepDive = (type, slug) => {
+    if (DEEP_DIVES[slug]) {
+      window.location.hash = `#/${type === 'case-study' ? 'case-study' : 'project'}/${slug}`;
+      setActiveDeepDive(DEEP_DIVES[slug]);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleBackToPortfolio = (targetSection) => {
+    const returnHash = targetSection || (activeDeepDive?.type === 'case-study' ? '#work' : '#build');
+    window.location.hash = returnHash;
+    setActiveDeepDive(null);
+    setTimeout(() => {
+      const el = document.querySelector(returnHash);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 60);
+  };
+
   return (
     <>
-      <Nav />
-      <main id="main-content">
-        <Hero />
-        <div className="divider" />
-        <HowIThink />
-        <div className="divider" />
-        <Skills />
-        <div className="divider" />
-        <CaseStudies />
-        <div className="divider" />
-        <BuiltSystems />
-        <div className="divider" />
-        <Experience />
-        <div className="divider" />
-        <Ventures />
-        <div className="divider" />
-        <Achievements />
-        <div className="divider" />
-        <MyStory />
-        <Contact />
-      </main>
+      <Nav activeDeepDive={activeDeepDive} onBackToPortfolio={handleBackToPortfolio} />
+      
+      {activeDeepDive ? (
+        <DeepDivePage item={activeDeepDive} onBack={handleBackToPortfolio} />
+      ) : (
+        <main id="main-content">
+          <Hero />
+          <div className="divider" />
+          <HowIThink />
+          <div className="divider" />
+          <Skills />
+          <div className="divider" />
+          <CaseStudies onSelectDeepDive={handleSelectDeepDive} />
+          <div className="divider" />
+          <BuiltSystems onSelectDeepDive={handleSelectDeepDive} />
+          <div className="divider" />
+          <Experience />
+          <div className="divider" />
+          <Ventures />
+          <div className="divider" />
+          <Achievements />
+          <div className="divider" />
+          <MyStory />
+          <div className="divider" />
+          <Education />
+          <Contact />
+        </main>
+      )}
     </>
   );
 }

@@ -24,65 +24,69 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
   pointer-events: auto;
   display: flex;
   align-items: center;
-  background: rgba(248, 247, 244, 0.94);
+  background: rgba(248, 247, 244, 0.96);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--surface-border-strong);
   border-radius: 9999px;
-  box-shadow: 0 8px 30px rgba(15, 14, 12, 0.08);
-  padding: 4px 6px;
-  gap: 1px;
+  box-shadow: 0 10px 36px rgba(15, 14, 12, 0.09);
+  padding: 6px 10px;
+  gap: 3px;
   max-width: 96vw;
+  transition: all 0.25s ease;
 }
 .floating-nav-pill--deepdive {
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 10px 32px rgba(15, 14, 12, 0.1);
-  padding: 5px 8px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 14px 40px rgba(15, 14, 12, 0.12);
+  padding: 8px 18px;
+  gap: 8px;
 }
 .floating-nav-back-pill {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   background: var(--text-primary);
   color: #ffffff;
   border: none;
   border-radius: 9999px;
-  padding: 6px 14px;
-  font-size: 0.76rem;
+  padding: 8px 18px;
+  font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 .floating-nav-back-pill:hover {
-  background: #2b2824;
+  background: #000000;
   transform: translateX(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 .floating-nav-divider {
   width: 1px;
-  height: 18px;
+  height: 22px;
   background: var(--surface-border-strong);
   margin: 0 6px;
 }
 .floating-nav-logo {
-  font-size: 0.78rem;
+  font-size: 0.86rem;
   font-weight: 700;
   color: var(--text-primary);
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 9999px;
   text-decoration: none;
   white-space: nowrap;
+  letter-spacing: -0.01em;
 }
 .floating-nav-links {
   display: flex;
   align-items: center;
-  gap: 1px;
+  gap: 2px;
 }
 .floating-nav-link {
-  font-size: 0.74rem;
+  font-size: 0.79rem;
   font-weight: 500;
   color: var(--text-secondary);
-  padding: 5px 9px;
+  padding: 6px 10px;
   border-radius: 9999px;
   transition: all 0.2s ease;
   text-decoration: none;
@@ -96,28 +100,70 @@ p, .hero__thesis, .cs-section-text, .built-section-text, .vc-desc, .story-text, 
   background: var(--text-primary);
   color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(15, 14, 12, 0.15);
+  box-shadow: 0 2px 10px rgba(15, 14, 12, 0.16);
+}
+.floating-nav-link-btn {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 7px 14px;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.floating-nav-link-btn:hover {
+  color: var(--text-primary);
+  background: rgba(15, 14, 12, 0.06);
 }
 .floating-nav-resume {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.68rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-link);
   background: var(--link-soft);
   border: 1px solid var(--link-line);
-  padding: 5px 11px;
+  padding: 6px 13px;
   border-radius: 9999px;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  margin-left: 2px;
+  gap: 6px;
+  margin-left: 4px;
   transition: all 0.2s;
   white-space: nowrap;
+  font-weight: 600;
 }
 .floating-nav-resume:hover {
   background: rgba(124, 92, 58, 0.16);
   color: var(--text-primary);
+  transform: translateY(-1px);
+}
+.floating-nav-cta-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7c4a1e;
+  background: #fbf8f3;
+  border: 1.5px solid #d4a373;
+  padding: 7px 16px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.floating-nav-cta-btn:hover {
+  background: #7c4a1e;
+  color: #ffffff;
+  border-color: #7c4a1e;
+  transform: translateY(-1px);
 }
 .floating-nav-burger {
   display: none;

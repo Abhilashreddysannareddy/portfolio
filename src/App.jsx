@@ -59,26 +59,52 @@ function Nav({ activeDeepDive, onBackToPortfolio }) {
   }, [activeDeepDive]);
 
   if (activeDeepDive) {
+    const scrollToSection = (id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const topOffset = 88;
+        const elementPosition = el.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - topOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    };
+
     return (
       <div className="floating-nav-wrapper">
         <nav className="floating-nav-pill floating-nav-pill--deepdive" role="navigation" aria-label="Deep dive navigation">
           <button 
+            type="button"
             className="floating-nav-back-pill" 
             onClick={() => onBackToPortfolio(activeDeepDive.type === 'case-study' ? '#work' : '#build')}
             aria-label="Back to Portfolio"
           >
-            <ArrowLeft size={13} /> Back to {activeDeepDive.type === 'case-study' ? 'Case Studies' : 'Built Systems'}
+            <ArrowLeft size={14} /> Back to {activeDeepDive.type === 'case-study' ? 'Case Studies' : 'Built Systems'}
           </button>
           <div className="floating-nav-divider" />
           <div className="floating-nav-links" role="list">
-            <a href="#deepdive-triad" className="floating-nav-link">Problem & Idea</a>
-            <a href="#deepdive-details" className="floating-nav-link">Full Spec</a>
+            <button 
+              type="button"
+              className="floating-nav-link-btn"
+              onClick={() => scrollToSection('deepdive-triad')}
+            >
+              Problem & Idea
+            </button>
+            <button 
+              type="button"
+              className="floating-nav-link-btn"
+              onClick={() => scrollToSection('deepdive-details')}
+            >
+              Full Spec
+            </button>
           </div>
           <div className="floating-nav-divider" />
           <button 
-            className="floating-nav-resume" 
+            type="button"
+            className="floating-nav-cta-btn" 
             onClick={() => onBackToPortfolio('#contact')}
-            style={{ cursor: 'pointer', border: '1px solid var(--link-line)' }}
           >
             Contact Abhi →
           </button>
@@ -1296,15 +1322,8 @@ function DeepDivePage({ item, onBack }) {
   return (
     <div className="deepdive-wrapper">
       <div className="container">
-        {/* Top Header Row with Clear Back Button & Breadcrumbs */}
+        {/* Top Breadcrumb Header */}
         <div className="deepdive-content-top">
-          <button 
-            className="deepdive-page-back-btn" 
-            onClick={() => onBack(item.type === 'case-study' ? '#work' : '#build')} 
-            aria-label="Back to Portfolio"
-          >
-            <ArrowLeft size={15} /> Back to {item.type === 'case-study' ? 'Case Studies' : 'Built Systems'}
-          </button>
           <div className="deepdive-breadcrumbs">
             <span onClick={() => onBack('#main-content')} style={{ cursor: 'pointer' }}>Portfolio</span>
             <span>/</span>
@@ -1562,6 +1581,9 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'instant' });
           return;
         }
+      } else if (hash.startsWith('#deepdive-')) {
+        // Internal deep dive jump link, keep deep dive active
+        return;
       }
       setActiveDeepDive(null);
     };
